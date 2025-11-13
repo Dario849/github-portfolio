@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Rodriguez Darío | Desarrollador</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+        padding: 1rem;
+        font-size: 16px;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #2c3e50, #3498db);
+        color: white;
+        padding: 2rem 1rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .main,
+    .aside {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.377);
+    }
+
+    .footer {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.377);
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+    }
+
+    .footer-title {
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        font-size: 1.4rem;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 0.5rem;
+        text-align: left;
+    }
+
+    .footer-grid {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .footer-pdf {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.377);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        place-self: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .footer-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .footer-title {
+            text-align: left;
+        }
+    }
+
+    h2 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 0.5rem;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    li {
+        margin-bottom: 0.8rem;
+        padding-left: 1rem;
+        position: relative;
+    }
+
+    li:before {
+        content: "▸";
+        color: #3498db;
+        position: absolute;
+        left: 0;
+    }
+
+    fieldset {
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    legend {
+        font-weight: bold;
+        color: #2c3e50;
+        padding: 0 0.5rem;
+    }
+
+    .btn {
+        display: inline-block;
+        background: #3498db;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0.25rem;
+    }
+
+    .btn:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    .contact-item {
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        background: #f8f9fa;
+        border-radius: 6px;
+    }
+
+    /* For Tablet */
+    @media (min-width: 768px) {
+        body {
+            padding: 1.5rem;
+            font-size: 17px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+        }
+
+        .wrapper {
+            gap: 2rem;
+        }
+
+        .main,
+        .aside,
+        .footer {
+            padding: 2rem;
+        }
+
+
+        .aside-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        body {
+            padding: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-template-areas:
+                "header header"
+                "main aside1"
+                "aside2 aside2"
+                "aside3 aside3"
+                "footer footer";
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .header {
+            grid-area: header;
+        }
+
+        .main {
+            grid-area: main;
+        }
+
+        .aside-1 {
+            grid-area: aside1;
+        }
+
+        .aside-2 {
+            grid-area: aside2;
+        }
+
+        .aside-3 {
+            grid-area: aside3;
+        }
+
+        .footer {
+            grid-area: footer;
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    /* For PC */
+    @media (min-width: 1200px) {
+        .wrapper {
+            grid-template-areas:
+                "header header"
+                "main aside1"
+                "main aside2"
+                "main aside3"
+                "footer footer";
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .main {
+            min-height: 400px;
+        }
+    }
+
+    .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .skill-tag {
+        background: #e3f2fd;
+        color: #1976d2;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .project-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    a:focus,
+    .btn:focus {
+        outline: 2px solid #3498db;
+        outline-offset: 2px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            margin-top: 20px;
+        }
+
+        to {
+            opacity: 1;
+            margin-top: 0;
+        }
+    }
+
+
+    .theme-switch {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        direction: rtl;
+    }
+
+    #themeCheckbox {
+        display: none;
+    }
+
+    #themeCheckbox+label {
+        font-size: 2rem;
+        height: 1em;
+        width: 2.5em;
+        border-radius: 0.25em;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        background-color: #cecece;
+        position: relative;
+    }
+
+    #themeCheckbox:checked+label {
+        background-color: #3a3a3a;
+    }
+
+    #themeCheckbox+label:active {
+        transform: scale(0.85);
+        transition: transform 0.2s;
+    }
+
+    #themeCheckbox+label div {
+        width: 0.8em;
+        height: 0.8em;
+        border-radius: inherit;
+        position: absolute;
+        top: 0.1em;
+        left: 0.1em;
+        z-index: 10;
+        transition: 0.5s cubic-bezier(1, 0.33, 0.11, 1.34);
+        background-color: #f2f2f2;
+    }
+
+    #themeCheckbox:checked+label div {
+        left: 1.6em;
+        background-color: #212121;
+    }
+
+    #themeCheckbox+label span {
+        display: flex;
+    }
+
+    #themeCheckbox+label svg {
+        display: inline-block;
+        height: 1em;
+        width: 1em;
+        padding: 0.15em;
+        box-sizing: border-box;
+    }
+
+    #themeCheckbox+label span:first-of-type {
+        color: #3a3a3a;
+    }
+
+    #themeCheckbox+label span:last-of-type {
+        color: #cecece;
+    }
+
+    .header,
+    .main,
+    .aside,
+    .footer {
+        animation: fadeIn 0.6s ease-out;
+        transition: all 0.0s ease-in;
+    }
+
+    .dark-mode .btn:hover {
+        background: #1a5276;
+    }
+
+    .dark-mode a {
+        color: #3498db;
+    }
+
+    .dark-mode a:hover {
+        color: #2980b9;
+    }
+
+
+    .dark-mode .btn,
+    .dark-mode h2 {
+        color: #c5c5c5;
+    }
+
+    .dark-mode {
+        background-color: #0d1117;
+        color: #f0f0f0;
+    }
+
+    @media print {
+        @page {
+            margin: 0;
+        }
+
+        #mainWrapper {
+            display: block;
+        }
+
+        #pdfWrapper,#themeWrapper,.btn {
+            display: none;
+        }
+
+        article {
+            margin-top: 8vh;
+            margin-bottom: 15vh;
+        }
+        .aside{
+            margin-top: 0.5vh;
+        }
+        .footer {
+            padding: 0.5rem;
+            margin-top: 0.5vh;
+        }
+
+        .project-link {
+            display: inline-block;
+        }
+
+        .footer-grid {
+            gap: 0;
+        }
+    }
+</style>
+
+<body>
+    <div class="wrapper" id="mainWrapper">
+        <header class="header">
+            <div class="theme-switch" id="themeWrapper">
+                <input type="checkbox" id="themeCheckbox" onchange="toggleNightMode()"
+                    aria-label="Cambiar modo oscuro/claro" />
+                <label for="themeCheckbox">
+                    <div></div>
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                            <path fill-rule="evenodd"
+                                d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </span>
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                            <path
+                                d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z">
+                            </path>
+                        </svg>
+                    </span>
+                </label>
+            </div>
+
+            <h1>Rodriguez Dario Ezequiel</h1>
+            <p>Desarrollador Full Stack | Estudiante de Análisis de Sistemas</p>
+        </header>
+
+        <article class="main">
+            <h2>Sobre Mí</h2>
+            <p>
+                Desarrollador con más de 7 años de formación en tecnología, comprometido con el aprendizaje
+                continuo y la actualización en nuevas tendencias tecnológicas. Destaco por mi capacidad de
+                trabajo en equipo, comunicación efectiva y colaboración proactiva.
+            </p>
+
+            <p>
+                <strong>Base técnica adquirida:</strong>
+            </p>
+            <ul>
+                <li>Lenguajes: C, C++, C#, PHP, JavaScript, jQuery, HTML, CSS con enfoque en lógica de programación</li>
+                <li>Desarrollo de algoritmos y pensamiento computacional</li>
+                <li>Fundamentos sólidos en programación estructurada y orientada a objetos</li>
+                <li>Amplio conocimiento técnico en hardware</li>
+                <li>Conocimiento en Bases de Datos, diagramas de entidad relación y documentación</li>
+                <li>Conocimiento en análisis de sistemas, relevamientos, patrones de diseño, diagramas de proceso, etc..
+                </li>
+            </ul>
+            <p>
+                <strong>Aspiraciones:</strong>
+            </p>
+            <ul>
+                <li>Expandir conocimiento en lenguajes de programación y frameworks</li>
+                <li>Colaborar con equipos de trabajo proactivos y cooperadores</li>
+                <li>Desarrollar mejores prácticas de empresa</li>
+                <li>Colaborar y aportar sustancialmente en proyectos</li>
+                <li>Mantenerme en constante mejora de mis conocimientos y aprendizaje</li>
+            </ul>
+            <p>
+                <strong>Localidad:</strong>
+            </p>
+            <ul>
+                <li>San Martín - Provincia de Buenos Aires - Argentina</li>
+            </ul>
+        </article>
+
+        <aside class="aside aside-1">
+            <h2>Estudios</h2>
+            <ul>
+                <li>
+                    <strong>Tecnicatura secundaria en informática</strong><br>
+                    <a href="https://eestn1.com.ar/informatica.php" target="_blank" rel="noopener noreferrer">EESTN1 -
+                        Tres de Febrero</a><br>
+                    <small>2017 - 2021 (4 años)</small>
+                </li>
+                <li>
+                    <strong>Tecnicatura superior en análisis de sistemas</strong><br>
+                    <a href="https://www.instagram.com/santotomasd/" target="_blank" rel="noopener noreferrer">ISTA -
+                        Ramón Carrillo San Martín</a><br>
+                    <small>2023 - 2025 (3 años)</small>
+                </li>
+            </ul>
+        </aside>
+
+        <aside class="aside aside-2">
+            <h2>Proyectos Destacados</h2>
+            <div>
+                <fieldset>
+                    <legend>Plataforma web administrativa</legend>
+                    <p>Recopilación y manejo de datos para el área agrícola, control de usuarios, sesiones, y gráficos.
+                    </p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">PHP</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">MVC</span>
+                        <span class="skill-tag">POO</span>
+                    </div>
+                    <a href="https://app-gro.zeabur.app/dashboard" target="_blank" rel="noopener noreferrer"
+                        class="btn project-link">
+                        Ver Proyecto →
+                    </a>
+                    <a href="https://github.com/Dario849/AppGro" target="_blank" rel="noopener noreferrer"
+                        class="btn project-link">
+                        Ver Repositorio Github →
+                    </a>
+                </fieldset>
+            </div>
+        </aside>
+
+        <aside class="aside aside-3">
+            <div>
+                <fieldset>
+                    <legend>Idiomas</legend>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Español Nativo</span>
+                        <span class="skill-tag">Ingles Intermedio (Score 61 - B1)</span>
+                    </div>
+                </fieldset>
+            </div>
+        </aside>
+
+        <footer class="footer">
+            <h2 class="footer-title">Contacto</h2>
+            <div class="footer-grid">
+                <div class="contact-item">
+                    <strong>GitHub:</strong><br>
+                    <span>https://github.com/Dario849</span><br>
+                    <a href="https://github.com/Dario849" target="_blank" class="btn" rel="noopener noreferrer">Ver
+                        Perfil</a>
+                </div>
+                <div class="contact-item">
+                    <strong>LinkedIn:</strong><br>
+                    <span>https://www.linkedin.com/in/devdariorodriguez</span><br>
+                    <a href="https://www.linkedin.com/in/devdariorodriguez" target="_blank" class="btn"
+                        rel="noopener noreferrer">Conectar</a>
+                </div>
+                <div class="contact-item">
+                    <strong>Email:</strong><br>
+                    <span>dariorodriguez7810@gmail.com</span><br>
+                    <a href="mailto:dariorodriguez7810@gmail.com" class="btn">Enviar Email</a>
+                </div>
+            </div>
+            <div class="footer-pdf" id="pdfWrapper">
+                <h2 class="footer-title">Generar PDF</h2>
+                <button class="btn" id="btn-pdf">Generar PDF</button>
+            </div>
+        </footer>
+    </div>
+</body>
+<script>
+    const printBtn = document.getElementById('btn-pdf');
+    printBtn.addEventListener('click', function () {
+        print();
+    });
+    function toggleNightMode() {
+        const elements = document.querySelectorAll('body, .main, .aside, .footer, .contact-item, .footer-pdf');
+        elements.forEach(element => {
+            element.classList.toggle('dark-mode');
+        });
+    }
+</script>
+
+</html>
