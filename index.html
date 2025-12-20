@@ -492,41 +492,146 @@
             margin: 0;
         }
 
-        #mainWrapper {
-            display: block;
+        /* Force grid layout and compact spacing for single-page print */
+        /* html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 10px;
+            line-height: 1.05;
+            color: #000;
+            background: #fff;
+        } */
+
+        .wrapper {
+            display: grid !important;
+            max-width: 100%;
+            margin: 0;
+            padding: 0.25rem;
+            grid-template-areas:
+                "header header"
+                "main aside1"
+                "main aside2"
+                "main aside3"
+                "footer footer"
+                "footerPdf footerPdf"
+                "footerLink footerLink";
+            grid-template-columns: 2fr 1fr;
+            gap: 0.5rem;
+            page-break-inside: avoid;
         }
 
-        #pdfWrapper,
-        #themeWrapper,
-        .btn {
-            display: none;
-        }
-
-
-        .aside {
-            width: revert;
-            height: revert;
+        /* ensure grid areas are set for print (they are only set at desktop breakpoints otherwise) */
+        .header {
+            grid-area: header;
         }
 
         .main {
-            width: revert;
-            height: revert;
+            grid-area: main;
+        }
+
+        .aside1 {
+            grid-area: aside1;
+        }
+
+        .aside2 {
+            grid-area: aside2;
+        }
+
+        .aside3 {
+            grid-area: aside3;
         }
 
         .footer {
-            padding: 0.5rem;
+            grid-area: footer;
         }
 
-        .projectLink {
-            display: inline-block;
+        .footerPdf {
+            grid-area: footerPdf;
         }
 
-        #htmlLinkContainer {
-            display: block;
+        .footerLink {
+            grid-area: footerLink;
+        }
+
+        /* hide UI controls */
+        #pdfWrapper,
+        #themeWrapper,
+        .btn {
+            display: none !important;
+        }
+
+        /* compact styles to save space */
+        .header,
+        .main,
+        .aside,
+        .footer,
+        .footerGrid,
+        .contactItem,
+        .skillTags {
+            padding: 0.35rem !important;
+            margin: 0 !important;
+            border-radius: 4px !important;
+            box-shadow: none !important;
+            page-break-inside: avoid;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            /* margin-bottom: 0.1rem; */
+        }
+
+        .header p {
+            font-size: 16.5px;
+            /* margin-bottom: 0.1rem; */
+        }
+
+        .aside,
+        .main {
+            width: auto;
+            height: auto;
+        }
+
+        .footer {
+            padding: 0.35rem;
         }
 
         .footerGrid {
             gap: 0;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .projectLink {
+            display: inline-block !important;
+            font-size: 10px;
+        }
+
+        #htmlLinkContainer {
+            display: block;
+            font-size: 20px;
+        }
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        fieldset {
+            padding: 0.45rem;
+            margin: 0.2rem 0;
+            border-width: 1px;
+        }
+
+        li {
+            margin-bottom: 0.25rem;
+            padding-left: 0.7rem;
+        }
+
+        /* fallback scaling if content still overflows */
+        @media (min-width: 1200px) {
+            body {
+                zoom: 0.95;
+            }
         }
     }
 </style>
