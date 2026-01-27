@@ -210,6 +210,26 @@
         margin: 0.25rem;
     }
 
+    .BtnCopy {
+        cursor: pointer;
+        border: none;
+
+    }
+
+    .BtnCopy:active::after {
+        content: " Copiado ✓";
+        color: green;
+        font-size: 0.9rem;
+        margin-left: 0.3rem;
+    }
+
+    .BtnCopy:active {
+        /* Slight color fade out effect transition for 2 seconds on :active = true */
+        transform: scale(0.9);
+        transition: transform 0.2s;
+    }
+
+
     .btn:hover {
         background: #2980b9;
         transform: translateY(-2px);
@@ -218,7 +238,6 @@
     .contactItem {
         margin-bottom: 1rem;
         padding: 0.5rem;
-        background: #f8f9fa;
         border-radius: 6px;
     }
 
@@ -451,9 +470,12 @@
     .header,
     .main,
     .aside,
-    .footer {
+    .footer,
+    .footerPdf,
+    .footerLink {
         animation: fadeIn 0.6s ease-out;
         transition: all 0.0s ease-in;
+        background-color: #8080801f;
     }
 
     .darkMode .btn:hover {
@@ -492,16 +514,10 @@
             margin: 0;
         }
 
-        /* Force grid layout and compact spacing for single-page print */
-        /* html,
         body {
-            margin: 0;
-            padding: 0;
-            font-size: 10px;
-            line-height: 1.05;
-            color: #000;
-            background: #fff;
-        } */
+            zoom: 0.7;
+            transform: scale(1);
+        }
 
         .wrapper {
             display: grid !important;
@@ -557,7 +573,8 @@
         /* hide UI controls */
         #pdfWrapper,
         #themeWrapper,
-        .btn {
+        .btn,
+        .BtnCopy {
             display: none !important;
         }
 
@@ -588,8 +605,8 @@
 
         .aside,
         .main {
-            width: auto;
-            height: auto;
+            width: fit-content;
+            height: fit-content;
         }
 
         .footer {
@@ -626,13 +643,6 @@
             margin-bottom: 0.25rem;
             padding-left: 0.7rem;
         }
-
-        /* fallback scaling if content still overflows */
-        @media (min-width: 1200px) {
-            body {
-                zoom: 0.95;
-            }
-        }
     }
 </style>
 
@@ -640,10 +650,12 @@
     <div class="wrapper" id="mainWrapper">
         <header class="header">
             <div class="themeSwitch" id="themeWrapper">
-                <input type="checkbox" id="themeCheckbox" onchange="toggleNightMode()"
-                    aria-label="Cambiar modo oscuro/claro" />
+                <input type="checkbox" id="themeCheckbox" onchange="toggleNightMode()" />
                 <label for="themeCheckbox">
-                    <div></div>
+                    <!-- If user uses tabindex to focus, allow toggling night mode with Enter key + force checkbox update acording to oposite actual value -->
+                    <div title="Cambiar modo oscuro/claro" aria-label="Cambiar modo oscuro/claro" tabindex="0"
+                        onkeypress="toggleNightMode(), document.getElementById('themeCheckbox').checked = !document.getElementById('themeCheckbox').checked">
+                    </div>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 24 24">
                             <path fill-rule="evenodd"
@@ -667,11 +679,20 @@
         <article class="main">
             <h2>Sobre Mí</h2>
             <p>
-                Desarrollador con más de 7 años de formación en tecnología, comprometido con el aprendizaje
+                <strong>Resumen:</strong><br>
+                Mi nombre es Dario Rodriguez, nací el 08/12/2001. Mi formación en informática comenzó en la
+                secundaria, donde desarrollé habilidades técnicas en computación, resolviendo problemas de hardware y
+                software, y sentando bases sólidas en lógica de programación y bases de datos. Cursé la Tecnicatura
+                Superior en Análisis de Sistemas en la Universidad Santo Tomas de Aquino, donde aprendí a integrar
+                entornos web completos de backend y frontend, implementar librerías y APIs, y a planificar proyectos con
+                diagramas de entidad-relación, flujo y Gantt. Desarrollé una plataforma web como proyecto de tesis,
+                aplicando conocimientos en diseño, implementación y despliegue. Me siento preparado y en búsqueda activa
+                de un entorno donde profesionalizarme y crecer como analista/programador.
+                <!-- Desarrollador con más de 7 años de formación en tecnología, comprometido con el aprendizaje
                 continuo y la actualización en nuevas tendencias tecnológicas. Destaco por mi capacidad de
-                trabajo en equipo, comunicación efectiva y colaboración proactiva.
+                trabajo en equipo, comunicación efectiva y colaboración proactiva. -->
             </p>
-
+            <br>
             <p>
                 <strong>Base técnica adquirida:</strong>
             </p>
@@ -795,7 +816,19 @@
                 </div>
                 <div class="contactItem">
                     <strong>Email:</strong><br>
-                    <span>dariorodriguez7810@gmail.com</span><br>
+                    <span>dariorodriguez7810@gmail.com</span>
+                    <button class="BtnCopy" onclick="copyToClipboard('dariorodriguez7810@gmail.com')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="-2 0 32 32">
+                            <title>clipboard</title>
+                            <g id="Page-1" fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+                                <g id="Icon-Set-Filled" fill="#000" transform="translate(-468 -101)">
+                                    <path id="clipboard"
+                                        d="M489 117h-14a1 1 0 1 1 0-2h14a1 1 0 1 1 0 2m0 5h-14a1 1 0 1 1 0-2h14a1 1 0 1 1 0 2m0 5h-14a1 1 0 1 1 0-2h14a1 1 0 1 1 0 2m-12-22h2.223c0-1.104 1.243-2 2.777-2s2.777.896 2.777 2H487v4h-10zm15 0h-3v-2h-2.693c-.867-1.19-2.461-2-4.307-2s-3.44.81-4.307 2H475v2h-3a4 4 0 0 0-4 4v20a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4v-20a4 4 0 0 0-4-4" />
+                                </g>
+                            </g>
+                        </svg>
+                    </button>
+                    <br>
                     <a href="mailto:dariorodriguez7810@gmail.com" class="btn">Enviar Email</a>
                 </div>
             </div>
@@ -824,6 +857,13 @@
         const elements = document.querySelectorAll('body, .main, .aside, .footer, .contactItem, .footerPdf, .footerLink, .header');
         elements.forEach(element => {
             element.classList.toggle('darkMode');
+        });
+    }
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function () {
+            console.log('Email copiado al portapapeles: ' + text);
+        }, function (err) {
+            console.log('Error al copiar el email: ', err);
         });
     }
 </script>
