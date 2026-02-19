@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV - Rodriguez Darío | Desarrollador</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <style>
     * {
@@ -98,6 +99,10 @@
         flex-direction: column;
         align-items: center;
         place-self: center;
+    }
+
+    .footerQrCode {
+        margin-top: 1rem;
     }
 
     @media (min-width: 768px) {
@@ -335,20 +340,23 @@
         .footerLink {
             grid-area: footerLink;
         }
+
+        .footerQrCode {
+            grid-area: footerQrCode;
+        }
     }
 
     /* For PC */
     @media (min-width: 1200px) {
         .wrapper {
             grid-template-areas:
-                "header header"
-                "main aside1"
-                "main aside2"
-                "main aside3"
-                "footer footer"
-                "footerPdf footerPdf"
-                "footerLink footerLink";
-            grid-template-columns: 2fr 1fr;
+                "header header header"
+                "main aside1 aside1"
+                "main aside2 aside2"
+                "main aside3 aside3"
+                "footer footer footer"
+                "footerPdf footerLink footerQrCode";
+            grid-template-columns: 3fr 2fr;
         }
 
         .main {
@@ -516,7 +524,7 @@
 
         body {
             zoom: 0.7;
-            transform: scale(1);
+            transform: scale(0.99);
         }
 
         .wrapper {
@@ -525,13 +533,12 @@
             margin: 0;
             padding: 0.25rem;
             grid-template-areas:
-                "header header"
-                "main aside1"
-                "main aside2"
-                "main aside3"
-                "footer footer"
-                "footerPdf footerPdf"
-                "footerLink footerLink";
+                "header header header"
+                "main aside1 aside1"
+                "main aside2 aside2"
+                "main aside3 aside3"
+                "footer footer footer"
+                "footerLink footerQrCode footerQrCode";
             grid-template-columns: 2fr 1fr;
             gap: 0.5rem;
             page-break-inside: avoid;
@@ -568,6 +575,10 @@
 
         .footerLink {
             grid-area: footerLink;
+        }
+
+        .footerQrCode {
+            grid-area: footerQrCode;
         }
 
         /* hide UI controls */
@@ -846,9 +857,10 @@
                             clip-rule="evenodd" />
                     </svg></a></p>
         </div>
+        <div id="qrcode" class="footerQrCode"></div>
     </div>
 </body>
-<script>
+<script type="text/javascript">
     const printBtn = document.getElementById('btnPdf');
     printBtn.addEventListener('click', function () {
         print();
@@ -866,6 +878,14 @@
             console.log('Error al copiar el email: ', err);
         });
     }
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: "https://dario849.github.io/github-portfolio/",
+        width: 128,
+        height: 128,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
 </script>
 
 </html>
