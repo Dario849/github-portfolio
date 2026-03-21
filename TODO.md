@@ -1,0 +1,12 @@
+## TODO LIST
+-	**Convert Portfolio to ReactJs Environment**
+-	**Add support for English translation (simple button for english language)**
+	- *Posible solutions:* 
+    	- Some library able to translate whole html text provided 
+    	- Manual translation and js event enabling for the change of specified text
+    	- Some API from external provider designed for translating whole pages dinamically
+-	**New section with hobbies and activities**
+	-	*Summarize what i like to do on my free time, what are my activities, to capture my style of life*
+-	**Make button to see special page for my projects**
+	-	*Could try to create special page with API from github to show direct output from my profile, this whay it could stay updated automatically*
+	-	*Design graphics, charts, etc...*
