@@ -6,6 +6,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://dario849.github.io/github-portfolio/',
+	site: 'https://dario849.github.io',
+	publicDir: '/github-portfolio',
+	base: '/github-portfolio',
 	integrations: [mdx(), sitemap()],
 });
