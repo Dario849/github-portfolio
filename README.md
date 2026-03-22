@@ -1,40 +1,62 @@
-## Hola, mi nombre es **Darío Rodriguez**
+# Astro Starter Kit: Blog
 
-Este es mi portfolio público donde muestro mis proyectos, habilidades y experiencias.
+```sh
+npm create astro@latest -- --template blog
+```
 
-## 📄 Portfolio - CV
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-Este es el enlace directo a mi portfolio:
+Features:
 
-<div align="center">
+- ✅ Minimal styling (make it your own!)
+- ✅ 100/100 Lighthouse performance
+- ✅ SEO-friendly with canonical URLs and Open Graph data
+- ✅ Sitemap support
+- ✅ RSS Feed support
+- ✅ Markdown & MDX support
 
-### [** Mi Portfolio **<img width="999" height="904" alt="image" src="https://github.com/user-attachments/assets/d944aec7-e34d-4b5a-9aee-574d69926d33" />](https://dario849.github.io/github-portfolio/)
+## 🚀 Project Structure
 
+Inside of your Astro project, you'll see the following folders and files:
 
-</div>
+```text
+├── public/
+├── src/
+│   ├── components/
+│   ├── content/
+│   ├── layouts/
+│   └── pages/
+├── astro.config.mjs
+├── README.md
+├── package.json
+└── tsconfig.json
+```
 
-## 📋 Características del Portfolio
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-- ✅ **Diseño responsive** 
-- ✅ **Proyectos destacados** con código fuente
-- ✅ **Tecnologías** y habilidades
-- ✅ **Experiencia** profesional
-- ✅ **Contacto** y redes sociales
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-## 📫 Contactame
+The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
 
-<div align="center">
+Any static assets, like images, can be placed in the `public/` directory.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/devdariorodriguez/)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dario849)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:dariorodriguez7810@gmail.com)
+## 🧞 Commands
 
-</div>
+All commands are run from the root of the project, from a terminal:
 
----
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-<div align="center">
+## 👀 Want to learn more?
 
-**Gracias por tu atención** 😊
+Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
 
-</div>
+## Credit
+
+This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
