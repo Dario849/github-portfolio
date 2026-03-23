@@ -1,62 +1,126 @@
-# Astro Starter Kit: Blog
+# 🛠️ Portfolio Website (Development Branch)
 
-```sh
-npm create astro@latest -- --template blog
-```
+This branch contains the active development of my personal portfolio, built with a modern, performance-focused stack.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The goal of this project is to create a **high-quality developer portfolio** that demonstrates not only technical skills, but also **UI/UX awareness, performance optimization, and product thinking**.
 
-Features:
+---
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+## 🚀 Tech Stack
 
-## 🚀 Project Structure
+### Core
+- **Astro** — Static-first architecture with partial hydration
+- **TailwindCSS** — Utility-first styling for fast and consistent UI
+- **React** — For interactive components and dynamic UI
 
-Inside of your Astro project, you'll see the following folders and files:
+---
 
+## 🧩 Planned Features
+
+- ⚡ Fast, optimized performance (Astro-first approach)
+- 🎨 Clean and modern UI with strong visual hierarchy
+- 🌗 Dark / Light mode
+- 📱 Fully responsive design (mobile-first)
+- 🧠 Project case studies (problem → solution approach)
+- ✍️ Blog section (MDX-based)
+- 🔍 Project filtering system
+- 📊 Interactive components (charts / visualizations)
+- ✨ Subtle animations and micro-interactions
+
+---
+
+## 📚 UI / Visualization / Interaction Libraries
+
+These are selected to enhance UX **without sacrificing performance**:
+
+### 🎨 UI & Components
+- **shadcn/ui** → Accessible, customizable components
+- **Radix UI** → Headless UI primitives (for modals, dropdowns, etc.)
+
+---
+
+### 🎞️ Animations
+- **Framer Motion** → Smooth, declarative animations (React-based)
+- **Lenis** → Smooth scrolling experience (optional, subtle use)
+
+---
+
+### 📊 Data Visualization
+- **Recharts** → Simple and clean charts (React-based)
+- **Chart.js** → Alternative for more customizable graphs
+
+---
+
+### 🧠 3D / Advanced Visuals
+- **Three.js** → 3D rendering (only if meaningful)
+- **@react-three/fiber** → React renderer for Three.js
+- **Spline** → Lightweight 3D embeds
+
+---
+
+### 🧰 Utilities
+- **clsx / classnames** → Conditional class handling
+- **tailwind-merge** → Merge Tailwind classes safely
+- **date-fns** → Date formatting
+
+---
+
+
+### ✍️ Content
+- **MDX** → Blog posts and rich content inside Astro
+
+---
+
+## 📁 Project Structure
 ```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
++---public
+|   +---fonts
+|   \---icons
+\---src
+    +---assets
+    +---components
+    +---content
+    |   \---blog
+    +---layouts
+    +---pages
+    |   \---blog
+    \---styles
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## 🧪 Development Goals
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+This project is not just where i will be building a portfolio, but where i will be practicing:
 
-Any static assets, like images, can be placed in the `public/` directory.
+- **Writing clean, maintainable code**
+- **Structuring a scalable frontend architecture**
+- **Applying UI/UX best practices**
+- **Optimizing for performance and accessibility**
 
-## 🧞 Commands
+---
+## 🧭 Roadmap
+- **Setup Astro project**
+- **Configure TailwindCSS**
+- **Create base layout and design system**
+- **Build Home page**
+- **Build Projects section**
+- **Add blog with MDX**
+- **Implement dark mode**
+- **Add animations and polish UI**
+- **Optimize performance (Lighthouse)**
+## ⚙️ Stack build process
 
-All commands are run from the root of the project, from a terminal:
+```bash
+# Install dependencies
+npm install
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+# start astro project
+npm create astro@latest
 
-## 👀 Want to learn more?
+# Add tailwind, react, etc.. to project
+npx astro add <integrationName>
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+# Start development server
+npm run dev
+```
