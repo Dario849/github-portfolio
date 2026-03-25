@@ -1,5 +1,12 @@
 const printBtn = document.getElementById('btnPdf');
 const AppGroLink = document.getElementById('OpenAppGro');
+const ImportantLists = document.querySelectorAll('.importantList');
+ImportantLists.forEach(list => {
+    list.children[0].classList.toggle('importantListExpanded');
+    list.addEventListener('click', function () {
+        list.children[0].classList.toggle('importantListExpanded');
+    });
+});
 AppGroLink.addEventListener('click', function (event) {
     event.preventDefault();
     Toastify({

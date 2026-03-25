@@ -153,7 +153,15 @@ li {
     left: 0;
 }
 
+
+.importantListExpanded {
+    /* Hides all the nested elements inside ImportanteList and changes the arrow to point downwards */
+    display: none;
+}
+
+
 .importantList {
+    cursor: pointer;
     margin-bottom: 0;
     color: #73a3d2;
     font-weight: bold;
@@ -381,7 +389,10 @@ legend {
     font-size: 0.9rem;
     font-weight: 500;
 }
+#OpenAppGro{
 
+    cursor:not-allowed;
+}
 .projectLink {
     display: inline-flex;
     align-items: center;
