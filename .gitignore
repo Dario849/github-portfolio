@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+# Dev branch Folder
+/frontend
+
 # dependencies
 node_modules/
 
