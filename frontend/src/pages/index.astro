@@ -1,0 +1,29 @@
+---
+import "../styles/global.css";
+import ThemeToggle from "../components/ChangeThemeButton.astro";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>My Portfolio</title>
+	</head>
+	<body>
+		<div
+			class="relative flex h-screen w-screen items-center justify-center dark:bg-black"
+		>
+			<h1 class="animate-jump-in dark:text-gray-50 not-dark:text-red-300">
+				Dario Rodriguez, Developer, Analyst, and IT Support
+			</h1>
+			<div
+				class="animate-fade-down animate-once animate-ease-in-out absolute top-5 right-5"
+			>
+				<ThemeToggle />
+			</div>
+		</div>
+	</body>
+</html>

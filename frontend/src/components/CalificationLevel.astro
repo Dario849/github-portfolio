@@ -1,0 +1,14 @@
+---
+// This component takes a "level" prop (1-5) and displays a corresponding number of filled squares (▰) and empty squares (▱) to visually represent the level of proficiency or rating.
+interface Props {
+	level: number;
+}
+
+const { level } = Astro.props;
+const maxLevel = 5; // Maximum level (e.g., 5)
+const DisplayLevel = '▰'.repeat(level) + '▱'.repeat(maxLevel - level);
+
+---
+<span>
+  {DisplayLevel}
+</span>

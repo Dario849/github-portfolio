@@ -6,12 +6,12 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "predeploy": "astro build",
-    "deploy": "gh-pages -d dist"
+    "dev": "pnpm --filter ** dev",
+    "build": "pnpm --filter ** build",
+    "preview": "pnpm --filter ** preview",
+    "astro": "pnpm --filter ** astro",
+    "predeploy": "pnpm --filter ** predeploy",
+    "deploy": "pnpm --filter ** deploy"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.2",
