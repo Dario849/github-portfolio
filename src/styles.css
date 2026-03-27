@@ -22,12 +22,35 @@ body {
 }
 
 .header {
+    display: grid;
+    grid-template-areas:
+        "ThemeSwitch . LangSelector"
+        "TitleHeader TitleHeader TitleHeader";
+    grid-template-columns: 1fr auto 1fr;
     background: linear-gradient(135deg, #2c3e50, #3498db);
     color: white;
     padding: 2rem 1rem;
     border-radius: 12px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.TitleHeader {
+    grid-area: TitleHeader;
+}
+
+.LangSelector {
+    grid-area: LangSelector;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#languageSelect {
+    padding: 0.3rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
 }
 
 .header h1 {
@@ -94,6 +117,16 @@ body {
 .footerQrCode {
     margin-top: 1rem;
 }
+.QrcodeDarkMode{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    width: 138px;
+    height: 138px;
+    border-radius: 5px;
+}
 
 @media (min-width: 768px) {
     .footerGrid {
@@ -154,8 +187,14 @@ li {
 }
 
 
-.importantListExpanded {
-    /* Hides all the nested elements inside ImportanteList and changes the arrow to point downwards */
+.importantListCollapsed:before {
+    content: "▸";
+    color: #3498db;
+    position: absolute;
+    left: 0;
+    
+}
+.importantListCollapsed {
     display: none;
 }
 
@@ -389,10 +428,12 @@ legend {
     font-size: 0.9rem;
     font-weight: 500;
 }
-#OpenAppGro{
 
-    cursor:not-allowed;
+#OpenAppGro {
+
+    cursor: not-allowed;
 }
+
 .projectLink {
     display: inline-flex;
     align-items: center;
@@ -420,10 +461,12 @@ a:focus,
 
 
 .themeSwitch {
+    grid-area: ThemeSwitch;
     position: relative;
     display: flex;
-    justify-content: center;
     direction: rtl;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 #themeCheckbox {
@@ -540,6 +583,10 @@ a:focus,
         transform: scale(0.99);
     }
 
+    .header {
+        display: block !important;
+    }
+
     .wrapper {
         display: grid !important;
         max-width: 100%;
@@ -596,6 +643,7 @@ a:focus,
 
     /* hide UI controls */
     #pdfWrapper,
+    .LangSelector,
     .themeSwitch,
     .btn,
     .BtnCopy {

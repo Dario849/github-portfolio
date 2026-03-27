@@ -8,6 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="/src/i18nextify.min.js" fallbacklng="es"></script>
     <link rel="stylesheet" href="./src/styles.css">
 </head>
 
@@ -36,14 +37,21 @@
                     </span>
                 </label>
             </div>
-
-            <h1>Rodriguez Dario Ezequiel</h1>
-            <p>Desarrollador Full Stack | Estudiante de Análisis de Sistemas</p>
+            <div class="LangSelector" id="LangContainer">
+                <select id="languageSelect" onchange="changeLanguage(this.value)">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div>
+                <h1>Rodriguez Dario Ezequiel</h1>
+                <p data-i18n="Encabezado">Desarrollador Full Stack | Estudiante de Análisis de Sistemas</p>
+            </div>
         </header>
 
         <article class="main">
-            <h2>Sobre Mí</h2>
-            <p>
+            <h2 data-i18n="About">Sobre Mí</h2>
+            <p data-i18n="Summary">
                 <strong>Resumen:</strong><br>
                 Mi nombre es Dario Rodriguez, nací el 08/12/2001. Mi formación en informática comenzó en la
                 secundaria, donde desarrollé habilidades técnicas en computación, resolviendo problemas de hardware y
@@ -54,16 +62,16 @@
                 diagramas de entidad-relación, flujo y Gantt. Desarrollé una plataforma web como proyecto de tesis,
                 aplicando conocimientos en diseño, implementación y despliegue. Me siento preparado y en búsqueda activa
                 de un entorno donde profesionalizarme, ya sea como soporte técnico o desarrollador.
-                <!-- Desarrollador con más de 7 años de formación en tecnología, comprometido con el aprendizaje
+                <!-- Desarrollador con más de 10 años de formación en tecnología, comprometido con el aprendizaje
                 continuo y la actualización en nuevas tendencias tecnológicas. Destaco por mi capacidad de
                 trabajo en equipo, comunicación efectiva y colaboración proactiva. -->
             </p>
             <br>
             <p>
-                <strong>Base técnica adquirida:</strong>
+                <strong data-i18n="SkillSection">Base técnica adquirida:</strong>
             </p>
             <ul>
-                <li class="importantList">Habilidades técnicas generales:
+                <li class="importantList" data-i18n="GeneralSkills">Habilidades técnicas generales:
                     <ul>
                         <li>Limpieza y mantenimiento de Computadoras de escritorio</li>
                         <li>Instalación y configuración de sistemas operativos</li>
@@ -72,7 +80,7 @@
                         <li>Habilidad para trabajar en equipo y comunicarse efectivamente</li>
                     </ul>
                 </li>
-                <li class="importantList">SOs, herramientas y entornos de trabajo:
+                <li class="importantList" data-i18n="WorkEnvironments">SOs, herramientas y entornos de trabajo:
                     <ul>
                         <li>VsCode</li>
                         <li>CMD (comandos de consola)</li>
@@ -85,7 +93,7 @@
                         <li>Uso de herramientas de coordinación y creación de tareas como Jira, Trello, etc..</li>
                     </ul>
                 </li>
-                <li class="importantList">Lenguajes:
+                <li class="importantList" data-i18n="ProgrammingLanguages">Lenguajes:
                     <ul>
                         <li>Python</li>
                         <li>PHP</li>
@@ -94,7 +102,7 @@
                         <li>CSS</li>
                     </ul>
                 </li>
-                <li class="importantList">Frameworks: <ul>
+                <li class="importantList" data-i18n="Frameworks">Frameworks: <ul>
                         <li>Astro <span class="progressBarForList">▰▰▱▱▱</span></li>
                         <li>React <span class="progressBarForList">▰▱▱▱▱</span></li>
                         <li>Vue.js <span class="progressBarForList">▰▰▱▱▱</span></li>
@@ -102,16 +110,16 @@
                         <li>Vite.js <span class="progressBarForList">▰▰▰▱▱</span></li>
                     </ul>
                 </li>
-                <li>Amplio conocimiento técnico en hardware y software, sistemas operativos, redes y virtualización</li>
-                <li>Fundamentos sólidos en programación estructurada y orientada a objetos</li>
-                <li>Conocimiento en Bases de Datos, diagramas de entidad relación y documentación</li>
-                <li>Conocimiento en análisis de sistemas, relevamientos, patrones de diseño, diagramas de proceso, etc..
+                <li data-i18n="ExtraTechnicalInfo0">Amplio conocimiento técnico en hardware y software, sistemas operativos, redes y virtualización</li>
+                <li data-i18n="ExtraTechnicalInfo1">Fundamentos sólidos en programación estructurada y orientada a objetos</li>
+                <li data-i18n="ExtraTechnicalInfo2">Conocimiento en Bases de Datos, diagramas de entidad relación y documentación</li>
+                <li data-i18n="ExtraTechnicalInfo3">Conocimiento en análisis de sistemas, relevamientos, patrones de diseño, diagramas de proceso, etc..
                 </li>
             </ul>
             <p>
-                <strong>Aspiraciones:</strong>
+                <strong data-i18n="Aspirations">Aspiraciones:</strong>
             </p>
-            <ul>
+            <ul data-i18n="AspirationsList">
                 <li>Expandir mis conocimientos en lenguajes de programación, frameworks, sistemas operativos (ej MacOS y
                     Linux), servidores y bases de datos</li>
                 <li>Colaborar con equipos de trabajo proactivos y aportar sustancialmente en proyectos</li>
@@ -119,23 +127,23 @@
                     organización</li>
             </ul>
             <p>
-                <strong>Localidad:</strong>
+                <strong data-i18n="Location">Localidad:</strong>
             </p>
-            <ul>
+            <ul data-i18n="LocationList">
                 <li>San Martín - Provincia de Buenos Aires - Argentina</li>
             </ul>
         </article>
 
         <aside class="aside aside1">
-            <h2>Estudios</h2>
+            <h2 data-i18n="Studies">Estudios</h2>
             <ul>
-                <li>
+                <li data-i18n="StudiesList0">
                     <strong>Tecnicatura secundaria en informática</strong><br>
                     <a href="https://eestn1.com.ar/#id__informatica" target="_blank" rel="noopener noreferrer">EESTN1 -
                         Tres de Febrero</a><br>
-                    <small>2017 - 2021 (4 años)</small>
+                    <small>2014 - 2021 (7 años)</small>
                 </li>
-                <li>
+                <li data-i18n="StudiesList1">
                     <strong>Tecnicatura superior en análisis de sistemas</strong><br>
                     <a href="https://maps.app.goo.gl/LFadpDCiGg5PPX9F6" target="_blank" rel="noopener noreferrer">ISTA -
                         Ramón Carrillo San Martín</a><br>
@@ -145,9 +153,9 @@
         </aside>
 
         <aside class="aside aside2">
-            <h2>Proyectos Destacados</h2>
+            <h2 data-i18n="Projects">Proyectos Destacados</h2>
             <div>
-                <fieldset>
+                <fieldset data-i18n="Project1">
                     <legend>Plataforma web administrativa</legend>
                     <p>Recopilación y manejo de datos para el área agrícola, control de usuarios, sesiones, y gráficos.
                     </p>
@@ -174,7 +182,7 @@
 
         <aside class="aside aside3">
             <div>
-                <fieldset>
+                <fieldset data-i18n="Languages">
                     <legend>Idiomas</legend>
                     <div class="skillTags">
                         <span class="skillTag">Español Nativo</span>
@@ -185,19 +193,18 @@
         </aside>
 
         <footer class="footer">
-            <h2 class="footerTitle">Contacto</h2>
+            <h2 class="footerTitle" data-i18n="Contact">Contacto</h2>
             <div class="footerGrid">
                 <div class="contactItem">
                     <strong>GitHub:</strong><br>
                     <span>https://github.com/Dario849</span><br>
-                    <a href="https://github.com/Dario849" target="_blank" class="btn" rel="noopener noreferrer">Ver
-                        Perfil</a>
+                    <a href="https://github.com/Dario849" target="_blank" class="btn" rel="noopener noreferrer" data-i18n="ViewProfile">Ver Perfil</a>
                 </div>
                 <div class="contactItem">
                     <strong>LinkedIn:</strong><br>
                     <span>https://www.linkedin.com/in/devdariorodriguez</span><br>
                     <a href="https://www.linkedin.com/in/devdariorodriguez" target="_blank" class="btn"
-                        rel="noopener noreferrer">Conectar</a>
+                        rel="noopener noreferrer" data-i18n="Connect">Conectar</a>
                 </div>
                 <div class="contactItem">
                     <strong>Email:</strong><br>
@@ -223,16 +230,16 @@
                     </div>
 
                     <br>
-                    <a href="mailto:dariorodriguez7810@gmail.com" class="btn">Enviar Email</a>
+                    <a href="mailto:dariorodriguez7810@gmail.com" class="btn" data-i18n="SendEmail">Enviar Email</a>
                 </div>
             </div>
         </footer>
         <div class="footerPdf" id="pdfWrapper">
-            <h2 class="footerTitle">Generar PDF</h2>
-            <button class="btn" id="btnPdf">Generar PDF</button>
+            <h2 class="footerTitle" data-i18n="GeneratePDF">Generar PDF</h2>
+            <button class="btn" id="btnPdf" data-i18n="GeneratePDF">Generar PDF</button>
         </div>
         <div class="footerLink" id="htmlLinkContainer">
-            <p>Para ver la versión html web: <a href="https://dario849.github.io/github-portfolio/" class="gitLink"
+            <p data-i18n="ViewHTMLVersion">Para ver la versión html web: <a href="https://dario849.github.io/github-portfolio/" class="gitLink"
                     target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="30"
                         height="30" viewBox="0 0 97 97">
                         <path fill="#24292f" fill-rule="evenodd"
