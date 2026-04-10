@@ -117,7 +117,8 @@ body {
 .footerQrCode {
     margin-top: 1rem;
 }
-.QrcodeDarkMode{
+
+.QrcodeDarkMode {
     position: relative;
     display: flex;
     justify-content: center;
@@ -192,8 +193,9 @@ li {
     color: #3498db;
     position: absolute;
     left: 0;
-    
+
 }
+
 .importantListCollapsed {
     display: none;
 }
@@ -348,6 +350,7 @@ legend {
             "main main"
             "aside1 aside1"
             "aside2 aside2"
+            "aside4 aside4"
             "aside3 aside3"
             "footer footer"
             "footerPdf footerPdf"
@@ -376,6 +379,10 @@ legend {
         grid-area: aside3;
     }
 
+    .aside4 {
+        grid-area: aside4;
+    }
+
     .footer {
         grid-area: footer;
         display: flex;
@@ -402,6 +409,7 @@ legend {
             "header header header"
             "main aside1 aside1"
             "main aside2 aside2"
+            "main aside4 aside4"
             "main aside3 aside3"
             "footer footer footer"
             "footerPdf footerLink footerQrCode";
@@ -596,6 +604,7 @@ a:focus,
             "header header header"
             "main aside1 aside1"
             "main aside2 aside2"
+            "main aside4 aside4"
             "main aside3 aside3"
             "footer footer footer"
             "footerLink footerQrCode footerQrCode";
@@ -623,6 +632,10 @@ a:focus,
 
     .aside3 {
         grid-area: aside3;
+    }
+
+    .aside4 {
+        grid-area: aside4;
     }
 
     .footer {

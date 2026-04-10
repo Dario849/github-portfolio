@@ -30,9 +30,9 @@ qrcodeElement.title = "Podes escanear este QR para ver la versión web \n desde 
 window.onbeforeprint = function () {
     const allExpanded = Array.from(ImportantLists).some(list => list.children[0].classList.contains('importantListCollapsed') === false);
     if (allExpanded) {
-        document.body.style.zoom = '0.59';
+        document.body.style.zoom = '0.57';
     } else {
-        document.body.style.zoom = '0.81';
+        document.body.style.zoom = '0.69';
     }
 };
 window.onafterprint = function () {
