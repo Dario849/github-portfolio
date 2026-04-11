@@ -1,2 +1,7 @@
 node_modules
 .vscode
+.agents/
+.copilot/
+.github/
+.env
+skills-lock.json

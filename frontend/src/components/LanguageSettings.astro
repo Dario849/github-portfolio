@@ -1,0 +1,84 @@
+---
+import { getPathForLanguage, type Language } from "../i18n/site";
+
+interface Props {
+  currentLanguage: Language;
+  caption: string;
+  ariaLabel: string;
+  englishLabel: string;
+  spanishLabel: string;
+}
+
+const { currentLanguage, caption, ariaLabel, englishLabel, spanishLabel } = Astro.props as Props;
+
+const options = [
+  { language: "en" as const, href: getPathForLanguage("en"), label: englishLabel },
+  { language: "es" as const, href: getPathForLanguage("es"), label: spanishLabel },
+];
+---
+
+<div
+  class="language-settings"
+  data-language-settings
+  data-current-language={currentLanguage}
+  data-language-path-en={getPathForLanguage("en")}
+  data-language-path-es={getPathForLanguage("es")}
+>
+  <span class="language-settings__caption">{caption}</span>
+  <nav aria-label={ariaLabel} class="language-settings__list">
+    {
+      options.map((option) => (
+        <a
+          class="language-settings__link"
+          href={option.href}
+          lang={option.language}
+          data-language-option={option.language}
+          aria-current={option.language === currentLanguage ? "page" : undefined}
+        >
+          {option.label}
+        </a>
+      ))
+    }
+  </nav>
+</div>
+
+<script is:inline>
+  const storageKey = "language";
+
+  document.querySelectorAll("[data-language-settings]").forEach((root) => {
+    if (!(root instanceof HTMLElement)) {
+      return;
+    }
+
+    const currentLanguage = root.dataset.currentLanguage;
+    const savedLanguage = window.localStorage.getItem(storageKey);
+    const currentPath = window.location.pathname || "/";
+    const spanishPath = root.dataset.languagePathEs ?? "/es/";
+
+    if (currentLanguage === "en" && currentPath === "/" && savedLanguage === "es") {
+      window.location.replace(spanishPath);
+      return;
+    }
+
+    if (currentLanguage) {
+      document.documentElement.lang = currentLanguage;
+      window.localStorage.setItem(storageKey, currentLanguage);
+    }
+
+    root.querySelectorAll("[data-language-option]").forEach((link) => {
+      if (!(link instanceof HTMLAnchorElement)) {
+        return;
+      }
+
+      const nextLanguage = link.dataset.languageOption;
+
+      if (!nextLanguage) {
+        return;
+      }
+
+      link.addEventListener("click", () => {
+        window.localStorage.setItem(storageKey, nextLanguage);
+      });
+    });
+  });
+</script>

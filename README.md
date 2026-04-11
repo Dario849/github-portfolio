@@ -1,126 +1,91 @@
-# 🛠️ Portfolio Website (Development Branch)
+# GitHub Portfolio
 
-This branch contains the active development of my personal portfolio, built with a modern, performance-focused stack.
-
-The goal of this project is to create a **high-quality developer portfolio** that demonstrates not only technical skills, but also **UI/UX awareness, performance optimization, and product thinking**.
-
----
-
-## 🚀 Tech Stack
-
-### Core
-- **Astro** — Static-first architecture with partial hydration
-- **TailwindCSS** — Utility-first styling for fast and consistent UI
-- **React** — For interactive components and dynamic UI
-
----
-
-## 🧩 Planned Features
-
-- ⚡ Fast, optimized performance (Astro-first approach)
-- 🎨 Clean and modern UI with strong visual hierarchy
-- 🌗 Dark / Light mode
-- 📱 Fully responsive design (mobile-first)
-- 🧠 Project case studies (problem → solution approach)
-- ✍️ Blog section (MDX-based)
-- 🔍 Project filtering system
-- 📊 Interactive components (charts / visualizations)
-- ✨ Subtle animations and micro-interactions
-
----
-
-## 📚 UI / Visualization / Interaction Libraries
-
-These are selected to enhance UX **without sacrificing performance**:
-
-### 🎨 UI & Components
-- **shadcn/ui** → Accessible, customizable components
-- **Radix UI** → Headless UI primitives (for modals, dropdowns, etc.)
-
----
-
-### 🎞️ Animations
-- **Framer Motion** → Smooth, declarative animations (React-based)
-- **Lenis** → Smooth scrolling experience (optional, subtle use)
-
----
-
-### 📊 Data Visualization
-- **Recharts** → Simple and clean charts (React-based)
-- **Chart.js** → Alternative for more customizable graphs
-
----
-
-### 🧠 3D / Advanced Visuals
-- **Three.js** → 3D rendering (only if meaningful)
-- **@react-three/fiber** → React renderer for Three.js
-- **Spline** → Lightweight 3D embeds
-
----
-
-### 🧰 Utilities
-- **clsx / classnames** → Conditional class handling
-- **tailwind-merge** → Merge Tailwind classes safely
-- **date-fns** → Date formatting
-
----
+Astro-based personal portfolio for **Darío**, built as an editorial single-page site with localized routes, theme settings, balanced display typography, and optimized placeholder media.
 
 
-### ✍️ Content
-- **MDX** → Blog posts and rich content inside Astro
+## Current implemented state
 
----
+The active app lives in `frontend/` and currently includes:
 
-## 📁 Project Structure
-```text
-+---public
-|   +---fonts
-|   \---icons
-\---src
-    +---assets
-    +---components
-    +---content
-    |   \---blog
-    +---layouts
-    +---pages
-    |   \---blog
-    \---styles
-```
+- a long-form portfolio homepage
+- English and Spanish routes: `/` and `/es/`
+- `i18next`-backed site copy in `frontend/src/i18n/site.ts`
+- a persisted language setting
+- a persisted light/dark theme toggle
+- Pretext-powered balanced hero and quote typography
+- hobby and project placeholder artwork optimized through Astro image handling
+- Tailwind CSS styling, including `tailwindcss-animated` entrance motion
 
----
+## Project structure
 
-## 🧪 Development Goals
+| Path | Purpose |
+| --- | --- |
+| `frontend/src/pages/index.astro` | English route |
+| `frontend/src/pages/es/index.astro` | Spanish route |
+| `frontend/src/components/PortfolioPage.astro` | Shared localized page template |
+| `frontend/src/i18n/site.ts` | Translation resources and language helpers |
+| `frontend/src/assets/placeholders/` | Local placeholder source images |
+| `frontend/src/styles/global.css` | Global visual system and custom classes |
 
-This project is not just where i will be building a portfolio, but where i will be practicing:
+## Tech stack
 
-- **Writing clean, maintainable code**
-- **Structuring a scalable frontend architecture**
-- **Applying UI/UX best practices**
-- **Optimizing for performance and accessibility**
+- **Astro 6**
+- **Tailwind CSS 4**
+- **tailwindcss-animated**
+- **i18next**
+- **@chenglou/pretext**
+- **Astro image pipeline / sharp**
+- **pnpm workspaces**
 
----
-## 🧭 Roadmap
-- **Setup Astro project**
-- **Configure TailwindCSS**
-- **Create base layout and design system**
-- **Build Home page**
-- **Build Projects section**
-- **Add blog with MDX**
-- **Implement dark mode**
-- **Add animations and polish UI**
-- **Optimize performance (Lighthouse)**
-## ⚙️ Stack build process
+## Development
+
+Install dependencies from the repo root:
 
 ```bash
-# Install dependencies
-npm install
-
-# start astro project
-npm create astro@latest
-
-# Add tailwind, react, etc.. to project
-npx astro add <integrationName>
-
-# Start development server
-npm run dev
+pnpm install
 ```
+
+Run the Astro app:
+
+```bash
+pnpm --filter frontend dev
+```
+  - Or just use in root directory: 
+    ```bash 
+    pnpm run dev
+    ```
+    (Shorthand for: `pnpm --filter ** dev`)
+
+Build the Astro app:
+
+```bash
+pnpm --filter frontend build
+```
+  - Or from the root directory:
+    ```bash
+    pnpm run build
+    ```
+    (Shorthand for: `pnpm --filter ** build`)
+Preview the production build:
+
+```bash
+pnpm --filter frontend preview
+```
+
+Run Astro checks:
+
+```bash
+pnpm --filter frontend astro check
+```
+
+## Deployment
+_Intended only for GitHub Pages_
+```bash
+pnpm run deploy
+```
+  - This is a root-level script that runs `pnpm --filter frontend deploy`, which in turn runs `gh-pages -d frontend/dist` to publish the built Astro output to the `gh-pages` branch.
+
+## Notes
+
+- The repository is a pnpm workspace, but `frontend/` is the only implemented application right now.
+- Placeholder images are stored locally so Astro can optimize them during build output.

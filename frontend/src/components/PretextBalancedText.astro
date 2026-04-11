@@ -1,0 +1,111 @@
+---
+interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+}
+
+const { as = "p", class: className } = Astro.props as Props;
+const Tag = as;
+---
+
+<Tag class:list={["pretext-balanced", className]} data-pretext-balanced style="max-inline-size: 100%;">
+  <slot />
+</Tag>
+
+<script>
+  import { measureLineStats, prepareWithSegments, type PreparedTextWithSegments } from "@chenglou/pretext";
+
+  const preparedCache = new Map<string, PreparedTextWithSegments>();
+
+  const getFont = (element: HTMLElement) => {
+    const styles = getComputedStyle(element);
+    const parts = [styles.fontStyle, styles.fontVariant, styles.fontWeight];
+
+    parts.push(styles.fontSize, styles.fontFamily);
+
+    return parts.join(" ");
+  };
+
+  const getPrepared = (text: string, font: string) => {
+    const cacheKey = `${font}::${text}`;
+    const cached = preparedCache.get(cacheKey);
+
+    if (cached) {
+      return cached;
+    }
+
+    const prepared = prepareWithSegments(text, font);
+    preparedCache.set(cacheKey, prepared);
+
+    return prepared;
+  };
+
+  const findBalancedWidth = (prepared: PreparedTextWithSegments, maxWidth: number) => {
+    const { lineCount, maxLineWidth } = measureLineStats(prepared, maxWidth);
+
+    if (lineCount <= 1) {
+      return Math.ceil(maxLineWidth);
+    }
+
+    let low = 1;
+    let high = maxWidth;
+
+    while (high - low > 0.5) {
+      const mid = (low + high) / 2;
+      const stats = measureLineStats(prepared, mid);
+
+      if (stats.lineCount <= lineCount) {
+        high = mid;
+      } else {
+        low = mid;
+      }
+    }
+
+    return Math.ceil(high);
+  };
+
+  const balanceElement = (element: HTMLElement) => {
+    const rawText = element.textContent?.replace(/\s+/g, " ").trim();
+    const availableWidth = element.parentElement?.clientWidth ?? element.clientWidth;
+
+    if (!rawText || !availableWidth) {
+      return;
+    }
+
+    const font = getFont(element);
+    const prepared = getPrepared(rawText, font);
+    const balancedWidth = findBalancedWidth(prepared, availableWidth);
+
+    element.style.maxInlineSize = `${Math.min(availableWidth, balancedWidth)}px`;
+  };
+
+  const connectElement = (element: HTMLElement) => {
+    if (element.dataset.pretextReady === "true") {
+      return;
+    }
+
+    element.dataset.pretextReady = "true";
+
+    const target = element.parentElement ?? element;
+    const observer = new ResizeObserver(() => {
+      balanceElement(element);
+    });
+
+    observer.observe(target);
+    balanceElement(element);
+  };
+
+  const initialize = () => {
+    document.querySelectorAll("[data-pretext-balanced]").forEach((element) => {
+      if (element instanceof HTMLElement) {
+        connectElement(element);
+      }
+    });
+  };
+
+  if ("fonts" in document) {
+    void document.fonts.ready.then(initialize);
+  } else {
+    initialize();
+  }
+</script>

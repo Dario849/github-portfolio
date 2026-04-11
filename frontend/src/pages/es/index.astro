@@ -1,0 +1,9 @@
+---
+import PortfolioPage from "../../components/PortfolioPage.astro";
+import { getSiteCopy, type Language } from "../../i18n/site";
+
+const language: Language = "es";
+const copy = await getSiteCopy(language);
+---
+
+<PortfolioPage language={language} copy={copy} />

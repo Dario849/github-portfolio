@@ -1,0 +1,487 @@
+---
+import { Image } from "astro:assets";
+import "../styles/global.css";
+import ChangeThemeButton from "./ChangeThemeButton.astro";
+import CalificationLevel from "./CalificationLevel.astro";
+import PretextBalancedText from "./PretextBalancedText.astro";
+import LanguageSettings from "./LanguageSettings.astro";
+import SectionRail from "./SectionRail.astro";
+import { hobbyPlaceholderImages, projectPlaceholderImages } from "../assets/placeholders";
+import { getDerivedSiteMetadata, getPathForLanguage, type Language, type SiteCopy } from "../i18n/site";
+
+interface Props {
+  language: Language;
+  copy: SiteCopy;
+}
+
+const { language, copy } = Astro.props as Props;
+const year = new Date().getFullYear();
+const footerEdition = copy.footer.edition.replace("{{year}}", String(year));
+const hobbyCards = copy.hobbies.items.map((item, index) => ({
+  ...item,
+  image: hobbyPlaceholderImages[index % hobbyPlaceholderImages.length],
+}));
+const projectCards = copy.projects.items.map((item, index) => ({
+  ...item,
+  image: projectPlaceholderImages[index % projectPlaceholderImages.length],
+}));
+const sectionRailItems = [
+  { href: "#section01", label: copy.about.section, title: copy.about.title },
+  { href: "#section02", label: copy.experience.section, title: copy.experience.title },
+  { href: "#section03", label: copy.rhythm.section, title: copy.rhythm.title },
+  { href: "#section04", label: copy.hobbies.section, title: copy.hobbies.title },
+  { href: "#section05", label: copy.activities.section, title: copy.activities.title },
+  { href: "#section06", label: copy.projects.section, title: copy.projects.title },
+  { href: "#section07", label: copy.aspirations.section, title: copy.aspirations.title },
+  { href: "#section08", label: copy.contact.section, title: copy.contact.title },
+];
+const primaryNavHrefs = ["#section01", "#section02", "#section03", "#section06", "#section07", "#section08"];
+const primaryNavItems = copy.header.navItems.map((item, index) => ({
+  ...item,
+  href: primaryNavHrefs[index] ?? item.href,
+}));
+const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const socialImageUrl = Astro.site ? new URL(projectPlaceholderImages[0].src, Astro.site).href : undefined;
+const pageMetadata = getDerivedSiteMetadata(copy, language, pageUrl, socialImageUrl);
+const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
+---
+
+<html lang={language}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageMetadata.title}</title>
+    <meta name="description" content={pageMetadata.description} />
+    <meta name="keywords" content={pageMetadata.keywords} />
+    <meta name="author" content={pageMetadata.author} />
+    <meta name="creator" content={pageMetadata.creator} />
+    <meta name="subject" content={copy.hero.identity} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta property="og:title" content={pageMetadata.title} />
+    <meta property="og:description" content={pageMetadata.description} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:locale" content={pageMetadata.locale} />
+    <meta property="og:site_name" content={pageMetadata.siteName} />
+    {pageUrl && <meta property="og:url" content={pageUrl} />}
+    {socialImageUrl && <meta property="og:image" content={socialImageUrl} />}
+    {socialImageUrl && (
+      <meta
+        property="og:image:alt"
+        content={`${copy.projects.visualLabel}: ${copy.projects.items[0]?.name ?? copy.projects.title}`}
+      />
+    )}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageMetadata.title} />
+    <meta name="twitter:description" content={pageMetadata.description} />
+    {socialImageUrl && <meta name="twitter:image" content={socialImageUrl} />}
+    <meta name="ai:summary" content={pageMetadata.aiSummary} />
+    {pageUrl && <link rel="canonical" href={pageUrl} />}
+    <link rel="alternate" hreflang="en" href={getPathForLanguage("en")} />
+    <link rel="alternate" hreflang="es" href={getPathForLanguage("es")} />
+    <link rel="alternate" hreflang="x-default" href={getPathForLanguage("en")} />
+    <script is:inline type="application/ld+json" set:html={structuredDataJson}></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header sticky top-0 z-40 px-4 pt-4 md:px-6">
+        <div
+          class="site-header__inner paper-card mx-auto flex max-w-7xl flex-col gap-4 rounded-3xl px-5 py-4 md:flex-row md:items-center md:justify-between md:px-6"
+        >
+          <div class="flex items-center gap-3">
+            <span class="eyebrow">{copy.header.eyebrow}</span>
+            <p class="hidden text-sm tracking-[0.18em] text-(--muted) uppercase lg:block">
+              {copy.header.subtitle}
+            </p>
+          </div>
+
+          <nav aria-label={copy.header.primaryNavAriaLabel} class="flex flex-wrap items-center gap-1.5">
+            {
+              primaryNavItems.map((item) => (
+                <a class="nav-chip" href={item.href}>
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+
+          <div class="toolbar-controls">
+            <LanguageSettings
+              currentLanguage={language}
+              caption={copy.languageSettings.caption}
+              ariaLabel={copy.languageSettings.ariaLabel}
+              englishLabel={copy.languageSettings.englishLabel}
+              spanishLabel={copy.languageSettings.spanishLabel}
+            />
+            <ChangeThemeButton
+              title={copy.themeToggle.title}
+              ariaLabel={copy.themeToggle.ariaLabel}
+              caption={copy.themeToggle.caption}
+
+            />
+          </div>
+        </div>
+        <SectionRail
+          items={sectionRailItems}
+          ariaLabel={copy.sectionRail.ariaLabel}
+          mobileLabel={copy.sectionRail.mobileLabel}
+        />
+      </header>
+
+      <main class="site-content mx-auto flex max-w-7xl flex-col gap-8 px-4 pb-14 pt-6 md:px-6 md:pb-20 md:pt-8">
+        <section class="hero-layout">
+          <div class="paper-card-strong hero-panel rounded-4xl px-6 py-8 md:px-10 md:py-10">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="eyebrow">{copy.hero.eyebrow}</span>
+              <p class="subtle-label">{copy.hero.status}</p>
+            </div>
+
+            <div class="mt-8 max-w-4xl">
+              <p class="subtle-label text-(--accent)">{copy.hero.identity}</p>
+
+              <PretextBalancedText
+                as="h1"
+                class="hero-title display-face mt-4 text-[clamp(3.2rem,8vw,7rem)] leading-[0.94] tracking-[-0.05em] text-(--ink)"
+              >
+                <span class="hero-title__segment hero-title__segment--start">
+                  {copy.hero.title.start}
+                </span>
+                {" "}
+                <span class="hero-title__segment hero-title__segment--highlight scribble relative inline-block">
+                  {copy.hero.title.highlight}
+                </span>
+                {" "}
+                <span class="hero-title__segment hero-title__segment--end">
+                  {copy.hero.title.end}
+                </span>
+              </PretextBalancedText>
+
+              <p class="mt-6 max-w-2xl text-base leading-8 text-(--muted) md:text-lg">
+                {copy.hero.bio}
+              </p>
+            </div>
+
+            <div class="hero-actions mt-8">
+              <a href="#section06" class="button-primary">
+                {copy.hero.primaryCta}
+              </a>
+              <a href="#section08" class="button-secondary">
+                {copy.hero.secondaryCta}
+              </a>
+            </div>
+
+            <div class="marker-line mt-8"></div>
+
+            <div class="mt-8 grid gap-4 md:grid-cols-3">
+              {
+                copy.hero.quickFacts.map((fact) => (
+                  <article class="paper-card detail-card rounded-[1.25rem] p-5">
+                    <p class="subtle-label">{fact.label}</p>
+                    <p class="mt-3 text-lg leading-7 text-(--ink)">{fact.value}</p>
+                  </article>
+                ))
+              }
+            </div>
+          </div>
+
+          <aside class="section-grid">
+            <section class="paper-card rounded-3xl p-6">
+              <p class="subtle-label">{copy.snapshot.eyebrow}</p>
+              <h2 class="section-title mt-3 text-(--ink)">{copy.snapshot.title}</h2>
+              <ul class="mt-5 space-y-3">
+                {
+                  copy.snapshot.items.map((item) => (
+                    <li class="paper-card detail-card rounded-2xl p-4">
+                      <p class="subtle-label">{item.label}</p>
+                      <p class="mt-2 text-base leading-7 text-(--ink)">{item.value}</p>
+                    </li>
+                  ))
+                }
+              </ul>
+            </section>
+
+            <section class="paper-card rounded-3xl p-6">
+              <p class="subtle-label">{copy.prompt.eyebrow}</p>
+              <PretextBalancedText
+                as="blockquote"
+                class="mt-4 display-face text-[1.7rem] leading-tight text-(--ink)"
+              >
+                {copy.prompt.quote}
+              </PretextBalancedText>
+            </section>
+          </aside>
+        </section>
+
+        <section
+          id="section01"
+          class="section-target deferred-section grid gap-6 lg:grid-cols-[0.95fr_1.05fr] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+        >
+          <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+            <p class="subtle-label">{copy.about.section}</p>
+            <h2 class="section-title mt-3">{copy.about.title}</h2>
+            <p class="section-copy mt-5">{copy.about.summary}</p>
+          </div>
+
+          <div class="card-grid">
+            {
+              copy.about.cards.map((card) => (
+                <article class="paper-card detail-card rounded-[1.25rem] p-5">
+                  <p class="subtle-label">{card.title}</p>
+                  <p class="mt-3 text-base leading-7 text-(--ink)">{card.description}</p>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section
+          id="section02"
+          class="section-target deferred-section paper-card-strong section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+        >
+          <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p class="subtle-label">{copy.experience.section}</p>
+              <h2 class="section-title mt-3">{copy.experience.title}</h2>
+            </div>
+            <a href="#section08" class="section-anchor text-sm font-semibold tracking-[0.18em] uppercase">
+              {copy.experience.cta}
+            </a>
+          </div>
+
+          <div class="mt-8 space-y-4">
+            {
+              copy.experience.items.map((item) => (
+                <article class="paper-card detail-card rounded-[1.35rem] p-5 md:p-6">
+                  <div class="grid gap-5 md:grid-cols-[0.28fr_0.72fr]">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <span class="timeline-dot"></span>
+                        <p class="subtle-label">{item.period}</p>
+                      </div>
+                      <p class="mt-4 text-lg font-semibold text-(--ink)">{item.company}</p>
+                    </div>
+
+                    <div>
+                      <h3 class="display-face text-[2rem] leading-tight text-(--ink)">{item.role}</h3>
+                      <p class="mt-4 text-base leading-8 text-(--muted)">{item.summary}</p>
+
+                      <ul class="mt-5 grid gap-3 md:grid-cols-2">
+                        {item.wins.map((win) => (
+                          <li class="experience-note rounded-2xl p-4 text-sm leading-7 text-(--ink)">
+                            {win}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section
+          id="section03"
+          class="section-target deferred-section grid gap-6 lg:grid-cols-[0.95fr_1.05fr] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+        >
+          <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+            <p class="subtle-label">{copy.rhythm.section}</p>
+            <h2 class="section-title mt-3">{copy.rhythm.title}</h2>
+            <p class="section-copy mt-5">{copy.rhythm.summary}</p>
+            <div class="marker-line mt-7"></div>
+            <p class="mt-7 text-base leading-8 text-(--ink)">
+              {copy.rhythm.currentFocus.intro} <strong>{copy.rhythm.currentFocus.focus}</strong>,
+              {` ${copy.rhythm.currentFocus.middle} `}
+              <strong>{copy.rhythm.currentFocus.balance}</strong>
+              {` ${copy.rhythm.currentFocus.end} `}
+              <strong>{copy.rhythm.currentFocus.learning}</strong>.
+            </p>
+          </div>
+
+          <div class="card-grid">
+            {
+              copy.rhythm.items.map((item) => (
+                <article class="paper-card detail-card rounded-[1.25rem] p-5">
+                  <p class="subtle-label">{item.label}</p>
+                  <div class="mt-3 text-lg tracking-[0.24em] text-(--accent)">
+                    <CalificationLevel level={item.level} />
+                  </div>
+                  <p class="mt-4 text-sm leading-7 text-(--ink)">{item.detail}</p>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="deferred-section grid gap-6 lg:grid-cols-2">
+          <section id="section04" class="section-target paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+            <p class="subtle-label">{copy.hobbies.section}</p>
+            <h2 class="section-title mt-3">{copy.hobbies.title}</h2>
+            <div class="mt-7 grid gap-4">
+              {
+                hobbyCards.map((item, index) => (
+                  <article
+                    class="paper-card media-card rounded-[1.35rem] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+                    style={`animation-delay: ${index * 90}ms;`}
+                  >
+                    <div class="media-card__image">
+                      <Image
+                        src={item.image}
+                        alt={`${copy.hobbies.visualLabel}: ${item.title}`}
+                        class="h-full w-full object-cover"
+                        widths={[480, 720, 960]}
+                        sizes="(min-width: 1024px) 30vw, 100vw"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div class="media-card__body">
+                      <p class="subtle-label">{copy.hobbies.section}</p>
+                      <h3 class="display-face mt-2 text-[1.8rem] leading-tight text-(--ink)">{item.title}</h3>
+                      <p class="mt-3 text-sm leading-7 text-(--muted)">{item.description}</p>
+                    </div>
+                  </article>
+                ))
+              }
+            </div>
+          </section>
+
+          <section id="section05" class="section-target paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+            <p class="subtle-label">{copy.activities.section}</p>
+            <h2 class="section-title mt-3">{copy.activities.title}</h2>
+            <div class="mt-7 grid gap-4">
+              {
+                copy.activities.items.map((item) => (
+                  <article class="paper-card detail-card rounded-[1.25rem] p-5">
+                    <p class="subtle-label">{copy.activities.section}</p>
+                    <h3 class="display-face mt-2 text-[1.8rem] leading-tight text-(--ink)">{item.title}</h3>
+                    <p class="mt-3 text-sm leading-7 text-(--muted)">{item.description}</p>
+                  </article>
+                ))
+              }
+            </div>
+          </section>
+        </section>
+
+        <section
+          id="section06"
+          class="section-target deferred-section paper-card-strong section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+        >
+          <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p class="subtle-label">{copy.projects.section}</p>
+              <h2 class="section-title mt-3">{copy.projects.title}</h2>
+            </div>
+            <p class="max-w-xl text-sm leading-7 text-(--muted)">{copy.projects.summary}</p>
+          </div>
+
+          <div class="mt-8 grid gap-4 xl:grid-cols-3">
+            {
+              projectCards.map((project, index) => (
+                <article
+                  class="paper-card media-card rounded-[1.4rem] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+                  style={`animation-delay: ${index * 100}ms;`}
+                >
+                  <div class="media-card__image media-card__image--project">
+                    <Image
+                      src={project.image}
+                      alt={`${copy.projects.visualLabel}: ${project.name}`}
+                      class="h-full w-full object-cover"
+                      widths={[480, 768, 1024, 1280]}
+                      sizes="(min-width: 1280px) 28vw, (min-width: 768px) 45vw, 100vw"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+
+                  <div class="media-card__body">
+                    <div class="project-meta">
+                      <span class="meta-pill">{project.type}</span>
+                      <span class="meta-pill">{project.stack}</span>
+                    </div>
+                    <h3 class="display-face mt-4 text-[2rem] leading-tight text-(--ink)">{project.name}</h3>
+                    <p class="mt-3 text-sm leading-7 text-(--muted)">{project.description}</p>
+
+                    <div class="marker-line mt-5"></div>
+
+                    <p class="mt-5 text-sm leading-7 text-(--ink)">
+                      <span class="subtle-label text-(--accent)">{copy.projects.outcomeLabel}</span>
+                      <br />
+                      {project.outcome}
+                    </p>
+
+                    <a href={project.href} class="project-link">
+                      {copy.projects.linkLabel}
+                    </a>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section
+          id="section07"
+          class="section-target deferred-section grid gap-6 lg:grid-cols-[1.05fr_0.95fr] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+        >
+          <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+            <p class="subtle-label">{copy.aspirations.section}</p>
+            <h2 class="section-title mt-3">{copy.aspirations.title}</h2>
+            <p class="section-copy mt-5">{copy.aspirations.summary}</p>
+          </div>
+
+          <div class="grid gap-4">
+            {
+              copy.aspirations.items.map((item, index) => (
+                <article class="paper-card detail-card rounded-[1.25rem] p-5">
+                  <p class="subtle-label">
+                    {copy.aspirations.goalLabel} {index + 1}
+                  </p>
+                  <p class="mt-3 text-base leading-7 text-(--ink)">{item}</p>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section
+          id="section08"
+          class="section-target deferred-section paper-card-strong section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+        >
+          <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+            <div>
+              <p class="subtle-label">{copy.contact.section}</p>
+              <h2 class="section-title mt-3">{copy.contact.title}</h2>
+              <p class="section-copy mt-5">{copy.contact.summary}</p>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-2">
+              {
+                copy.contact.items.map((item) => (
+                  <a href={item.href} class="paper-card detail-card rounded-[1.25rem] p-5">
+                    <p class="subtle-label">{item.label}</p>
+                    <p class="mt-3 text-base leading-7 text-(--ink)">{item.value}</p>
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="px-4 pb-8 md:px-6 md:pb-10">
+        <div
+          class="site-footer__inner paper-card mx-auto flex max-w-7xl flex-col gap-3 rounded-[1.25rem] px-5 py-4 text-sm text-(--muted) md:flex-row md:items-center md:justify-between"
+        >
+          <p>{copy.footer.identity}</p>
+          <p>{footerEdition}</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

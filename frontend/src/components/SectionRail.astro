@@ -1,0 +1,167 @@
+---
+interface SectionRailItem {
+  href: string;
+  label: string;
+  title: string;
+}
+
+interface Props {
+  items: SectionRailItem[];
+  ariaLabel: string;
+  mobileLabel: string;
+}
+
+const { items, ariaLabel, mobileLabel } = Astro.props as Props;
+const totalItems = Math.max(items.length - 1, 1);
+---
+
+<aside class="section-rail-shell" data-section-rail-root>
+  <nav aria-label={mobileLabel} class="section-rail-mobile">
+    {
+      items.map((item) => (
+        <a class="section-rail-mobile__link" href={item.href} data-section-link={item.href}>
+          <span>{item.label}</span>
+        </a>
+      ))
+    }
+  </nav>
+
+  <nav aria-label={ariaLabel} class="section-rail">
+    <div class="section-rail__track">
+      <div class="section-rail__progress" data-section-progress aria-hidden="true"></div>
+      <ol class="section-rail__list">
+        {
+          items.map((item, index) => (
+            <li class="section-rail__item" style={`--section-position:${index / totalItems};`}>
+              <a class="section-rail__link" href={item.href} data-section-link={item.href}>
+                <span class="section-rail__marker" aria-hidden="true"></span>
+                <span class="section-rail__tooltip">
+                  <span class="section-rail__label">{item.label}</span>
+                  <span class="section-rail__title">{item.title}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </nav>
+</aside>
+
+<script>
+  const railRoots = document.querySelectorAll("[data-section-rail-root]");
+
+  railRoots.forEach((root) => {
+    if (!(root instanceof HTMLElement)) {
+      return;
+    }
+
+    const links = Array.from(root.querySelectorAll("[data-section-link]")).filter(
+      (link): link is HTMLAnchorElement => link instanceof HTMLAnchorElement,
+    );
+    const progress = root.querySelector("[data-section-progress]");
+    const sections = links
+      .map((link) => {
+        const href = link.dataset.sectionLink;
+        const sectionId = href?.startsWith("#") ? href.slice(1) : undefined;
+
+        if (!sectionId) {
+          return null;
+        }
+
+        const section = document.getElementById(sectionId);
+
+        if (!(section instanceof HTMLElement)) {
+          return null;
+        }
+
+        return { href, sectionId, section };
+      })
+      .filter((entry): entry is { href: string; sectionId: string; section: HTMLElement } => Boolean(entry));
+
+    if (sections.length === 0) {
+      return;
+    }
+
+    let metrics = sections.map(({ href, sectionId, section }) => ({
+      href,
+      sectionId,
+      top: section.offsetTop,
+      bottom: section.offsetTop + section.offsetHeight,
+    }));
+
+    const syncActiveState = (sectionId: string) => {
+      links.forEach((link) => {
+        if (link.dataset.sectionLink === `#${sectionId}`) {
+          link.setAttribute("aria-current", "location");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+    };
+
+    const updateMetrics = () => {
+      metrics = sections.map(({ href, sectionId, section }) => ({
+        href,
+        sectionId,
+        top: section.offsetTop,
+        bottom: section.offsetTop + section.offsetHeight,
+      }));
+    };
+
+    const updateState = () => {
+      const header = document.querySelector(".site-header__inner");
+      const headerOffset = header instanceof HTMLElement ? header.offsetHeight + 200 : 140;
+      const scrollAnchor = window.scrollY + headerOffset;
+
+      let active = metrics[0];
+
+      for (const metric of metrics) {
+        if (scrollAnchor >= metric.top) {
+          active = metric;
+        } else {
+          break;
+        }
+      }
+
+      syncActiveState(active.sectionId);
+
+      if (progress instanceof HTMLElement) {
+        const start = metrics[0].top;
+        const end = Math.max(metrics[metrics.length - 1].bottom - window.innerHeight * 0.62, start + 1);
+        const rawProgress = (scrollAnchor - start) / (end - start);
+        const clampedProgress = Math.min(Math.max(rawProgress, 0), 1);
+        progress.style.setProperty("--rail-progress", clampedProgress.toFixed(4));
+      }
+    };
+
+    let frame = 0;
+
+    const requestUpdate = () => {
+      if (frame) {
+        return;
+      }
+
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        updateState();
+      });
+    };
+
+    updateMetrics();
+    updateState();
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateMetrics();
+      updateState();
+    });
+
+    sections.forEach(({ section }) => resizeObserver.observe(section));
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", () => {
+      updateMetrics();
+      requestUpdate();
+    });
+  });
+</script>
