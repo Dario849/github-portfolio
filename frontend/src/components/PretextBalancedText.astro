@@ -2,13 +2,19 @@
 interface Props {
   as?: keyof HTMLElementTagNameMap;
   class?: string;
+  [key: string]: unknown;
 }
 
-const { as = "p", class: className } = Astro.props as Props;
+const { as = "p", class: className, ...rest } = Astro.props as Props;
 const Tag = as;
 ---
 
-<Tag class:list={["pretext-balanced", className]} data-pretext-balanced style="max-inline-size: 100%;">
+<Tag
+  {...rest}
+  class:list={["pretext-balanced", className]}
+  data-pretext-balanced
+  style="max-inline-size: 100%;"
+>
   <slot />
 </Tag>
 

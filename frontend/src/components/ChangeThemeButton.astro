@@ -1,6 +1,6 @@
 ---
-import SunIcon from "../../public/Icons/SunIcon.astro";
-import MoonIcon from "../../public/Icons/MoonIcon.astro";
+import IconSun from "../../public/Icons/IconSun.astro";
+import IconMoon from "../../public/Icons/IconMoon.astro";
 interface Props {
   title?: string;
   ariaLabel?: string;
@@ -28,8 +28,8 @@ const {
     aria-label={ariaLabel}
     class="theme-toggle__track"
   >
-    <span class="theme-toggle__text theme-toggle__text--light"><SunIcon /></span>
-    <span class="theme-toggle__text theme-toggle__text--dark"><MoonIcon /></span>
+    <span class="theme-toggle__text theme-toggle__text--light"><IconSun /></span>
+    <span class="theme-toggle__text theme-toggle__text--dark"><IconMoon /></span>
     <span class="theme-toggle__thumb"></span>
   </div>
 </label>

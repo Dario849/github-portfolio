@@ -6,8 +6,23 @@ import CalificationLevel from "./CalificationLevel.astro";
 import PretextBalancedText from "./PretextBalancedText.astro";
 import LanguageSettings from "./LanguageSettings.astro";
 import SectionRail from "./SectionRail.astro";
-import { hobbyPlaceholderImages, projectPlaceholderImages } from "../assets/placeholders";
-import { getDerivedSiteMetadata, getPathForLanguage, type Language, type SiteCopy } from "../i18n/site";
+import {
+  hobbyPlaceholderImages,
+  projectPlaceholderImages,
+} from "../assets/placeholders";
+import {
+  getDerivedSiteMetadata,
+  getPathForLanguage,
+  type Language,
+  type SiteCopy,
+} from "../i18n/site";
+import IconLink from "../../public/Icons/IconLink.astro";
+import IconGitHub from "../../public/Icons/IconGitHub.astro";
+import IconEmail from "../../public/Icons/IconEmail.astro";
+import IconLinkedIn from "../../public/Icons/IconLinkedIn.astro";
+import IconWebsite from "../../public/Icons/IconWebsite.astro";
+
+type ContactType = "email" | "github" | "linkedin" | "website";
 
 interface Props {
   language: Language;
@@ -15,8 +30,13 @@ interface Props {
 }
 
 const { language, copy } = Astro.props as Props;
-const year = new Date().getFullYear();
-const footerEdition = copy.footer.edition.replace("{{year}}", String(year));
+const date = new Date(2026, 3, 12).toLocaleDateString("es-ES", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
+const ShowTime = new Date().toLocaleTimeString([], { hour12: false });
+const footerEdition = copy.footer.edition.replace("{{date}}", String(date));
 const hobbyCards = copy.hobbies.items.map((item, index) => ({
   ...item,
   image: hobbyPlaceholderImages[index % hobbyPlaceholderImages.length],
@@ -25,25 +45,123 @@ const projectCards = copy.projects.items.map((item, index) => ({
   ...item,
   image: projectPlaceholderImages[index % projectPlaceholderImages.length],
 }));
+
+const getContactType = (href: string): ContactType => {
+  const normalizedHref = href.toLowerCase();
+
+  if (normalizedHref.startsWith("mailto:")) {
+    return "email";
+  }
+
+  if (normalizedHref.includes("github.com")) {
+    return "github";
+  }
+
+  if (normalizedHref.includes("linkedin.com")) {
+    return "linkedin";
+  }
+
+  return "website";
+};
+
+const contactItems = copy.contact.items.map((item) => ({
+  ...item,
+  type: getContactType(item.href),
+}));
+
 const sectionRailItems = [
   { href: "#section01", label: copy.about.section, title: copy.about.title },
-  { href: "#section02", label: copy.experience.section, title: copy.experience.title },
+  {
+    href: "#section02",
+    label: copy.experience.section,
+    title: copy.experience.title,
+  },
   { href: "#section03", label: copy.rhythm.section, title: copy.rhythm.title },
-  { href: "#section04", label: copy.hobbies.section, title: copy.hobbies.title },
-  { href: "#section05", label: copy.activities.section, title: copy.activities.title },
-  { href: "#section06", label: copy.projects.section, title: copy.projects.title },
-  { href: "#section07", label: copy.aspirations.section, title: copy.aspirations.title },
-  { href: "#section08", label: copy.contact.section, title: copy.contact.title },
+  {
+    href: "#section04",
+    label: copy.hobbies.section,
+    title: copy.hobbies.title,
+  },
+  {
+    href: "#section05",
+    label: copy.activities.section,
+    title: copy.activities.title,
+  },
+  {
+    href: "#section06",
+    label: copy.projects.section,
+    title: copy.projects.title,
+  },
+  {
+    href: "#section07",
+    label: copy.aspirations.section,
+    title: copy.aspirations.title,
+  },
+  {
+    href: "#section08",
+    label: copy.contact.section,
+    title: copy.contact.title,
+  },
 ];
-const primaryNavHrefs = ["#section01", "#section02", "#section03", "#section06", "#section07", "#section08"];
+const primaryNavHrefs = [
+  "#section01",
+  "#section02",
+  "#section03",
+  "#section06",
+  "#section07",
+  "#section08",
+];
 const primaryNavItems = copy.header.navItems.map((item, index) => ({
   ...item,
   href: primaryNavHrefs[index] ?? item.href,
 }));
-const pageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
-const socialImageUrl = Astro.site ? new URL(projectPlaceholderImages[0].src, Astro.site).href : undefined;
-const pageMetadata = getDerivedSiteMetadata(copy, language, pageUrl, socialImageUrl);
+const pageUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : undefined;
+const socialImageUrl = Astro.site
+  ? new URL(projectPlaceholderImages[0].src, Astro.site).href
+  : undefined;
+const alternateLinks = {
+  en: Astro.site
+    ? new URL(getPathForLanguage("en"), Astro.site).href
+    : getPathForLanguage("en"),
+  es: Astro.site
+    ? new URL(getPathForLanguage("es"), Astro.site).href
+    : getPathForLanguage("es"),
+};
+const profileLinks = contactItems
+  .map((item) => item.href)
+  .filter((href) => href.startsWith("http://") || href.startsWith("https://"));
+const pageMetadata = getDerivedSiteMetadata(
+  copy,
+  language,
+  pageUrl,
+  socialImageUrl,
+);
 const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
+const galleryOpenLabel =
+  language === "es" ? "Abrir imagen ampliada" : "Open expanded image";
+const galleryDialogTitle =
+  language === "es" ? "Vista ampliada" : "Expanded view";
+const galleryCloseLabel = language === "es" ? "Cerrar" : "Close";
+const imageGalleryStructuredDataJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  name: `${copy.projects.title} & ${copy.hobbies.title}`,
+  inLanguage: language,
+  ...(pageUrl ? { url: pageUrl } : {}),
+  associatedMedia: [...hobbyCards, ...projectCards].map((item) => {
+    const caption = "name" in item ? item.name : item.title;
+
+    return {
+      "@type": "ImageObject",
+      contentUrl: Astro.site
+        ? new URL(item.image.src, Astro.site).href
+        : item.image.src,
+      description: caption,
+    };
+  }),
+});
 ---
 
 <html lang={language}>
@@ -59,9 +177,29 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
     <meta name="author" content={pageMetadata.author} />
     <meta name="creator" content={pageMetadata.creator} />
     <meta name="subject" content={copy.hero.identity} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="language" content={language} />
+    <meta
+      name="theme-color"
+      content="#f6f2eb"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0f1115"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta
+      name="googlebot"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta
+      name="bingbot"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta property="og:title" content={pageMetadata.title} />
     <meta property="og:description" content={pageMetadata.description} />
@@ -70,24 +208,50 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
     <meta property="og:site_name" content={pageMetadata.siteName} />
     {pageUrl && <meta property="og:url" content={pageUrl} />}
     {socialImageUrl && <meta property="og:image" content={socialImageUrl} />}
-    {socialImageUrl && (
-      <meta
-        property="og:image:alt"
-        content={`${copy.projects.visualLabel}: ${copy.projects.items[0]?.name ?? copy.projects.title}`}
-      />
-    )}
+    {
+      socialImageUrl && (
+        <meta
+          property="og:image:alt"
+          content={`${copy.projects.visualLabel}: ${copy.projects.items[0]?.name ?? copy.projects.title}`}
+        />
+      )
+    }
+    {socialImageUrl && <meta property="og:image:width" content="1280" />}
+    {socialImageUrl && <meta property="og:image:height" content="720" />}
+    {socialImageUrl && <meta property="og:image:type" content="image/webp" />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageMetadata.title} />
     <meta name="twitter:description" content={pageMetadata.description} />
+    <meta name="twitter:site" content="@dario849" />
+    <meta name="twitter:creator" content="@dario849" />
     {socialImageUrl && <meta name="twitter:image" content={socialImageUrl} />}
+    {
+      socialImageUrl && copy.projects.items[0] && (
+        <meta
+          name="twitter:image:alt"
+          content={`${copy.projects.visualLabel}: ${copy.projects.items[0].name}`}
+        />
+      )
+    }
     <meta name="ai:summary" content={pageMetadata.aiSummary} />
     {pageUrl && <link rel="canonical" href={pageUrl} />}
-    <link rel="alternate" hreflang="en" href={getPathForLanguage("en")} />
-    <link rel="alternate" hreflang="es" href={getPathForLanguage("es")} />
-    <link rel="alternate" hreflang="x-default" href={getPathForLanguage("en")} />
-    <script is:inline type="application/ld+json" set:html={structuredDataJson}></script>
+    <link rel="alternate" hreflang="en" href={alternateLinks.en} />
+    <link rel="alternate" hreflang="es" href={alternateLinks.es} />
+    <link rel="alternate" hreflang="x-default" href={alternateLinks.en} />
+    {profileLinks.map((href) => <link rel="me" href={href} />)}
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={structuredDataJson}
+    />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={imageGalleryStructuredDataJson}
+    />
   </head>
   <body>
+    <div class="Cursor_Background-Orb"></div>
     <div class="site-shell">
       <header class="site-header sticky top-0 z-40 px-4 pt-4 md:px-6">
         <div
@@ -95,15 +259,20 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
         >
           <div class="flex items-center gap-3">
             <span class="eyebrow">{copy.header.eyebrow}</span>
-            <p class="hidden text-sm tracking-[0.18em] text-(--muted) uppercase lg:block">
+            <p
+              class="hidden text-sm tracking-[0.18em] text-(--muted) uppercase lg:block"
+            >
               {copy.header.subtitle}
             </p>
           </div>
 
-          <nav aria-label={copy.header.primaryNavAriaLabel} class="flex flex-wrap items-center gap-1.5">
+          <nav
+            aria-label={copy.header.primaryNavAriaLabel}
+            class="flex flex-wrap items-center gap-1.5"
+          >
             {
               primaryNavItems.map((item) => (
-                <a class="nav-chip" href={item.href}>
+                <a class="nav-chip will-change-transform" href={item.href}>
                   {item.label}
                 </a>
               ))
@@ -122,7 +291,6 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
               title={copy.themeToggle.title}
               ariaLabel={copy.themeToggle.ariaLabel}
               caption={copy.themeToggle.caption}
-
             />
           </div>
         </div>
@@ -133,12 +301,18 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
         />
       </header>
 
-      <main class="site-content mx-auto flex max-w-7xl flex-col gap-8 px-4 pb-14 pt-6 md:px-6 md:pb-20 md:pt-8">
+      <main
+        class="site-content mx-auto flex max-w-7xl flex-col gap-8 px-4 pb-14 pt-6 md:px-6 md:pb-20 md:pt-8"
+      >
         <section class="hero-layout">
-          <div class="paper-card-strong hero-panel rounded-4xl px-6 py-8 md:px-10 md:py-10">
+          <div
+            class="paper-card-strong hero-panel rounded-4xl px-6 py-8 md:px-10 md:py-10"
+          >
             <div class="flex flex-wrap items-center gap-3">
               <span class="eyebrow">{copy.hero.eyebrow}</span>
-              <p class="subtle-label">{copy.hero.status}</p>
+              <p class="subtle-label" data-showTime>
+                {copy.hero.status}{ShowTime}
+              </p>
             </div>
 
             <div class="mt-8 max-w-4xl">
@@ -148,29 +322,43 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
                 as="h1"
                 class="hero-title display-face mt-4 text-[clamp(3.2rem,8vw,7rem)] leading-[0.94] tracking-[-0.05em] text-(--ink)"
               >
-                <span class="hero-title__segment hero-title__segment--start">
-                  {copy.hero.title.start}
-                </span>
+                <span
+                  class="hero-title__segment animate-fade-right animate-once animate-duration-600"
+                  >{copy.hero.title.start}</span
+                >
                 {" "}
-                <span class="hero-title__segment hero-title__segment--highlight scribble relative inline-block">
+                <span
+                  class="hero-title__segment hero-title__segment--highlight scribble relative inline-block animate-fade-left animate-once animate-duration-600"
+                >
                   {copy.hero.title.highlight}
                 </span>
                 {" "}
-                <span class="hero-title__segment hero-title__segment--end">
-                  {copy.hero.title.end}
-                </span>
+                <span
+                  class="hero-title__segment animate-fade-up animate-once animate-duration-600"
+                  >{copy.hero.title.end}</span
+                >
               </PretextBalancedText>
 
-              <p class="mt-6 max-w-2xl text-base leading-8 text-(--muted) md:text-lg">
+              <p
+                class="mt-6 max-w-2xl text-base leading-8 text-(--muted) md:text-lg"
+              >
                 {copy.hero.bio}
+              </p>
+              <p
+                class="mt-0 max-w-2xl text-base leading-8 text-(--muted) md:text-lg"
+              >
+                {copy.hero.bioLastSentence}
               </p>
             </div>
 
             <div class="hero-actions mt-8">
-              <a href="#section06" class="button-primary">
+              <a href="#project-1" class="button-primary will-change-transform">
                 {copy.hero.primaryCta}
               </a>
-              <a href="#section08" class="button-secondary">
+              <a
+                href="#section08"
+                class="button-secondary will-change-transform"
+              >
                 {copy.hero.secondaryCta}
               </a>
             </div>
@@ -182,7 +370,9 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
                 copy.hero.quickFacts.map((fact) => (
                   <article class="paper-card detail-card rounded-[1.25rem] p-5">
                     <p class="subtle-label">{fact.label}</p>
-                    <p class="mt-3 text-lg leading-7 text-(--ink)">{fact.value}</p>
+                    <p class="mt-3 text-lg leading-7 text-(--ink)">
+                      {fact.value}
+                    </p>
                   </article>
                 ))
               }
@@ -190,15 +380,22 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
           </div>
 
           <aside class="section-grid">
-            <section class="paper-card rounded-3xl p-6">
+            <section
+              class="paper-card reactive-section rounded-3xl p-6"
+              data-reactive-section
+            >
               <p class="subtle-label">{copy.snapshot.eyebrow}</p>
-              <h2 class="section-title mt-3 text-(--ink)">{copy.snapshot.title}</h2>
+              <h2 class="section-title mt-3 text-(--ink)" data-section-title>
+                {copy.snapshot.title}
+              </h2>
               <ul class="mt-5 space-y-3">
                 {
                   copy.snapshot.items.map((item) => (
                     <li class="paper-card detail-card rounded-2xl p-4">
                       <p class="subtle-label">{item.label}</p>
-                      <p class="mt-2 text-base leading-7 text-(--ink)">{item.value}</p>
+                      <p class="mt-2 text-base leading-7 text-(--ink)">
+                        {item.value}
+                      </p>
                     </li>
                   ))
                 }
@@ -219,11 +416,14 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
 
         <section
           id="section01"
-          class="section-target deferred-section grid gap-6 lg:grid-cols-[0.95fr_1.05fr] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          class="section-target deferred-section reactive-section grid gap-6 lg:grid-cols-[0.95fr_1.05fr] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          data-reactive-section
         >
           <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
             <p class="subtle-label">{copy.about.section}</p>
-            <h2 class="section-title mt-3">{copy.about.title}</h2>
+            <h2 class="section-title mt-3" data-section-title>
+              {copy.about.title}
+            </h2>
             <p class="section-copy mt-5">{copy.about.summary}</p>
           </div>
 
@@ -232,7 +432,9 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
               copy.about.cards.map((card) => (
                 <article class="paper-card detail-card rounded-[1.25rem] p-5">
                   <p class="subtle-label">{card.title}</p>
-                  <p class="mt-3 text-base leading-7 text-(--ink)">{card.description}</p>
+                  <p class="mt-3 text-base leading-7 text-(--ink)">
+                    {card.description}
+                  </p>
                 </article>
               ))
             }
@@ -241,14 +443,22 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
 
         <section
           id="section02"
-          class="section-target deferred-section paper-card-strong section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          class="section-target deferred-section paper-card-strong reactive-section section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          data-reactive-section
         >
-          <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div
+            class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+          >
             <div>
               <p class="subtle-label">{copy.experience.section}</p>
-              <h2 class="section-title mt-3">{copy.experience.title}</h2>
+              <h2 class="section-title mt-3" data-section-title>
+                {copy.experience.title}
+              </h2>
             </div>
-            <a href="#section08" class="section-anchor text-sm font-semibold tracking-[0.18em] uppercase">
+            <a
+              href="#section08"
+              class="section-anchor will-change-transform text-sm font-semibold tracking-[0.18em] uppercase"
+            >
               {copy.experience.cta}
             </a>
           </div>
@@ -260,15 +470,21 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
                   <div class="grid gap-5 md:grid-cols-[0.28fr_0.72fr]">
                     <div>
                       <div class="flex items-center gap-3">
-                        <span class="timeline-dot"></span>
+                        <span class="timeline-dot" />
                         <p class="subtle-label">{item.period}</p>
                       </div>
-                      <p class="mt-4 text-lg font-semibold text-(--ink)">{item.company}</p>
+                      <p class="mt-4 text-lg font-semibold text-(--ink)">
+                        {item.company}
+                      </p>
                     </div>
 
                     <div>
-                      <h3 class="display-face text-[2rem] leading-tight text-(--ink)">{item.role}</h3>
-                      <p class="mt-4 text-base leading-8 text-(--muted)">{item.summary}</p>
+                      <h3 class="display-face text-[2rem] leading-tight text-(--ink)">
+                        {item.role}
+                      </h3>
+                      <p class="mt-4 text-base leading-8 text-(--muted)">
+                        {item.summary}
+                      </p>
 
                       <ul class="mt-5 grid gap-3 md:grid-cols-2">
                         {item.wins.map((win) => (
@@ -287,15 +503,19 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
 
         <section
           id="section03"
-          class="section-target deferred-section grid gap-6 lg:grid-cols-[0.95fr_1.05fr] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          class="section-target deferred-section reactive-section grid gap-6 lg:grid-cols-[0.95fr_1.05fr] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          data-reactive-section
         >
           <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
             <p class="subtle-label">{copy.rhythm.section}</p>
-            <h2 class="section-title mt-3">{copy.rhythm.title}</h2>
+            <h2 class="section-title mt-3" data-section-title>
+              {copy.rhythm.title}
+            </h2>
             <p class="section-copy mt-5">{copy.rhythm.summary}</p>
             <div class="marker-line mt-7"></div>
             <p class="mt-7 text-base leading-8 text-(--ink)">
-              {copy.rhythm.currentFocus.intro} <strong>{copy.rhythm.currentFocus.focus}</strong>,
+              {copy.rhythm.currentFocus.intro}
+              <strong>{copy.rhythm.currentFocus.focus}</strong>,
               {` ${copy.rhythm.currentFocus.middle} `}
               <strong>{copy.rhythm.currentFocus.balance}</strong>
               {` ${copy.rhythm.currentFocus.end} `}
@@ -311,7 +531,9 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
                   <div class="mt-3 text-lg tracking-[0.24em] text-(--accent)">
                     <CalificationLevel level={item.level} />
                   </div>
-                  <p class="mt-4 text-sm leading-7 text-(--ink)">{item.detail}</p>
+                  <p class="mt-4 text-sm leading-7 text-(--ink)">
+                    {item.detail}
+                  </p>
                 </article>
               ))
             }
@@ -319,31 +541,52 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
         </section>
 
         <section class="deferred-section grid gap-6 lg:grid-cols-2">
-          <section id="section04" class="section-target paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+          <section
+            id="section04"
+            class="section-target paper-card reactive-section section-card rounded-[1.75rem] p-6 md:p-8"
+            data-reactive-section
+          >
             <p class="subtle-label">{copy.hobbies.section}</p>
-            <h2 class="section-title mt-3">{copy.hobbies.title}</h2>
+            <h2 class="section-title mt-3" data-section-title>
+              {copy.hobbies.title}
+            </h2>
             <div class="mt-7 grid gap-4">
               {
                 hobbyCards.map((item, index) => (
                   <article
-                    class="paper-card media-card rounded-[1.35rem] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+                    class="paper-card media-card rounded-[1.35rem] will-change-transform motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
                     style={`animation-delay: ${index * 90}ms;`}
                   >
                     <div class="media-card__image">
-                      <Image
-                        src={item.image}
-                        alt={`${copy.hobbies.visualLabel}: ${item.title}`}
-                        class="h-full w-full object-cover"
-                        widths={[480, 720, 960]}
-                        sizes="(min-width: 1024px) 30vw, 100vw"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <button
+                        type="button"
+                        class="media-card__image-trigger"
+                        data-gallery-trigger
+                        data-image-src={item.image.src}
+                        data-image-alt={`${copy.hobbies.visualLabel}: ${item.title}`}
+                        data-image-caption={item.title}
+                        aria-label={`${galleryOpenLabel}: ${item.title}`}
+                        aria-haspopup="dialog"
+                      >
+                        <Image
+                          src={item.image}
+                          alt={`${copy.hobbies.visualLabel}: ${item.title}`}
+                          class="h-full w-full object-cover"
+                          widths={[480, 720, 960]}
+                          sizes="(min-width: 1024px) 30vw, 100vw"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
                     </div>
                     <div class="media-card__body">
                       <p class="subtle-label">{copy.hobbies.section}</p>
-                      <h3 class="display-face mt-2 text-[1.8rem] leading-tight text-(--ink)">{item.title}</h3>
-                      <p class="mt-3 text-sm leading-7 text-(--muted)">{item.description}</p>
+                      <h3 class="display-face mt-2 text-[1.8rem] leading-tight text-(--ink)">
+                        {item.title}
+                      </h3>
+                      <p class="mt-3 text-sm leading-7 text-(--muted)">
+                        {item.description}
+                      </p>
                     </div>
                   </article>
                 ))
@@ -351,16 +594,26 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
             </div>
           </section>
 
-          <section id="section05" class="section-target paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+          <section
+            id="section05"
+            class="section-target paper-card reactive-section section-card rounded-[1.75rem] p-6 md:p-8"
+            data-reactive-section
+          >
             <p class="subtle-label">{copy.activities.section}</p>
-            <h2 class="section-title mt-3">{copy.activities.title}</h2>
+            <h2 class="section-title mt-3" data-section-title>
+              {copy.activities.title}
+            </h2>
             <div class="mt-7 grid gap-4">
               {
                 copy.activities.items.map((item) => (
                   <article class="paper-card detail-card rounded-[1.25rem] p-5">
                     <p class="subtle-label">{copy.activities.section}</p>
-                    <h3 class="display-face mt-2 text-[1.8rem] leading-tight text-(--ink)">{item.title}</h3>
-                    <p class="mt-3 text-sm leading-7 text-(--muted)">{item.description}</p>
+                    <h3 class="display-face mt-2 text-[1.8rem] leading-tight text-(--ink)">
+                      {item.title}
+                    </h3>
+                    <p class="mt-3 text-sm leading-7 text-(--muted)">
+                      {item.description}
+                    </p>
                   </article>
                 ))
               }
@@ -370,33 +623,52 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
 
         <section
           id="section06"
-          class="section-target deferred-section paper-card-strong section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          class="section-target deferred-section paper-card-strong reactive-section section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          data-reactive-section
         >
-          <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div
+            class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+          >
             <div>
               <p class="subtle-label">{copy.projects.section}</p>
-              <h2 class="section-title mt-3">{copy.projects.title}</h2>
+              <h2 class="section-title mt-3" data-section-title>
+                {copy.projects.title}
+              </h2>
             </div>
-            <p class="max-w-xl text-sm leading-7 text-(--muted)">{copy.projects.summary}</p>
+            <p class="max-w-xl text-sm leading-7 text-(--muted)">
+              {copy.projects.summary}
+            </p>
           </div>
 
           <div class="mt-8 grid gap-4 xl:grid-cols-3">
             {
               projectCards.map((project, index) => (
                 <article
-                  class="paper-card media-card rounded-[1.4rem] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+                  class="paper-card media-card rounded-[1.4rem] will-change-transform motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
                   style={`animation-delay: ${index * 100}ms;`}
+                  id={`project-${index + 1}`}
                 >
                   <div class="media-card__image media-card__image--project">
-                    <Image
-                      src={project.image}
-                      alt={`${copy.projects.visualLabel}: ${project.name}`}
-                      class="h-full w-full object-cover"
-                      widths={[480, 768, 1024, 1280]}
-                      sizes="(min-width: 1280px) 28vw, (min-width: 768px) 45vw, 100vw"
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <button
+                      type="button"
+                      class="media-card__image-trigger"
+                      data-gallery-trigger
+                      data-image-src={project.image.src}
+                      data-image-alt={`${copy.projects.visualLabel}: ${project.name}`}
+                      data-image-caption={project.name}
+                      aria-label={`${galleryOpenLabel}: ${project.name}`}
+                      aria-haspopup="dialog"
+                    >
+                      <Image
+                        src={project.image}
+                        alt={`${copy.projects.visualLabel}: ${project.name}`}
+                        class="h-full w-full object-cover"
+                        widths={[480, 768, 1024, 1280]}
+                        sizes="(min-width: 1280px) 28vw, (min-width: 768px) 45vw, 100vw"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </button>
                   </div>
 
                   <div class="media-card__body">
@@ -404,19 +676,31 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
                       <span class="meta-pill">{project.type}</span>
                       <span class="meta-pill">{project.stack}</span>
                     </div>
-                    <h3 class="display-face mt-4 text-[2rem] leading-tight text-(--ink)">{project.name}</h3>
-                    <p class="mt-3 text-sm leading-7 text-(--muted)">{project.description}</p>
+                    <h3 class="display-face mt-4 text-[2rem] leading-tight text-(--ink)">
+                      {project.name}
+                    </h3>
+                    <p class="mt-3 text-sm leading-7 text-(--muted)">
+                      {project.description}
+                    </p>
 
-                    <div class="marker-line mt-5"></div>
+                    <div class="marker-line mt-5" />
 
                     <p class="mt-5 text-sm leading-7 text-(--ink)">
-                      <span class="subtle-label text-(--accent)">{copy.projects.outcomeLabel}</span>
+                      <span class="subtle-label text-(--accent)">
+                        {copy.projects.outcomeLabel}
+                      </span>
                       <br />
                       {project.outcome}
                     </p>
 
-                    <a href={project.href} class="project-link">
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="project-link will-change-transform"
+                    >
                       {copy.projects.linkLabel}
+                      <IconLink />
                     </a>
                   </div>
                 </article>
@@ -427,11 +711,14 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
 
         <section
           id="section07"
-          class="section-target deferred-section grid gap-6 lg:grid-cols-[1.05fr_0.95fr] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          class="section-target deferred-section reactive-section grid gap-6 lg:grid-cols-[1.05fr_0.95fr] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          data-reactive-section
         >
           <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
             <p class="subtle-label">{copy.aspirations.section}</p>
-            <h2 class="section-title mt-3">{copy.aspirations.title}</h2>
+            <h2 class="section-title mt-3" data-section-title>
+              {copy.aspirations.title}
+            </h2>
             <p class="section-copy mt-5">{copy.aspirations.summary}</p>
           </div>
 
@@ -451,22 +738,54 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
 
         <section
           id="section08"
-          class="section-target deferred-section paper-card-strong section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          class="section-target deferred-section paper-card-strong reactive-section section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
+          data-reactive-section
         >
           <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
             <div>
               <p class="subtle-label">{copy.contact.section}</p>
-              <h2 class="section-title mt-3">{copy.contact.title}</h2>
+              <h2 class="section-title mt-3" data-section-title>
+                {copy.contact.title}
+              </h2>
               <p class="section-copy mt-5">{copy.contact.summary}</p>
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2">
               {
-                copy.contact.items.map((item) => (
-                  <a href={item.href} class="paper-card detail-card rounded-[1.25rem] p-5">
-                    <p class="subtle-label">{item.label}</p>
-                    <p class="mt-3 text-base leading-7 text-(--ink)">{item.value}</p>
-                  </a>
+                contactItems.map((item) => (
+                  <article class="paper-card detail-card contact-card rounded-[1.25rem] p-5">
+                    <div class="contact-card__header">
+                      <span class="contact-card__icon" aria-hidden="true">
+                        {item.type === "email" && <IconEmail />}
+                        {item.type === "github" && <IconGitHub />}
+                        {item.type === "linkedin" && <IconLinkedIn />}
+                        {item.type === "website" && <IconWebsite />}
+                      </span>
+                      <p class="subtle-label">{item.label}</p>
+                    </div>
+                    <p class="contact-card__value mt-3 text-base leading-7 text-(--ink)">
+                      {item.value}
+                    </p>
+                    {item.type === "email" ? (
+                      <a
+                        href={item.href}
+                        class="contact-card__action will-change-transform"
+                        aria-label={`${item.label}: ${item.value}`}
+                      >
+                        Mailto: {copy.contact.calltoAction}
+                      </a>
+                    ) : (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="contact-card__action will-change-transform"
+                        aria-label={`${item.label}: ${item.value}`}
+                      >
+                        {copy.contact.calltoAction}
+                      </a>
+                    )}
+                  </article>
                 ))
               }
             </div>
@@ -483,5 +802,163 @@ const structuredDataJson = JSON.stringify(pageMetadata.structuredData);
         </div>
       </footer>
     </div>
+    <div class="gallery-modal" data-gallery-modal hidden>
+      <button
+        type="button"
+        class="gallery-modal__backdrop"
+        data-gallery-close
+        aria-label={galleryCloseLabel}></button>
+      <section
+        class="gallery-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="gallery-modal-title"
+      >
+        <header class="gallery-modal__header">
+          <h3 id="gallery-modal-title" class="gallery-modal__title">
+            {galleryDialogTitle}
+          </h3>
+          <button
+            type="button"
+            class="gallery-modal__close"
+            data-gallery-close
+            aria-label={galleryCloseLabel}
+          >
+            {galleryCloseLabel}
+          </button>
+        </header>
+        <img class="gallery-modal__image" alt="" data-gallery-image />
+        <p class="gallery-modal__caption" data-gallery-caption></p>
+      </section>
+    </div>
+    <script>
+      setInterval(() => {
+        const ShowTime = new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        });
+        const timeElements = document.querySelectorAll("[data-showTime]");
+        timeElements.forEach((el) => {
+          const baseText = el.textContent.split("//")[0];
+          el.textContent = `${baseText}//${ShowTime}`;
+        });
+      }, 1000);
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const cursorOrb = document.querySelector<HTMLElement>(
+          ".Cursor_Background-Orb",
+        );
+        const galleryModal = document.querySelector<HTMLElement>(
+          "[data-gallery-modal]",
+        );
+        const galleryImage = document.querySelector<HTMLImageElement>(
+          "[data-gallery-image]",
+        );
+        const galleryCaption = document.querySelector<HTMLElement>(
+          "[data-gallery-caption]",
+        );
+        const galleryCloseButtons = document.querySelectorAll<HTMLElement>(
+          "[data-gallery-close]",
+        );
+        const galleryTriggers = document.querySelectorAll<HTMLButtonElement>(
+          "[data-gallery-trigger]",
+        );
+        const focusCloseButton = document.querySelector<HTMLElement>(
+          ".gallery-modal__close",
+        );
+        let lastFocusedElement: HTMLElement | null = null;
+
+        const openGallery = (
+          source: string,
+          alt: string,
+          caption: string,
+          trigger: HTMLElement,
+        ) => {
+          if (!galleryModal || !galleryImage) {
+            return;
+          }
+
+          galleryImage.src = source;
+          galleryImage.alt = alt;
+          if (galleryCaption) {
+            galleryCaption.textContent = caption;
+          }
+          lastFocusedElement = trigger;
+          galleryModal.hidden = false;
+          document.body.style.overflow = "hidden";
+          focusCloseButton?.focus();
+        };
+
+        const closeGallery = () => {
+          if (!galleryModal) {
+            return;
+          }
+
+          galleryModal.hidden = true;
+          document.body.style.removeProperty("overflow");
+          lastFocusedElement?.focus();
+        };
+
+        galleryTriggers.forEach((trigger) => {
+          trigger.addEventListener("click", () => {
+            openGallery(
+              trigger.dataset.imageSrc ?? "",
+              trigger.dataset.imageAlt ?? "",
+              trigger.dataset.imageCaption ?? "",
+              trigger,
+            );
+          });
+        });
+
+        galleryCloseButtons.forEach((control) => {
+          control.addEventListener("click", closeGallery);
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && galleryModal && !galleryModal.hidden) {
+            closeGallery();
+          }
+        });
+
+        if (cursorOrb) {
+          let targetX = 0;
+          let targetY = 0;
+          let currentX = 0;
+          let currentY = 0;
+          let hasPosition = false;
+          let rafPending = false;
+
+          const tick = () => {
+            currentX += (targetX - currentX) * 0.1;
+            currentY += (targetY - currentY) * 0.1;
+            cursorOrb.style.transform = `translate(calc(${currentX}px - 50%), calc(${currentY}px - 50%))`;
+            if (
+              Math.abs(targetX - currentX) > 0.5 ||
+              Math.abs(targetY - currentY) > 0.5
+            ) {
+              requestAnimationFrame(tick);
+            } else {
+              rafPending = false;
+            }
+          };
+
+          document.addEventListener("mousemove", (event) => {
+            targetX = event.clientX;
+            targetY = event.clientY;
+            if (!hasPosition) {
+              hasPosition = true;
+              currentX = targetX;
+              currentY = targetY;
+            }
+            if (!rafPending) {
+              rafPending = true;
+              requestAnimationFrame(tick);
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>

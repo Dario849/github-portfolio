@@ -5,9 +5,9 @@ const resources = {
     translation: {
       site: {
         metadata: {
-          title: "[Your Name] | [Professional Title]",
+          title: "Dario Rodríguez | Functional Analyst & IT Technician",
           description:
-            "[Short Bio: replace this with a concise summary of who you are, what you do, and what people can explore on this site.]",
+            "This is a detailed about-me blog for Dario Rodríguez, a Functional Analyst & IT Technician. Explore Dario's background, work experience, current focus, hobbies, and aspirations in this personal archive that offers a comprehensive view of who he is, what he builds, and where he's going.",
         },
         languageSettings: {
           caption: "Language",
@@ -26,7 +26,7 @@ const resources = {
         },
         header: {
           eyebrow: "Personal archive",
-          subtitle: "[About Me Blog Title]",
+          subtitle: "Know me better than a resume",
           primaryNavAriaLabel: "Primary",
           navItems: [
             { href: "#about", label: "About" },
@@ -39,21 +39,23 @@ const resources = {
         },
         hero: {
           eyebrow: "Detailed about-me blog",
-          status: "[Current Status / Tagline]",
-          identity: "[Your Name] / [Professional Title]",
+          status: "Online//",
+          identity: "Dario Rodríguez / Functional Analyst & IT Technician",
           title: {
             start: "A living record of",
             highlight: "who I am,",
-            end: "what I build, and where I'm going.",
+            end: " and where I'm going.",
           },
           bio:
-            "[Short Bio] Replace this paragraph with a clear personal introduction that explains your identity, strengths, and the tone of the site in a way that feels human and specific.",
+            "Hi, I'm Dario Rodríguez, a Functional Analyst & IT Technician. I enjoy building things, exploring new technologies, music, coffee, and more.",
+          bioLastSentence:
+            "Keep reading...",
           primaryCta: "View featured work",
           secondaryCta: "Contact placeholder",
           quickFacts: [
-            { label: "Base", value: "[Current City or Region]" },
-            { label: "Focus", value: "[Professional Title] + [Current Main Priority]" },
-            { label: "Availability", value: "[Availability Status]" },
+            { label: "Base", value: "Villa Lynch, San Martín, Buenos Aires, Argentina" },
+            { label: "Focus", value: "Landing a job, learning new technologies and living life to the fullest" },
+            { label: "Availability", value: "Available for new opportunities, fully committed to personal and professional growth" },
           ],
         },
         snapshot: {
@@ -62,47 +64,47 @@ const resources = {
           items: [
             {
               label: "Current priority",
-              value: "[Main focus right now]",
+              value: "Learning how to cope with the fast-paced world of technology while maintaining a balanced and fulfilling life.",
             },
             {
               label: "Learning",
-              value: "[Topic, tool, language, or discipline you are currently improving]",
+              value: "Improving my skills in functional analysis and IT techniques.",
             },
             {
               label: "Outside work",
-              value: "[A short line about hobbies, routines, family, sport, art, or community]",
+              value: "Enjoying music, coffee, and exploring new technologies in my free time.",
             },
           ],
         },
         prompt: {
           eyebrow: "Writing prompt",
           quote:
-            "\"Replace this with a line that captures your personal philosophy, direction, or the kind of builder/person you want people to remember.\"",
+            "\"Discovering oneself is a lifelong journey.\"",
         },
         about: {
           section: "Section 01",
           title: "About me",
           summary:
-            "[Longer About Summary] Replace this block with a fuller narrative about your background, motivations, values, communication style, and the kind of work you enjoy doing most.",
+            "I am a passionate and dedicated professional with a strong background in functional analysis and IT techniques. I value continuous learning, effective communication, and collaboration. I enjoy tackling challenging problems, exploring new technologies, and contributing to meaningful projects.",
           cards: [
             {
               title: "Strengths",
               description:
-                "[Examples: problem-solving, communication, ownership, adaptability, support, documentation, product thinking.]",
+                "Problem-solving, communication, ownership, adaptability, support, documentation, product thinking.",
             },
             {
               title: "Preferred tools",
-              description: "[List the technologies and workflows you genuinely like using.]",
+              description: "PHP, MySQL, JavaScript, HTML, CSS, Astro, Node.js, Windows, etc.",
             },
             {
               title: "Working style",
               description:
-                "[Write how you collaborate, learn, document, organize, and support others.]",
+                "Collaborative, continuous learner, documenter, task organizer, and supporter of others.",
             },
             {
               title: "What matters to me",
               description:
-                "[Examples: clarity, consistency, useful systems, accessible experiences, growth, calm execution.]",
+                "Being consistent, clarity, useful systems, accessible experiences, growth, serene execution.",
             },
           ],
         },
@@ -112,36 +114,36 @@ const resources = {
           cta: "[Open to conversations]",
           items: [
             {
-              period: "[2024 - Present]",
-              role: "[Current Role Title]",
-              company: "[Current Company or Organization]",
+              period: "[May 2025 - Present]",
+              role: "Independent / Personal projects",
+              company: "Freelance and own projects",
               summary:
-                "[Write a concise summary of your responsibilities, impact, and the type of problems you solve here.]",
+                "I currently dedicate myself to building personal projects and offering help to acquaintances and friends. This allows me to apply my skills, learn new technologies, and stay active in the tech community while I look for professional opportunities that align with my aspirations.",
               wins: [
-                "[Highlight a measurable achievement or area of ownership.]",
-                "[Mention a project, process improvement, or collaboration success.]",
+                "Self-taught and proactive in learning and building projects independently, which has allowed me to develop technical and project management skills without relying on a formal work environment.",
+                "My most current and favorite project is Android Mic, I discovered React Native, and I built a finished product, wrote technical documentation, and created accessibility for all users, and published it as open source for others to use.",
               ],
             },
             {
-              period: "[2022 - 2024]",
-              role: "[Previous Role Title]",
-              company: "[Previous Company or Organization]",
+              period: "[Jul 2023 - May 2025]",
+              role: "IT Support Technician",
+              company: "Callcenter office for anonymous client in San Isidro",
               summary:
-                "[Use this entry for the role that most clearly shows your growth, versatility, or technical depth.]",
+                "I provided first-level IT support within the office, resolving hardware and software issues for employees. Also management and resolution of SaaS issues like CRM, spreadsheets, email, and internal communication tools.(under informal contract)",
               wins: [
                 "[Describe a skill you strengthened.]",
                 "[Describe a challenge you handled well.]",
               ],
             },
             {
-              period: "[Earlier Experience]",
-              role: "[Earlier Role Title]",
-              company: "[Earlier Company or Organization]",
+              period: "[Mar 2022 - Nov 2022]",
+              role: "Client service",
+              company: "Deli and Cheese Shop Don Navarro",
               summary:
-                "[Use older roles to show foundation, transferable skills, or the path that led to your current direction.]",
+                "I attended customers, managed orders, made home deliveries in the area, performed cleaning and stock control.(under informal contract)",
               wins: [
-                "[Mention a lesson, strength, or milestone from this period.]",
-                "[Mention another relevant contribution or area of growth.]",
+                "Dealing with customers in a friendly and efficient manner, ensuring their satisfaction and loyalty.",
+                "Utilizing specific machinery of the industry and maintaining the cleanliness and hygiene of the place, complying with quality standards and food safety.",
               ],
             },
           ],
@@ -150,39 +152,39 @@ const resources = {
           section: "Section 03",
           title: "Actual schedule / current rhythm",
           summary:
-            "Use this section to describe how your week is structured, where your attention goes right now, and how you balance work, study, side projects, and recovery.",
+            "My day is currently structured in blocks of time dedicated to different activities. I spend most of my week working on IT projects, learning new technologies, and staying updated on tech news. I currently dedicate a large portion of time to my hobbies and interests to stay motivated and creative.",
           currentFocus: {
             intro: "Right now I am focused on",
-            focus: "[current work, study, or project]",
+            focus: "becoming independent and building my own projects",
             middle: "while balancing",
-            balance: "[other commitment]",
+            balance: "my hobbies and interests",
             end: "and dedicating time each week to",
-            learning: "[learning goal or discipline]",
+            learning: "Cybersecurity, cloud technologies, and keeping up with tech news.",
           },
           items: [
             {
               label: "Deep work",
               level: 5,
               detail:
-                "[Describe where your strongest weekly focus goes right now: building, studying, shipping, mentoring, or support.]",
+                "I dedicate my strongest weekly focus to deep work, whether it's building, studying, shipping, mentoring, or providing support.",
             },
             {
               label: "Learning",
               level: 4,
               detail:
-                "[Note what you are currently learning or practicing on a recurring basis.]",
+                "I spend a significant portion of my time learning new technologies and tools, as well as improving my skills using AI and productivity techniques.",
             },
             {
               label: "Community",
               level: 3,
               detail:
-                "[Use this for collaboration, mentoring, volunteering, or knowledge sharing.]",
+                "I keep in touch with friends and acquaintances who share my interests, collaborating on personal projects and sharing knowledge and resources to grow together.",
             },
             {
               label: "Recovery",
               level: 4,
               detail:
-                "[Use this to describe how you protect balance, rest, and sustainability.]",
+                "I take part of my week to activities that allow me to rest, recharge and maintain a healthy work-life balance.",
             },
           ],
         },
@@ -192,19 +194,19 @@ const resources = {
           visualLabel: "Hobby placeholder",
           items: [
             {
-              title: "[Hobby 1]",
+              title: "Coffee enthusiast",
               description:
-                "[Write why this hobby matters to you, what it gives you, or how it complements your work.]",
+                "I enjoy exploring different coffee brewing methods and tasting various coffee beans. It's a hobby that allows me to appreciate the art and science behind a good cup of coffee.",
             },
             {
-              title: "[Hobby 2]",
+              title: "Gym",
               description:
-                "[Use this to add personality and show how you spend your time beyond work.]",
+                "I enjoy going to the gym to stay fit and maintain a healthy lifestyle. It's a way to relieve stress, build strength, and improve overall well-being.",
             },
             {
-              title: "[Hobby 3]",
+              title: "Bassist",
               description:
-                "[Mention a recurring interest, craft, sport, or subject you enjoy exploring.]",
+                "I practiced electric bass for several years, which allowed me to develop musical skills, discipline, and creativity. Although I don't do it professionally, music is an important part of my life.",
             },
           ],
         },
@@ -213,14 +215,14 @@ const resources = {
           title: "Extra activities",
           items: [
             {
-              title: "[Extra Activity 1]",
+              title: "Gaming",
               description:
-                "[Examples: mentoring, volunteering, community organizing, language study, content creation, or certifications.]",
+                "I enjoy playing video games in my free time. It's a form of entertainment, relaxation, and also a way to connect with friends and online communities.",
             },
             {
-              title: "[Extra Activity 2]",
+              title: "Gardening",
               description:
-                "[Use this area to show initiative outside your core day-to-day work.]",
+                "I enjoy taking care of plants and maintaining my garden with a variety of fruit plants and vegetables. I enjoy the outdoors in a more relaxed way and the routine of care.",
             },
           ],
         },
@@ -228,37 +230,37 @@ const resources = {
           section: "Section 06",
           title: "Featured projects",
           summary:
-            "Keep these project cards concise but specific. They should quickly communicate what you built, what role you played, and what makes the project worth opening.",
-          visualLabel: "Project placeholder",
+            "A brief overview of some of the projects I've worked on.",
+          visualLabel: "Referential image for the project",
           outcomeLabel: "Outcome",
-          linkLabel: "[Project Link]",
+          linkLabel: "View project",
           items: [
             {
-              name: "[Project 1]",
-              type: "[Portfolio / Product / Internal Tool / Open Source]",
-              stack: "[Astro, React, Tailwind, Node.js, etc.]",
-              outcome: "[What this project achieved or what it taught you.]",
+              name: "AppGro",
+              type: "Portfolio / Product / Internal Tool / Open Source",
+              stack: "PHP, MySQL, JavaScript, HTML, CSS",
+              outcome: "Completion of systems analysis degree, satisfied client.",
               description:
-                "[Summarize the problem, what you built, and the reason it deserves a place in your featured work.]",
-              href: "[Project Link]",
+                "AppGro is a comprehensive project management tool designed to streamline workflows and enhance team collaboration. It offers features such as task tracking, resource management, and real-time reporting, helping teams stay organized and efficient.",
+              href: "https://github.com/Dario849/AppGro",
             },
             {
-              name: "[Project 2]",
-              type: "[Portfolio / Product / Internal Tool / Open Source]",
-              stack: "[Tech Stack]",
-              outcome: "[Result or key learning.]",
+              name: "QR Pass",
+              type: "Internal Tool / Product / Open Source",
+              stack: "JavaScript, HTML, CSS, QR generation and scanning libraries, PostgreSQL",
+              outcome: "In the process of documenting architecture and functionalities, learning new technologies.",
               description:
-                "[Use this card for a project that shows a different strength: UI, architecture, support, analysis, or delivery.]",
-              href: "[Project Link]",
+                "QR Pass is a web application that allows generating and scanning QR codes to facilitate and record access to buildings. The application allows users to generate unique QR codes for each visitor, which can be scanned at the building entrance to quickly and securely record their access, without the need for physical cards or traditional access control systems. It enables keeping a digital record of accesses, improving security and efficiency in visitor management.",
+              href: "https://github.com/Dario849/QRpassport",
             },
             {
-              name: "[Project 3]",
-              type: "[Portfolio / Product / Internal Tool / Open Source]",
-              stack: "[Tech Stack]",
-              outcome: "[Result or key learning.]",
+              name: "Android Mic",
+              type: "Open Source / Internal Tool",
+              stack: "React Native, Java, Kotlin, audio processing libraries, Android SDK",
+              outcome: "Accessibility to an external microphone for Android users, learning mobile development and audio processing.",
               description:
-                "[Use this card to show range, depth, or a project that reflects your aspirations.]",
-              href: "[Project Link]",
+                "Built by me and for me, Android Mic is a mobile application that turns your Android phone into an external microphone for your computer. The app connects via Wi-Fi or USB, allowing you to transmit high-quality audio from your phone to your computer, which is ideal for video calls, recordings, or streaming. It's an accessible solution for those who need an external microphone but don't want to invest in additional hardware.",
+              href: "https://github.com/Dario849/AndroidMic",
             },
           ],
         },
@@ -266,29 +268,30 @@ const resources = {
           section: "Section 07",
           title: "Aspirations",
           summary:
-            "Use this area to explain what kind of builder, teammate, and professional you want to become. The best versions of this section feel directional, honest, and specific.",
+            "My main aspiration is to live as a professional within the world of technology, and who knows, maybe in the future I can live retired in the countryside away from the city, meanwhile, I try to keep up to date and improving to be able to grow professionally. Some other of my dreams would be to be part of or be creator of a real product, that contributes to humanity.",
           goalLabel: "Goal",
           items: [
-            "[Aspiration 1: the kind of work or impact you want to grow into.]",
-            "[Aspiration 2: the type of problems, industries, or teams you want to contribute to.]",
-            "[Aspiration 3: the skills, habits, or responsibilities you want to keep developing.]",
+            "Working within a consulting firm, IT agency, or startup that allows me to grow, learn, and contribute value through my technical and analytical skills.",
+            "Helping a multi-disciplinary team build a product that makes a positive difference in people's lives.",
+            "Getting to a place where I can live comfortably, with financial and emotional stability, enjoying my hobbies and interests.",
           ],
         },
         contact: {
           section: "Section 08",
           title: "Contact & next conversation",
           summary:
-            "Replace this area with the clearest way for people to reach you, understand your availability, and continue the conversation after exploring your story.",
+            "You can reach out to me through the following channels.",
+          calltoAction: "Contact me",
           items: [
-            { label: "Email", value: "[Email Address]", href: "mailto:[Email Address]" },
-            { label: "GitHub", value: "[GitHub URL]", href: "[GitHub URL]" },
-            { label: "LinkedIn", value: "[LinkedIn URL]", href: "[LinkedIn URL]" },
-            { label: "Website", value: "[Portfolio URL]", href: "[Portfolio URL]" },
+            { label: "Email", value: "dariorodriguez7810@gmail.com", href: "mailto:dariorodriguez7810@gmail.com" },
+            { label: "GitHub", value: "Dario849", href: "https://github.com/Dario849" },
+            { label: "LinkedIn", value: "Darío Rodríguez", href: "https://www.linkedin.com/in/dario-rodriguez/" },
+            { label: "Website", value: "My Portfolio", href: "https://dario849.github.io/" },
           ],
         },
         footer: {
-          identity: "[Your Name] / [Professional Title] / [Availability Status]",
-          edition: "{{year}} placeholder edition for manual replacement",
+          identity: "Dario Rodríguez / Functional Analyst & IT Technician / Available full-time",
+          edition: "{{date}} Last edition",
         },
       },
     },
@@ -297,9 +300,9 @@ const resources = {
     translation: {
       site: {
         metadata: {
-          title: "[Tu Nombre] | [Título Profesional]",
+          title: "Darío | Analísta funcional técnico",
           description:
-            "[Biografía corta: reemplaza esto con un resumen conciso de quién eres, qué haces y qué puede explorar la gente en este sitio.]",
+            "Este es un blog detallado sobre mí para Darío, un Analísta funcional técnico. Explora el fondo, la experiencia laboral, el enfoque actual, los hobbies y las aspiraciones de Darío en este archivo personal que ofrece una vista completa de quién es, lo que construye y hacia dónde va.",
         },
         languageSettings: {
           caption: "Idioma",
@@ -318,7 +321,7 @@ const resources = {
         },
         header: {
           eyebrow: "Archivo personal",
-          subtitle: "[Título del blog sobre mí]",
+          subtitle: "Conoceme mejor que un currículum",
           primaryNavAriaLabel: "Principal",
           navItems: [
             { href: "#about", label: "Sobre mí" },
@@ -331,21 +334,21 @@ const resources = {
         },
         hero: {
           eyebrow: "Blog detallado sobre mí",
-          status: "[Estado actual / Lema]",
-          identity: "[Tu Nombre] / [Título Profesional]",
+          status: "En línea//",
+          identity: "Darío / Analísta funcional & técnico de IT",
           title: {
             start: "Un registro vivo de",
             highlight: "quién soy,",
-            end: "lo que construyo y hacia dónde voy.",
+            end: " y hacia dónde voy.",
           },
           bio:
-            "[Biografía corta] Reemplaza este párrafo con una introducción personal clara que explique tu identidad, fortalezas y el tono del sitio de una manera humana y específica.",
+            "Hola, soy Darío, un Analísta funcional & técnico de IT. Me gusta construir cosas, explorar nuevas tecnologías, la música, el café y más.",
           primaryCta: "Ver trabajo destacado",
           secondaryCta: "Contacto provisional",
           quickFacts: [
-            { label: "Base", value: "[Ciudad o región actual]" },
-            { label: "Enfoque", value: "[Título Profesional] + [Prioridad principal actual]" },
-            { label: "Disponibilidad", value: "[Estado de disponibilidad]" },
+            { label: "Base", value: "Villa Lynch, San Martín, Buenos Aires, Argentina" },
+            { label: "Enfoque", value: "Conseguir un trabajo, aprender nuevas tecnologías y vivir la vida al máximo" },
+            { label: "Disponibilidad", value: "Disponible para nuevas oportunidades, completamente comprometido con el crecimiento personal y profesional" },
           ],
         },
         snapshot: {
@@ -354,48 +357,48 @@ const resources = {
           items: [
             {
               label: "Prioridad actual",
-              value: "[En lo que más me enfoco ahora]",
+              value: "Aprender a lidiar con el mundo acelerado de la tecnología mientras mantengo una vida equilibrada y satisfactoria.",
             },
             {
               label: "Aprendizaje",
-              value: "[Tema, herramienta, idioma o disciplina que estás mejorando ahora]",
+              value: "Mejorando mis habilidades en análisis funcional y técnicas de IT.",
             },
             {
               label: "Fuera del trabajo",
-              value: "[Una línea breve sobre hobbies, rutinas, familia, deporte, arte o comunidad]",
+              value: "Disfruto de la música, el café, y explorar nuevas tecnologías en mi tiempo libre.",
             },
           ],
         },
         prompt: {
           eyebrow: "Punto de escritura",
           quote:
-            "\"Reemplaza esto con una frase que capture tu filosofía personal, tu dirección o el tipo de persona/creador que quieres que la gente recuerde.\"",
+            "\"Persevera y triunfarás\"",
         },
         about: {
           section: "Sección 01",
           title: "Sobre mí",
           summary:
-            "[Resumen más amplio] Reemplaza este bloque con una narrativa más completa sobre tu trayectoria, motivaciones, valores, estilo de comunicación y el tipo de trabajo que más disfrutas.",
+            "Crecí en Buenos Aires, Argentina, y desde joven me fascinó cómo las cosas funcionan detrás de escena. Empecé a construir mi propio PC a los 15 años, lo que me llevó a estudiar informática y análisis de sistemas. Me apasiona resolver problemas complejos, aprender nuevas tecnologías y crear soluciones que tengan un impacto positivo. Valoro la claridad, la colaboración y el crecimiento continuo, tanto en mi vida profesional como personal.",
           cards: [
             {
               title: "Fortalezas",
               description:
-                "[Ejemplos: resolución de problemas, comunicación, responsabilidad, adaptabilidad, soporte, documentación, visión de producto.]",
+                "resolución de problemas, comunicación, adaptabilidad, documentación, pensamiento de producto.",
             },
             {
               title: "Herramientas preferidas",
               description:
-                "[Enumera las tecnologías y flujos de trabajo que realmente disfrutas usar.]",
+                "Astro, React, Tailwind, Node.js, PHP, Python, Windows, etc.",
             },
             {
               title: "Estilo de trabajo",
               description:
-                "[Describe cómo colaboras, aprendes, documentas, organizas y apoyas a otras personas.]",
+                "Colaboro con amigos y conocidos, aprendo continuamente, documento procesos, organizo tareas y apoyo a otras personas.",
             },
             {
               title: "Lo que me importa",
               description:
-                "[Ejemplos: claridad, consistencia, sistemas útiles, experiencias accesibles, crecimiento, ejecución serena.]",
+                "claridad, consistencia, sistemas útiles, experiencias accesibles, crecimiento, ejecución serena.",
             },
           ],
         },
@@ -405,36 +408,36 @@ const resources = {
           cta: "[Abierto a conversaciones]",
           items: [
             {
-              period: "[2024 - Actualidad]",
-              role: "[Título del puesto actual]",
-              company: "[Empresa u organización actual]",
+              period: "[May 2025 - Presente]",
+              role: "Independiente / Proyectos personales",
+              company: "Freelance y proyectos propios",
               summary:
-                "[Escribe un resumen conciso de tus responsabilidades, impacto y el tipo de problemas que resuelves aquí.]",
+                "Actualmente me dedico a construir proyectos personales y ofrecer ayuda a conocidos y amigos. Esto me permite aplicar mis habilidades, aprender nuevas tecnologías y mantenerme activo en la comunidad tecnológica mientras busco oportunidades profesionales que se alineen con mis aspiraciones.",
               wins: [
-                "[Destaca un logro medible o un área de responsabilidad.]",
-                "[Menciona un proyecto, una mejora de proceso o un éxito de colaboración.]",
+                "Autodidactismo y proactividad para aprender y construir proyectos de manera independiente, lo que me ha permitido desarrollar habilidades técnicas y de gestión de proyectos sin depender de un entorno laboral formal.",
+                "Mi proyecto más actual y favorito es Android Mic, descubrí React Native, y elaboré un producto finalizado, redacté documentación técnica y creé accesibilidad para todos los usuarios, y lo publiqué como código abierto para que otros puedan usarlo.",
               ],
             },
             {
-              period: "[2022 - 2024]",
-              role: "[Título del puesto anterior]",
-              company: "[Empresa u organización anterior]",
+              period: "[Jul 2023 - May 2025]",
+              role: "Soporte técnico IT junior",
+              company: "Oficina de callcenter para cliente anónimo en San Isidro",
               summary:
-                "[Usa esta entrada para el rol que mejor muestre tu crecimiento, versatilidad o profundidad técnica.]",
+                "Brindaba soporte técnico de primer nivel dentro de la oficina resolviendo problemas de hardware y software para los empleados. También gestión y resolución de problemas de SaaS como CRM, hojas de cálculo, correo electrónico y herramientas de comunicación interna.(bajo contrato informal)",
               wins: [
-                "[Describe una habilidad que fortaleciste.]",
-                "[Describe un reto que manejaste bien.]",
+                "Desarrollo de habilidades técnicas en soporte IT, incluyendo diagnóstico de problemas, resolución de conflictos y gestión de herramientas SaaS, lo que me permitió brindar un soporte eficiente y mejorar la experiencia tecnológica de los empleados.",
+                "Colaboración y comunicación efectiva con equipos técnicos y no técnicos, lo que contribuyó a resolver problemas de manera rápida y a mantener un ambiente de trabajo productivo.",
               ],
             },
             {
-              period: "[Experiencia anterior]",
-              role: "[Título de un puesto anterior]",
-              company: "[Empresa u organización anterior]",
+              period: "[Mar 2022 - Nov 2022]",
+              role: "Atención al cliente",
+              company: "Fiambrería y Quesería Don Navarro",
               summary:
-                "[Usa roles más antiguos para mostrar tu base, habilidades transferibles o el camino que te llevó a tu dirección actual.]",
+                "Atendía a los clientes, gestionaba pedidos, realizaba entregas a domicilio por la zona, realizaba limpieza y control de stock.(bajo contrato informal)",
               wins: [
-                "[Menciona una lección, fortaleza o hito de esta etapa.]",
-                "[Menciona otra contribución relevante o un área de crecimiento.]",
+                "Trato con clientes de forma amable y eficiente, asegurando su satisfacción y fidelidad.",
+                "Manejo de maquinaria específica del rubro y mantenimiento de la limpieza e higiene del local, cumpliendo con los estándares de calidad y seguridad alimentaria.",
               ],
             },
           ],
@@ -443,39 +446,39 @@ const resources = {
           section: "Sección 03",
           title: "Horario real / ritmo actual",
           summary:
-            "Usa esta sección para describir cómo se estructura tu semana, hacia dónde va tu atención ahora y cómo equilibras trabajo, estudio, proyectos paralelos y recuperación.",
+            "Mi día atualmente está estructurado en bloques de tiempo dedicados a diferentes actividades. Paso la mayor parte de mi semana trabajando en proyectos de IT, aprendiendo nuevas tecnologías y manteniendome actualizado en noticias tecnológicas. Actualmente dedico gran parte del tiempo a mis hobbies e intereses para mantenerme motivado y creativo.",
           currentFocus: {
             intro: "Ahora mismo estoy enfocado en",
-            focus: "[trabajo, estudio o proyecto actual]",
+            focus: "independizarme y construir mis propios proyectos",
             middle: "mientras equilibro",
-            balance: "[otro compromiso]",
+            balance: "mis hobbies e intereses",
             end: "y dedico tiempo cada semana a",
-            learning: "[meta o disciplina de aprendizaje]",
+            learning: "Ciberseguridad, tecnologías en la nube, y mantenerme al día con las noticias tecnológicas.",
           },
           items: [
             {
               label: "Trabajo profundo",
-              level: 5,
+              level: 4,
               detail:
-                "[Describe en qué se concentra más tu foco semanal ahora: construir, estudiar, lanzar, mentoría o soporte.]",
+                "Dedico mi enfoque semanal más fuerte al trabajo profundo, ya sea construyendo, estudiando, enviando proyectos, mentoreando o brindando soporte.",
             },
             {
               label: "Aprendizaje",
               level: 4,
               detail:
-                "[Anota lo que estás aprendiendo o practicando de forma recurrente.]",
+                "Actualmente estoy aprendiendo sobre nuevas tecnologías y herramientas de desarrollo, así como mejorando mis habilidades con el uso de la IA y productividad.",
             },
             {
               label: "Comunidad",
               level: 3,
               detail:
-                "[Usa esto para colaboración, mentoría, voluntariado o compartir conocimiento.]",
+                "Me mantengo en contacto con amigos y conocidos que comparten mis intereses, colaborando en proyectos personales y compartiendo conocimientos y recursos para crecer juntos.",
             },
             {
               label: "Recuperación",
               level: 4,
               detail:
-                "[Úsalo para describir cómo proteges el equilibrio, el descanso y la sostenibilidad.]",
+                "Dedico tiempo a actividades que me permiten descansar, recargar energías y mantener un equilibrio saludable entre trabajo y vida personal.",
             },
           ],
         },
@@ -485,19 +488,19 @@ const resources = {
           visualLabel: "Imagen referencial del hobby",
           items: [
             {
-              title: "[Hobby 1]",
+              title: "Barista aficionado",
               description:
-                "[Escribe por qué este hobby te importa, qué te aporta o cómo complementa tu trabajo.]",
+                "Me encanta el café y disfruto experimentando con diferentes métodos de preparación, granos y técnicas para crear la taza perfecta. Amo poder compartir esta pasión con amigos y familiares, y siempre estoy buscando nuevas formas de mejorar mis habilidades como barista casero.",
             },
             {
-              title: "[Hobby 2]",
+              title: "Gimnasio",
               description:
-                "[Úsalo para añadir personalidad y mostrar cómo pasas tu tiempo fuera del trabajo.]",
+                "Disfruto mantenerme en forma y cuidar mi salud física a través del ejercicio regular en el gimnasio. Es una buena forma de liberar el estrés y rematar el día (o empezar el día).",
             },
             {
-              title: "[Hobby 3]",
+              title: "Bajista",
               description:
-                "[Menciona un interés, oficio, deporte o tema que disfrutes explorar con frecuencia.]",
+                "Practiqué bajo eléctrico durante varios años, lo que me permitió desarrollar habilidades musicales, disciplina y creatividad. Aunque no lo hago profesionalmente, la música es una parte importante de mi vida.",
             },
           ],
         },
@@ -506,14 +509,14 @@ const resources = {
           title: "Actividades extra",
           items: [
             {
-              title: "[Actividad extra 1]",
+              title: "Gaming",
               description:
-                "[Ejemplos: mentoría, voluntariado, organización comunitaria, estudio de idiomas, creación de contenido o certificaciones.]",
+                "Disfruto jugar videojuegos en mi tiempo libre. Es una forma de entretenimiento, relajación y también de conectar con amigos y comunidades en línea.",
             },
             {
-              title: "[Actividad extra 2]",
+              title: "Jardinería",
               description:
-                "[Usa esta área para mostrar iniciativa fuera de tu trabajo principal.]",
+                "Disfruto cuidar de las plantas y mantener el jardín con una variedad de plantas frutales y verduras. Disfruto del aire libre de una manera más relajada y la rutina del cuidado.",
             },
           ],
         },
@@ -521,37 +524,37 @@ const resources = {
           section: "Sección 06",
           title: "Proyectos destacados",
           summary:
-            "Mantén estas tarjetas de proyecto concisas pero específicas. Deben comunicar rápido qué construiste, cuál fue tu rol y por qué vale la pena abrir el proyecto.",
+            "Un breve resumen de algunos de los proyectos en los que he trabajado.",
           visualLabel: "Imagen referencial del proyecto",
           outcomeLabel: "Resultado",
-          linkLabel: "[Enlace del proyecto]",
+          linkLabel: "Ver proyecto",
           items: [
             {
-              name: "[Proyecto 1]",
-              type: "[Portafolio / Producto / Herramienta interna / Código abierto]",
-              stack: "[Astro, React, Tailwind, Node.js, etc.]",
-              outcome: "[Lo que logró este proyecto o lo que te enseñó.]",
+              name: "AppGro",
+              type: "Código abierto / Producto / Herramienta interna",
+              stack: "PHP, MySQL, JavaScript, HTML, CSS",
+              outcome: "Finalización de la carrera de análisis de sistemas, cliente satisfecho.",
               description:
-                "[Resume el problema, lo que construiste y la razón por la que merece un lugar en tu trabajo destacado.]",
-              href: "[Enlace del proyecto]",
+                "Appgro proviene de la necesidad de un cliente dueño de un capo agrícola de llevar un control digital de su producción. La aplicación permite gestionar cultivos, registrar actividades diarias, controlar inventarios y generar reportes personalizados para optimizar la producción agrícola, sin necesidad de pilas de papeles o conocimientos técnicos avanzados.",
+              href: "https://github.com/Dario849/AppGro",
             },
             {
-              name: "[Proyecto 2]",
-              type: "[Portafolio / Producto / Herramienta interna / Código abierto]",
-              stack: "[Stack tecnológico]",
-              outcome: "[Resultado o aprendizaje clave.]",
+              name: "QR Pass",
+              type: "Herramienta interna / Producto / Código abierto",
+              stack: "JavaScript, HTML, CSS, librerías de generación y escaneo de QR, PostgreSQL",
+              outcome: "En proceso de documentación de arquitectura y funcionalidades, aprendizaje de nuevas tecnologías.",
               description:
-                "[Usa esta tarjeta para un proyecto que muestre otra fortaleza: UI, arquitectura, soporte, análisis o entrega.]",
-              href: "[Enlace del proyecto]",
+                "QR Pass es una aplicación web que permite generar y escanear códigos QR para facilitar y registrar el acceso a edificios. La aplicación permite a los usuarios generar códigos QR únicos para cada visitante, que pueden ser escaneados en la entrada del edificio para registrar su acceso de manera rápida y segura, sin necesidad de tarjetas físicas o sistemas de control de acceso tradicionales. Posibilita llevar un registro digital de los accesos, mejorando la seguridad y la eficiencia en la gestión de visitantes.",
+              href: "https://github.com/Dario849/QRpassport",
             },
             {
-              name: "[Proyecto 3]",
-              type: "[Portafolio / Producto / Herramienta interna / Código abierto]",
-              stack: "[Stack tecnológico]",
-              outcome: "[Resultado o aprendizaje clave.]",
+              name: "Android Mic",
+              type: "Código abierto / Herramienta interna",
+              stack: "React Native, Java, Kotlin, librerías de procesamiento de audio, Android SDK",
+              outcome: "Accesibilidad a un micrófono externo para usuarios de Android, aprendizaje de desarrollo móvil y procesamiento de audio.",
               description:
-                "[Usa esta tarjeta para mostrar amplitud, profundidad o un proyecto que refleje tus aspiraciones.]",
-              href: "[Enlace del proyecto]",
+                "Desarrollado por mí y para mí, Android Mic es una aplicación móvil que convierte tu teléfono Android en un micrófono externo para tu computadora. La aplicación se conecta a través de Wi-Fi o USB, permitiendo transmitir audio de alta calidad desde el teléfono a la computadora, lo que es ideal para videollamadas, grabaciones o streaming. Es una solución accesible para quienes necesitan un micrófono externo pero no quieren invertir en hardware adicional.",
+              href: "https://github.com/Dario849/AndroidMic",
             },
           ],
         },
@@ -559,29 +562,30 @@ const resources = {
           section: "Sección 07",
           title: "Aspiraciones",
           summary:
-            "Usa esta área para explicar en qué tipo de creador, compañero y profesional quieres convertirte. Las mejores versiones de esta sección se sienten honestas, específicas y con dirección.",
+            "Mi sueño es vivir como profesional dentro del mundo de la tecnología, y quien sabe, quizá en un futuro pueda vivir retirado en el campo lejos de la ciudad, mientras tanto, me intento mantener al día y mejorando para poder crecer profesionalmente. Algunos otros de mis sueños serían poder formar parte o ser creador de un producto real, que aporte a la humanidad.",
           goalLabel: "Meta",
           items: [
-            "[Aspiración 1: el tipo de trabajo o impacto hacia el que quieres crecer.]",
-            "[Aspiración 2: el tipo de problemas, industrias o equipos a los que quieres contribuir.]",
-            "[Aspiración 3: las habilidades, hábitos o responsabilidades que quieres seguir desarrollando.]",
+            "Trabajar dentro de una empresa de consultoría, agencia de IT o startup que me permita crecer, aprender y aportar valor a través de mis habilidades técnicas y de análisis.",
+            "Explotar al máximo las nuevas herramientas de IA para mejorar mi productividad, aprender nuevas tecnologías y construir proyectos personales que me apasionan.",
+            "Vivir tranquilo, con estabilidad económica y emocional, disfrutando de mis hobbies e intereses.",
           ],
         },
         contact: {
           section: "Sección 08",
           title: "Contacto y próxima conversación",
           summary:
-            "Reemplaza esta área con la forma más clara de contactarte, entender tu disponibilidad y continuar la conversación después de explorar tu historia.",
+            "La mejor forma de contactarme es enviándome un correo electrónico. También tengo LinkedIn, y GitHub.",
+          calltoAction: "Contactame",
           items: [
-            { label: "Correo", value: "[Correo electrónico]", href: "mailto:[Correo electrónico]" },
-            { label: "GitHub", value: "[URL de GitHub]", href: "[URL de GitHub]" },
-            { label: "LinkedIn", value: "[URL de LinkedIn]", href: "[URL de LinkedIn]" },
-            { label: "Sitio web", value: "[URL del portafolio]", href: "[URL del portafolio]" },
+            { label: "Correo", value: "dariorodriguez7810@gmail.com", href: "mailto:dariorodriguez7810@gmail.com" },
+            { label: "GitHub", value: "Dario849", href: "https://github.com/Dario849" },
+            { label: "LinkedIn", value: "Dario Rodriguez", href: "https://www.linkedin.com/in/devdariorodriguez/" },
+            { label: "Sitio web", value: "Mi Portafolio", href: "https://dario849.github.io/github-portfolio/" },
           ],
         },
         footer: {
-          identity: "[Tu Nombre] / [Título Profesional] / [Estado de disponibilidad]",
-          edition: "{{year}} edición provisional para reemplazo manual",
+          identity: "Darío Rodríguez / Analísta funcional & técnico de IT / Disponible full-time",
+          edition: "{{date}} última edición",
         },
       },
     },
