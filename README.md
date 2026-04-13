@@ -8,7 +8,7 @@ Este es el enlace directo a mi portfolio:
 
 <div align="center">
 
-### [** Mi Portfolio **<img width="999" height="904" alt="image" src="https://github.com/user-attachments/assets/d944aec7-e34d-4b5a-9aee-574d69926d33" />](https://dario849.github.io/github-portfolio/)
+### [** Mi Portfolio **<img width="1920" height="944" alt="portfolio_image" src="https://github.com/user-attachments/assets/52af6d59-c945-4c61-9cdf-95ec19c4d396" />](https://dario849.github.io/github-portfolio/)
 
 
 </div>
