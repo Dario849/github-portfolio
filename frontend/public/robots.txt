@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dario849.github.io/sitemap.xml
+Sitemap: https://dario849.github.io/github-portfolio/sitemap.xml

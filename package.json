@@ -6,12 +6,12 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "pnpm --filter ** dev",
-    "build": "pnpm --filter ** build",
-    "preview": "pnpm --filter ** preview",
-    "astro": "pnpm --filter ** astro",
-    "predeploy": "pnpm --filter ** predeploy",
-    "deploy": "pnpm --filter ** deploy"
+    "dev": "pnpm --filter frontend dev",
+    "build": "pnpm --filter frontend build",
+    "preview": "pnpm --filter frontend preview",
+    "astro": "pnpm --filter frontend astro",
+    "predeploy": "pnpm --filter frontend predeploy",
+    "gh-deploy": "pnpm --filter frontend gh-deploy"
   },
   "dependencies": {
     "@astrojs/mdx": "5.0.2",

@@ -286,7 +286,7 @@ const resources = {
             { label: "Email", value: "dariorodriguez7810@gmail.com", href: "mailto:dariorodriguez7810@gmail.com" },
             { label: "GitHub", value: "Dario849", href: "https://github.com/Dario849" },
             { label: "LinkedIn", value: "Darío Rodríguez", href: "https://www.linkedin.com/in/dario-rodriguez/" },
-            { label: "Website", value: "My Portfolio", href: "https://dario849.github.io/" },
+            { label: "Website", value: "My Portfolio", href: "https://dario849.github.io/github-portfolio/" },
           ],
         },
         footer: {

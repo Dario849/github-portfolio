@@ -11,7 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "predeploy": "astro build",
-    "deploy": "gh-pages -d dist"
+    "gh-deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@astrojs/react": "5.0.1",
