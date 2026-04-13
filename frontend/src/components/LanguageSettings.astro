@@ -44,6 +44,13 @@ const options = [
 
 <script is:inline>
   const storageKey = "language";
+  const normalizePath = (value) => {
+    if (!value || value === "/") {
+      return "/";
+    }
+
+    return value.endsWith("/") ? value : `${value}/`;
+  };
 
   document.querySelectorAll("[data-language-settings]").forEach((root) => {
     if (!(root instanceof HTMLElement)) {
@@ -52,10 +59,15 @@ const options = [
 
     const currentLanguage = root.dataset.currentLanguage;
     const savedLanguage = window.localStorage.getItem(storageKey);
-    const currentPath = window.location.pathname || "/";
-    const spanishPath = root.dataset.languagePathEs ?? "/es/";
+    const currentPath = normalizePath(window.location.pathname || "/");
+    const englishPath = normalizePath(root.dataset.languagePathEn ?? "/");
+    const spanishPath = normalizePath(root.dataset.languagePathEs ?? "/es/");
 
-    if (currentLanguage === "en" && currentPath === "/" && savedLanguage === "es") {
+    if (
+      currentLanguage === "en" &&
+      currentPath === englishPath &&
+      savedLanguage === "es"
+    ) {
       window.location.replace(spanishPath);
       return;
     }

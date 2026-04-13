@@ -608,8 +608,29 @@ export interface DerivedSiteMetadata {
 
 export const defaultLanguage: Language = "en";
 
+const getBasePath = () => {
+  const basePath = import.meta.env.BASE_URL || "/";
+
+  if (basePath === "/") {
+    return "";
+  }
+
+  return basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
+};
+
+export const withBasePath = (path = "") => {
+  const basePath = getBasePath();
+  const normalizedPath = path.replace(/^\/+/, "");
+
+  if (!basePath) {
+    return normalizedPath ? `/${normalizedPath}` : "/";
+  }
+
+  return normalizedPath ? `${basePath}/${normalizedPath}` : `${basePath}/`;
+};
+
 export const getPathForLanguage = (language: Language) => {
-  return language === "es" ? "/es/" : "/";
+  return language === "es" ? withBasePath("es/") : withBasePath();
 };
 
 const languageLocales: Record<Language, string> = {

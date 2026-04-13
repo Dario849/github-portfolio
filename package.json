@@ -9,9 +9,7 @@
     "dev": "pnpm --filter frontend dev",
     "build": "pnpm --filter frontend build",
     "preview": "pnpm --filter frontend preview",
-    "astro": "pnpm --filter frontend astro",
-    "predeploy": "pnpm --filter frontend predeploy",
-    "gh-deploy": "pnpm --filter frontend gh-deploy"
+    "astro": "pnpm --filter frontend astro"
   },
   "dependencies": {
     "@astrojs/mdx": "5.0.2",
@@ -19,7 +17,6 @@
     "@astrojs/sitemap": "3.7.1",
     "@tailwindcss/vite": "4.2.2",
     "astro": "6.0.8",
-    "gh-pages": "6.3.0",
     "sharp": "0.34.3",
     "tailwindcss": "4.2.2"
   }

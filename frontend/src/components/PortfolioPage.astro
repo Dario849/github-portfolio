@@ -13,6 +13,7 @@ import {
 import {
   getDerivedSiteMetadata,
   getPathForLanguage,
+  withBasePath,
   type Language,
   type SiteCopy,
 } from "../i18n/site";
@@ -37,6 +38,8 @@ const date = new Date(2026, 3, 12).toLocaleDateString("es-ES", {
 });
 const ShowTime = new Date().toLocaleTimeString([], { hour12: false });
 const footerEdition = copy.footer.edition.replace("{{date}}", String(date));
+const faviconSvgHref = withBasePath("favicon.svg");
+const faviconIcoHref = withBasePath("favicon.ico");
 const hobbyCards = copy.hobbies.items.map((item, index) => ({
   ...item,
   image: hobbyPlaceholderImages[index % hobbyPlaceholderImages.length],
@@ -167,8 +170,8 @@ const imageGalleryStructuredDataJson = JSON.stringify({
 <html lang={language}>
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={faviconSvgHref} />
+    <link rel="icon" href={faviconIcoHref} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageMetadata.title}</title>

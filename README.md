@@ -80,10 +80,20 @@ pnpm --filter frontend astro check
 
 ## Deployment
 _Intended only for GitHub Pages_
+
+Deployment is handled by **GitHub Actions**.
+
+1. In repository **Settings -> Pages**, set **Source** to **GitHub Actions**.
+2. Push to `main`.
+3. The workflow in `.github/workflows/deploy.yml` builds `frontend/dist` and publishes it to GitHub Pages.
+
+For local validation before pushing:
+
 ```bash
-pnpm run deploy
+pnpm --filter frontend astro check
+pnpm --filter frontend build
+pnpm --filter frontend preview
 ```
-  - This is a root-level script that runs `pnpm --filter frontend deploy`, which in turn runs `gh-pages -d frontend/dist` to publish the built Astro output to the `gh-pages` branch.
 
 ## Notes
 
