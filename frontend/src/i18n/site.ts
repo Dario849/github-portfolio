@@ -344,7 +344,7 @@ const resources = {
           bio:
             "Hola, soy Darío, un Analísta funcional & técnico de IT. Me gusta construir cosas, explorar nuevas tecnologías, la música, el café y más.",
           primaryCta: "Ver trabajo destacado",
-          secondaryCta: "Contacto provisional",
+          secondaryCta: "Como contactarme",
           quickFacts: [
             { label: "Base", value: "Villa Lynch, San Martín, Buenos Aires, Argentina" },
             { label: "Enfoque", value: "Conseguir un trabajo, aprender nuevas tecnologías y vivir la vida al máximo" },
@@ -574,7 +574,7 @@ const resources = {
           section: "Sección 08",
           title: "Contacto y próxima conversación",
           summary:
-            "La mejor forma de contactarme es enviándome un correo electrónico. También tengo LinkedIn, y GitHub.",
+            "La mejor forma de contactarme es enviándome un correo electrónico o por mensaje en LinkedIn. También tengo GitHub.",
           calltoAction: "Contactame",
           items: [
             { label: "Correo", value: "dariorodriguez7810@gmail.com", href: "mailto:dariorodriguez7810@gmail.com" },

@@ -256,7 +256,10 @@ const imageGalleryStructuredDataJson = JSON.stringify({
   <body>
     <div class="Cursor_Background-Orb"></div>
     <div class="site-shell">
-      <header class="site-header sticky top-0 z-40 px-4 pt-4 md:px-6">
+      <header
+        class="site-header sticky top-0 z-40 px-4 pt-4 md:px-6"
+        data-site-header
+      >
         <div
           class="site-header__inner paper-card mx-auto flex max-w-7xl flex-col gap-4 rounded-3xl px-5 py-4 md:flex-row md:items-center md:justify-between md:px-6"
         >
@@ -271,7 +274,7 @@ const imageGalleryStructuredDataJson = JSON.stringify({
 
           <nav
             aria-label={copy.header.primaryNavAriaLabel}
-            class="flex flex-wrap items-center gap-1.5"
+            class="site-primary-nav flex max-w-full flex-nowrap items-center gap-1.5 overflow-x-auto pb-1 md:flex-wrap md:overflow-visible md:pb-0"
           >
             {
               primaryNavItems.map((item) => (
@@ -560,7 +563,7 @@ const imageGalleryStructuredDataJson = JSON.stringify({
                     class="paper-card media-card rounded-[1.35rem] will-change-transform motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-500"
                     style={`animation-delay: ${index * 90}ms;`}
                   >
-                    <div class="media-card__image">
+                    {/* <div class="media-card__image">
                       <button
                         type="button"
                         class="media-card__image-trigger"
@@ -581,9 +584,8 @@ const imageGalleryStructuredDataJson = JSON.stringify({
                           decoding="async"
                         />
                       </button>
-                    </div>
+                    </div> */}
                     <div class="media-card__body">
-                      <p class="subtle-label">{copy.hobbies.section}</p>
                       <h3 class="display-face mt-2 text-[1.8rem] leading-tight text-(--ink)">
                         {item.title}
                       </h3>
@@ -610,7 +612,6 @@ const imageGalleryStructuredDataJson = JSON.stringify({
               {
                 copy.activities.items.map((item) => (
                   <article class="paper-card detail-card rounded-[1.25rem] p-5">
-                    <p class="subtle-label">{copy.activities.section}</p>
                     <h3 class="display-face mt-2 text-[1.8rem] leading-tight text-(--ink)">
                       {item.title}
                     </h3>
@@ -835,6 +836,9 @@ const imageGalleryStructuredDataJson = JSON.stringify({
       </section>
     </div>
     <script>
+      import { createConsoleLogger } from "astro/app";
+import { number } from "astro:schema";
+
       setInterval(() => {
         const ShowTime = new Date().toLocaleTimeString([], {
           hour: "2-digit",
@@ -871,7 +875,51 @@ const imageGalleryStructuredDataJson = JSON.stringify({
         const focusCloseButton = document.querySelector<HTMLElement>(
           ".gallery-modal__close",
         );
+        const siteHeader =
+          document.querySelector<HTMLElement>("[data-site-header]");
+        const mobileHeaderQuery = window.matchMedia("(max-width: 767px)");
         let lastFocusedElement: HTMLElement | null = null;
+        let headerFrame = 0;
+        let headerIsVisible = true; /* Track state to prevent toggle loops */
+
+        const syncHeaderState = () => {
+          if (!siteHeader) {
+            return;
+          }
+
+          if (!mobileHeaderQuery.matches) {
+            siteHeader.classList.remove("site-header--hidden");
+            headerIsVisible = true;
+            return;
+          }
+
+          const currentScrollY = window.scrollY;
+
+          /* Hysteresis: two thresholds prevent toggle at boundary */
+          if (currentScrollY < 180 ) {
+            if (!headerIsVisible) {
+              siteHeader.classList.remove("site-header--hidden");
+              headerIsVisible = true;
+            }
+          } else if (currentScrollY > 220) {
+            if (headerIsVisible) {
+              siteHeader.classList.add("site-header--hidden");
+              headerIsVisible = false;
+            }
+          }
+          /* Between 180-220: no state change (prevents toggle loop) */
+        };
+
+        const requestHeaderSync = () => {
+          if (headerFrame) {
+            return;
+          }
+
+          headerFrame = window.requestAnimationFrame(() => {
+            headerFrame = 0;
+            syncHeaderState();
+          });
+        };
 
         const openGallery = (
           source: string,
@@ -924,6 +972,11 @@ const imageGalleryStructuredDataJson = JSON.stringify({
             closeGallery();
           }
         });
+
+        syncHeaderState();
+        window.addEventListener("scroll", requestHeaderSync, { passive: true });
+        window.addEventListener("resize", requestHeaderSync);
+        mobileHeaderQuery.addEventListener("change", requestHeaderSync);
 
         if (cursorOrb) {
           let targetX = 0;

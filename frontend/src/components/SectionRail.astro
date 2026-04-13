@@ -19,7 +19,11 @@ const totalItems = Math.max(items.length - 1, 1);
   <nav aria-label={mobileLabel} class="section-rail-mobile">
     {
       items.map((item) => (
-        <a class="section-rail-mobile__link" href={item.href} data-section-link={item.href}>
+        <a
+          class="section-rail-mobile__link"
+          href={item.href}
+          data-section-link={item.href}
+        >
           <span>{item.label}</span>
         </a>
       ))
@@ -28,13 +32,25 @@ const totalItems = Math.max(items.length - 1, 1);
 
   <nav aria-label={ariaLabel} class="section-rail">
     <div class="section-rail__track">
-      <div class="section-rail__progress" data-section-progress aria-hidden="true"></div>
+      <div
+        class="section-rail__progress"
+        data-section-progress
+        aria-hidden="true"
+      >
+      </div>
       <ol class="section-rail__list">
         {
           items.map((item, index) => (
-            <li class="section-rail__item" style={`--section-position:${index / totalItems};`}>
-              <a class="section-rail__link" href={item.href} data-section-link={item.href}>
-                <span class="section-rail__marker" aria-hidden="true"></span>
+            <li
+              class="section-rail__item"
+              style={`--section-position:${index / totalItems};`}
+            >
+              <a
+                class="section-rail__link"
+                href={item.href}
+                data-section-link={item.href}
+              >
+                <span class="section-rail__marker" aria-hidden="true" />
                 <span class="section-rail__tooltip">
                   <span class="section-rail__label">{item.label}</span>
                   <span class="section-rail__title">{item.title}</span>
@@ -56,32 +72,64 @@ const totalItems = Math.max(items.length - 1, 1);
       return;
     }
 
-    const links = Array.from(root.querySelectorAll("[data-section-link]")).filter(
+    const links = Array.from(
+      root.querySelectorAll("[data-section-link]"),
+    ).filter(
       (link): link is HTMLAnchorElement => link instanceof HTMLAnchorElement,
     );
     const progress = root.querySelector("[data-section-progress]");
-    const sections = links
-      .map((link) => {
-        const href = link.dataset.sectionLink;
-        const sectionId = href?.startsWith("#") ? href.slice(1) : undefined;
+    const uniqueSections = new Map<
+      string,
+      { href: string; sectionId: string; section: HTMLElement }
+    >();
 
-        if (!sectionId) {
-          return null;
-        }
+    links.forEach((link) => {
+      const href = link.dataset.sectionLink;
+      const sectionId = href?.startsWith("#") ? href.slice(1) : undefined;
 
-        const section = document.getElementById(sectionId);
+      if (!href || !sectionId || uniqueSections.has(sectionId)) {
+        return;
+      }
 
-        if (!(section instanceof HTMLElement)) {
-          return null;
-        }
+      const section = document.getElementById(sectionId);
 
-        return { href, sectionId, section };
-      })
-      .filter((entry): entry is { href: string; sectionId: string; section: HTMLElement } => Boolean(entry));
+      if (!(section instanceof HTMLElement)) {
+        return;
+      }
+
+      uniqueSections.set(sectionId, { href, sectionId, section });
+    });
+
+    const sections = Array.from(uniqueSections.values());
+    const mobileRail = root.querySelector(".section-rail-mobile");
+    let lastActiveSectionId = "";
+    let railAnimationFrame = 0;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
 
     if (sections.length === 0) {
       return;
     }
+
+    const getHeaderBottom = () => {
+      const header = document.querySelector(".site-header");
+
+      if (!(header instanceof HTMLElement)) {
+        return 0;
+      }
+
+      return Math.max(header.getBoundingClientRect().bottom, 0);
+    };
+
+    const getFocusLine = () => {
+      const headerBottom = getHeaderBottom();
+
+      return Math.min(
+        Math.max(headerBottom + 28, window.innerHeight * 0.80),
+        window.innerHeight * 0.80,
+      );
+    };
 
     let metrics = sections.map(({ href, sectionId, section }) => ({
       href,
@@ -98,6 +146,71 @@ const totalItems = Math.max(items.length - 1, 1);
           link.removeAttribute("aria-current");
         }
       });
+
+      if (
+        sectionId === lastActiveSectionId ||
+        !(mobileRail instanceof HTMLElement) ||
+        mobileRail.scrollWidth <= mobileRail.clientWidth
+      ) {
+        lastActiveSectionId = sectionId;
+        return;
+      }
+
+      const activeMobileLink = mobileRail.querySelector<HTMLAnchorElement>(
+        `[data-section-link="#${sectionId}"]`,
+      );
+
+      if (activeMobileLink) {
+        if (railAnimationFrame) {
+          cancelAnimationFrame(railAnimationFrame);
+        }
+
+        const railRect = mobileRail.getBoundingClientRect();
+        const linkRect = activeMobileLink.getBoundingClientRect();
+        const currentLeft = mobileRail.scrollLeft;
+        const targetLeft =
+          currentLeft +
+          (linkRect.left +
+            linkRect.width / 2 -
+            (railRect.left + railRect.width / 2));
+        const clampedTargetLeft = Math.min(
+          Math.max(targetLeft, 0),
+          Math.max(mobileRail.scrollWidth - mobileRail.clientWidth, 0),
+        );
+        const startLeft = currentLeft;
+        const distance = clampedTargetLeft - startLeft;
+
+        if (Math.abs(distance) > 1) {
+          if (prefersReducedMotion.matches) {
+            mobileRail.scrollLeft = clampedTargetLeft;
+            lastActiveSectionId = sectionId;
+            return;
+          }
+
+          const duration = 340;
+          const startTime = performance.now();
+
+          const easeOutQuint = (value: number) => 1 - Math.pow(1 - value, 5);
+
+          const animateRail = (timestamp: number) => {
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easedProgress = easeOutQuint(progress);
+
+            mobileRail.scrollLeft = startLeft + distance * easedProgress;
+
+            if (progress < 1) {
+              railAnimationFrame = requestAnimationFrame(animateRail);
+            } else {
+              railAnimationFrame = 0;
+            }
+          };
+
+          railAnimationFrame = requestAnimationFrame(animateRail);
+        }
+      }
+
+      lastActiveSectionId = sectionId;
     };
 
     const updateMetrics = () => {
@@ -110,28 +223,49 @@ const totalItems = Math.max(items.length - 1, 1);
     };
 
     const updateState = () => {
-      const header = document.querySelector(".site-header__inner");
-      const headerOffset = header instanceof HTMLElement ? header.offsetHeight + 200 : 140;
-      const scrollAnchor = window.scrollY + headerOffset;
+      const headerBottom = getHeaderBottom();
+      const focusLine = getFocusLine();
+      const scrollAnchor = window.scrollY + focusLine;
 
-      let active = metrics[0];
+      let activeSectionId = metrics[0]?.sectionId ?? "";
+      let bestScore = Number.NEGATIVE_INFINITY;
 
-      for (const metric of metrics) {
-        if (scrollAnchor >= metric.top) {
-          active = metric;
-        } else {
-          break;
+      sections.forEach(({ section, sectionId }, index) => {
+        const rect = section.getBoundingClientRect();
+        const visibleTop = Math.max(rect.top, headerBottom);
+        const visibleBottom = Math.min(rect.bottom, window.innerHeight);
+        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+        const containsFocusLine =
+          rect.top <= focusLine && rect.bottom >= focusLine;
+        const distanceToFocusLine =
+          rect.bottom < focusLine
+            ? focusLine - rect.bottom
+            : rect.top > focusLine
+              ? rect.top - focusLine
+              : 0;
+        const score =
+          (containsFocusLine ? 100000 : 0) +
+          visibleHeight * 10 -
+          distanceToFocusLine * 3 -
+          index * 0.01;
+
+        if (score > bestScore) {
+          bestScore = score;
+          activeSectionId = sectionId;
         }
-      }
+      });
 
-      syncActiveState(active.sectionId);
+      syncActiveState(activeSectionId);
 
       if (progress instanceof HTMLElement) {
         const start = metrics[0].top;
-        const end = Math.max(metrics[metrics.length - 1].bottom - window.innerHeight * 0.62, start + 1);
+        const end = Math.max(metrics[metrics.length - 1].bottom, start + 1);
         const rawProgress = (scrollAnchor - start) / (end - start);
         const clampedProgress = Math.min(Math.max(rawProgress, 0), 1);
-        progress.style.setProperty("--rail-progress", clampedProgress.toFixed(4));
+        progress.style.setProperty(
+          "--rail-progress",
+          clampedProgress.toFixed(4),
+        );
       }
     };
 
