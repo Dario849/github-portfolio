@@ -1,0 +1,18 @@
+---
+import type { HighlightItem } from '@/features/portfolio/content'
+
+interface Props {
+  items: HighlightItem[]
+}
+
+const { items } = Astro.props
+---
+
+<div class="grid gap-4 lg:grid-cols-2">
+  {items.map((item) => (
+    <article class="surface-card rounded-[1.75rem] p-6">
+      <p class="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+      <p class="mt-3 text-sm leading-7 text-[var(--muted)]">{item.description}</p>
+    </article>
+  ))}
+</div>

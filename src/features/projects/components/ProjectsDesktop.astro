@@ -1,0 +1,14 @@
+---
+import ProjectCard from '@/features/projects/components/ProjectCard.astro'
+import type { ProjectItem } from '@/features/portfolio/content'
+
+interface Props {
+  projects: ProjectItem[]
+}
+
+const { projects } = Astro.props
+---
+
+<div class="grid gap-4 lg:grid-cols-3">
+  {projects.map((project) => <ProjectCard project={project} />)}
+</div>

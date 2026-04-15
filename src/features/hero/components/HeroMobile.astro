@@ -1,0 +1,37 @@
+---
+import DevicePill from '@/features/hero/components/DevicePill'
+import type { DeviceKind } from '@/lib/device'
+import type { PortfolioCopy } from '@/features/portfolio/content'
+
+interface Props {
+  device: DeviceKind
+  copy: PortfolioCopy['hero']
+  deviceLabels: PortfolioCopy['devicePill']
+}
+
+const { device, copy, deviceLabels } = Astro.props
+---
+
+<section id="intro" class="scroll-mt-28 px-4 pb-10 pt-10 sm:px-6">
+  <div class="mx-auto max-w-xl space-y-6">
+    <p class="eyebrow-token">{copy.eyebrow}</p>
+    <h1 class="text-4xl font-semibold tracking-[-0.05em] text-[var(--foreground)] sm:text-5xl">
+      {copy.title}
+      <span class="block text-[var(--subtle)]">{copy.highlight}</span>
+    </h1>
+    <p class="text-base leading-7 text-[var(--muted)]">{copy.description}</p>
+    <DevicePill client:load initialDevice={device} labels={deviceLabels} />
+    <div class="grid gap-3">
+      <a href="#projects" class="action-primary">
+        {copy.mobilePrimaryCta}
+      </a>
+      <a href="#contact" class="action-secondary">
+        {copy.mobileSecondaryCta}
+      </a>
+    </div>
+    <div class="surface-card rounded-[1.75rem] p-5">
+      <p class="text-sm font-semibold text-[var(--foreground)]">{copy.mobileCardTitle}</p>
+      <p class="mt-2 text-sm leading-6 text-[var(--muted)]">{copy.mobileCardDescription}</p>
+    </div>
+  </div>
+</section>

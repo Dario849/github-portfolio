@@ -1,0 +1,52 @@
+---
+import DevicePill from '@/features/hero/components/DevicePill'
+import type { DeviceKind } from '@/lib/device'
+import type { PortfolioCopy } from '@/features/portfolio/content'
+
+interface Props {
+  device: DeviceKind
+  copy: PortfolioCopy['hero']
+  deviceLabels: PortfolioCopy['devicePill']
+}
+
+const { device, copy, deviceLabels } = Astro.props
+---
+
+<section id="intro" class="scroll-mt-28 px-4 pb-14 pt-12 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
+  <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.3fr_0.9fr] lg:items-end">
+    <div class="space-y-8">
+      <p class="eyebrow-token">{copy.eyebrow}</p>
+      <div class="space-y-6">
+        <h1 class="max-w-4xl text-5xl font-semibold tracking-[-0.04em] text-[var(--foreground)] lg:text-7xl">
+          {copy.title}
+          <span class="block text-[var(--subtle)]">{copy.highlight}</span>
+        </h1>
+        <p class="max-w-2xl text-lg leading-8 text-[var(--muted)]">{copy.description}</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="#projects" class="action-primary">
+          {copy.primaryCta}
+        </a>
+        <a href="#stack" class="action-secondary">
+          {copy.secondaryCta}
+        </a>
+      </div>
+    </div>
+
+    <div class="surface-panel space-y-6 rounded-[2rem] p-8">
+      <DevicePill client:load initialDevice={device} labels={deviceLabels} />
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="surface-card-strong rounded-3xl p-5">
+          <p class="text-subtle-token">{copy.statOneLabel}</p>
+          <p class="mt-4 text-3xl font-semibold text-[var(--foreground)]">{copy.statOneValue}</p>
+          <p class="mt-2 text-sm leading-6 text-[var(--muted)]">{copy.statOneDescription}</p>
+        </div>
+        <div class="surface-card-strong rounded-3xl p-5">
+          <p class="text-subtle-token">{copy.statTwoLabel}</p>
+          <p class="mt-4 text-3xl font-semibold text-[var(--foreground)]">{copy.statTwoValue}</p>
+          <p class="mt-2 text-sm leading-6 text-[var(--muted)]">{copy.statTwoDescription}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

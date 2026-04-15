@@ -1,0 +1,33 @@
+---
+import type { PortfolioCopy } from '@/features/portfolio/content'
+
+interface Props {
+  copy: PortfolioCopy['contact']
+}
+
+const { copy } = Astro.props
+---
+
+<div class="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+  <article class="surface-card rounded-[1.75rem] p-6">
+    <p class="text-subtle-token">{copy.panelEyebrow}</p>
+    <h3 class="mt-4 text-2xl font-semibold text-[var(--foreground)]">{copy.panelTitle}</h3>
+    <p class="mt-4 max-w-xl text-sm leading-7 text-[var(--muted)]">
+      {copy.panelDescription}
+    </p>
+  </article>
+
+  <article class="surface-accent rounded-[1.75rem] p-6">
+    <div class="space-y-3 text-sm text-[var(--accent-text)]">
+      <a class="surface-card-strong block rounded-2xl px-4 py-3 transition hover:opacity-90" href="mailto:dario@example.com">
+        {copy.emailLabel}
+      </a>
+      <a class="surface-card-strong block rounded-2xl px-4 py-3 transition hover:opacity-90" href="https://github.com/" target="_blank" rel="noreferrer">
+        {copy.githubLabel}
+      </a>
+      <a class="surface-card-strong block rounded-2xl px-4 py-3 transition hover:opacity-90" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+        {copy.linkedinLabel}
+      </a>
+    </div>
+  </article>
+</div>

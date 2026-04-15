@@ -1,0 +1,95 @@
+---
+import RootLayout from '@/layouts/RootLayout.astro'
+import SectionShell from '@/components/layout/SectionShell.astro'
+import HeroDesktop from '@/features/hero/components/HeroDesktop.astro'
+import HeroMobile from '@/features/hero/components/HeroMobile.astro'
+import ScrollTabs from '@/features/navigation/components/ScrollTabs'
+import HeaderControls from '@/features/navigation/components/HeaderControls'
+import HighlightsGrid from '@/features/about/components/HighlightsGrid.astro'
+import ProjectsDesktop from '@/features/projects/components/ProjectsDesktop.astro'
+import ProjectsMobile from '@/features/projects/components/ProjectsMobile.astro'
+import StackBoard from '@/features/stack/components/StackBoard.astro'
+import ContactPanel from '@/features/contact/components/ContactPanel.astro'
+import { getPortfolioContent } from '@/features/portfolio/content'
+
+export const prerender = false
+
+const device = Astro.locals.device?.kind ?? 'desktop'
+const isMobile = device === 'mobile'
+const locale = Astro.locals.locale
+const theme = Astro.locals.theme
+const copy = getPortfolioContent(locale)
+---
+
+<RootLayout
+  title={copy.meta.title}
+  description={copy.meta.description}
+  locale={locale}
+  theme={theme}
+  skipToContentLabel={copy.meta.skipToContent}
+>
+  <div class="relative min-h-screen overflow-x-clip">
+    <div class="page-glow pointer-events-none absolute inset-x-0 top-0 h-[32rem]"></div>
+
+    <header class="sticky top-0 z-40 border-b border-[var(--border-soft)] bg-[color:var(--background-elevated)] py-4 backdrop-blur-xl">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3">
+        <HeaderControls
+          client:load
+          initialLocale={locale}
+          initialTheme={theme}
+          currentPath={Astro.url.pathname}
+          labels={copy.controls}
+        />
+        <ScrollTabs client:load sections={copy.navSections} initialDevice={device} />
+      </div>
+    </header>
+
+    <main id="content">
+      {isMobile ? (
+        <HeroMobile device={device} copy={copy.hero} deviceLabels={copy.devicePill} />
+      ) : (
+        <HeroDesktop device={device} copy={copy.hero} deviceLabels={copy.devicePill} />
+      )}
+
+      <SectionShell
+        id="about"
+        eyebrow={copy.about.eyebrow}
+        title={copy.about.title}
+        lead={copy.about.lead}
+      >
+        <HighlightsGrid items={copy.about.highlights} />
+      </SectionShell>
+
+      <SectionShell
+        id="projects"
+        eyebrow={copy.projects.eyebrow}
+        title={copy.projects.title}
+        lead={copy.projects.lead}
+      >
+        {isMobile ? (
+          <ProjectsMobile projects={copy.projects.items} />
+        ) : (
+          <ProjectsDesktop projects={copy.projects.items} />
+        )}
+      </SectionShell>
+
+      <SectionShell
+        id="stack"
+        eyebrow={copy.stack.eyebrow}
+        title={copy.stack.title}
+        lead={copy.stack.lead}
+      >
+        <StackBoard items={copy.stack.notes} />
+      </SectionShell>
+
+      <SectionShell
+        id="contact"
+        eyebrow={copy.contact.eyebrow}
+        title={copy.contact.title}
+        lead={copy.contact.lead}
+      >
+        <ContactPanel copy={copy.contact} />
+      </SectionShell>
+    </main>
+  </div>
+</RootLayout>
