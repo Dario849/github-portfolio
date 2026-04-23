@@ -1,5 +1,6 @@
 # build output
 dist/
+
 # generated types
 .astro/
 
@@ -8,6 +9,13 @@ dist/
 
 # dependencies
 node_modules/
+
+# Agents
+.agents/
+.github
+
+# local configuration files
+.vscode/
 
 # logs
 npm-debug.log*
