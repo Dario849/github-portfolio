@@ -4,4 +4,7 @@ node_modules
 .copilot/
 .github/copilot-instructions.md
 .env
+.astro/
+.github/
+dist
 skills-lock.json
