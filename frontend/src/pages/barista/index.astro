@@ -1,0 +1,16 @@
+---
+import BaristaPage from "../../components/BaristaPage.astro";
+import {
+  baristaCopy,
+  baristaPdfPath,
+  getBaristaMetadata,
+} from "../../i18n/barista";
+
+const pageUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : undefined;
+
+const metadata = getBaristaMetadata(pageUrl);
+---
+
+<BaristaPage copy={baristaCopy} metadata={metadata} pageUrl={pageUrl} pdfHref={baristaPdfPath} />

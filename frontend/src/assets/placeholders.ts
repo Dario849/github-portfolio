@@ -9,3 +9,10 @@ import androidMic01 from "./placeholders/androidMic01.jpeg";
 
 export const hobbyPlaceholderImages = [hobbyNotes, hobbyritual, hobbyOrbit] as const;
 export const projectPlaceholderImages = [AppGro01, qrPassport01, androidMic01] as const;
+export const baristaPlaceholderImages = [
+  hobbyNotes,
+  hobbyritual,
+  hobbyOrbit,
+  qrPassport01,
+  androidMic01,
+] as const;

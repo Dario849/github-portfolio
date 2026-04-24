@@ -1,0 +1,546 @@
+---
+import { Image } from "astro:assets";
+import "../styles/global.css";
+import ChangeThemeButton from "./ChangeThemeButton.astro";
+import PretextBalancedText from "./PretextBalancedText.astro";
+import IconEmail from "../../public/Icons/IconEmail.astro";
+import IconLinkedIn from "../../public/Icons/IconLinkedIn.astro";
+import IconWebsite from "../../public/Icons/IconWebsite.astro";
+import SectionRail from "./SectionRail.astro";
+import { baristaPlaceholderImages } from "../assets/placeholders";
+import { withBasePath } from "../i18n/site";
+import type { BaristaCopy, BaristaMetadata } from "../i18n/barista";
+
+type ContactType = "email" | "linkedin" | "website";
+
+interface Props {
+  copy: BaristaCopy;
+  metadata: BaristaMetadata;
+  pageUrl?: string;
+  pdfHref: string;
+}
+
+const { copy, metadata, pageUrl, pdfHref } = Astro.props as Props;
+
+const homeHref = withBasePath();
+const structuredDataJson = JSON.stringify(metadata.structuredData);
+const contactItems = copy.contact.items.map((item) => {
+  const href = item.href.toLowerCase();
+
+  let type: ContactType = "website";
+
+  if (href.startsWith("mailto:")) {
+    type = "email";
+  } else if (href.includes("linkedin.com")) {
+    type = "linkedin";
+  }
+
+  return {
+    ...item,
+    type,
+  };
+});
+const mediaItems = copy.media.items.map((item, index) => ({
+  ...item,
+  image: baristaPlaceholderImages[index % baristaPlaceholderImages.length],
+}));
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{metadata.title}</title>
+    <meta name="description" content={metadata.description} />
+    <meta name="keywords" content={metadata.keywords} />
+    <meta name="author" content="Darío Rodríguez" />
+    <meta name="creator" content="Darío Rodríguez" />
+    <meta name="language" content="es" />
+    <meta
+      name="theme-color"
+      content="#f6f2eb"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0f1115"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta property="og:title" content={metadata.title} />
+    <meta property="og:description" content={metadata.description} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:locale" content={metadata.locale} />
+    <meta property="og:site_name" content={copy.header.subtitle} />
+    {pageUrl && <meta property="og:url" content={pageUrl} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={metadata.title} />
+    <meta name="twitter:description" content={metadata.description} />
+    <meta name="twitter:creator" content="@dario849" />
+    {pageUrl && <link rel="canonical" href={pageUrl} />}
+    {pageUrl && <link rel="alternate" hreflang="es" href={pageUrl} />}
+    {pageUrl && <link rel="alternate" hreflang="x-default" href={pageUrl} />}
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={structuredDataJson}
+    />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header sticky top-0 z-40 px-4 pt-4 md:px-6" data-site-header>
+        <div
+          class="site-header__inner paper-card mx-auto flex max-w-7xl flex-col gap-4 rounded-3xl px-5 py-4 md:flex-row md:items-center md:justify-between md:px-6"
+        >
+          <div class="flex items-center gap-3">
+            <span class="eyebrow">{copy.header.eyebrow}</span>
+            <p
+              class="hidden text-sm tracking-[0.18em] text-(--muted) uppercase lg:block"
+            >
+              {copy.header.subtitle}
+            </p>
+          </div>
+
+          <div class="toolbar-controls">
+            <a href={homeHref} class="button-secondary will-change-transform">
+              {copy.header.homeLabel}
+            </a>
+            <ChangeThemeButton
+              title="Cambiar tema de color"
+              ariaLabel="Cambiar modo oscuro"
+              caption="Tema"
+            />
+          </div>
+        </div>
+        <SectionRail 
+          items = {copy.navItems.map((item) => ({
+            href: item.href,
+            label: item.label,
+            title: item.label,
+          }))}
+          ariaLabel={copy.sectionRail.ariaLabel}
+          mobileLabel={copy.sectionRail.mobileLabel}
+        />
+      </header>
+
+      <main
+        class="site-content mx-auto flex max-w-7xl flex-col gap-8 px-4 pb-14 pt-6 md:px-6 md:pb-20 md:pt-8"
+      >
+        <section class="hero-layout">
+          <div
+            class="paper-card-strong hero-panel rounded-4xl px-6 py-8 md:px-10 md:py-10"
+          >
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="eyebrow">{copy.hero.eyebrow}</span>
+              <p class="subtle-label text-(--accent)">
+                Disponible para conversar
+              </p>
+            </div>
+
+            <div class="mt-8 max-w-5xl">
+              <p class="subtle-label text-(--accent)">{copy.hero.identity}</p>
+
+              <PretextBalancedText
+                as="h1"
+                class="hero-title display-face mt-4 text-[clamp(3rem,8vw,6.4rem)] leading-[0.94] tracking-[-0.05em] text-(--ink)"
+              >
+                <span class="hero-title__segment">{copy.hero.title.start}</span>
+                {" "}
+                <span
+                  class="hero-title__segment hero-title__segment--highlight scribble relative inline-block"
+                >
+                  {copy.hero.title.highlight}
+                </span>
+                {" "}
+                <span class="hero-title__segment">{copy.hero.title.end}</span>
+              </PretextBalancedText>
+
+              <p
+                class="mt-6 max-w-3xl text-base leading-8 text-(--muted) md:text-lg"
+              >
+                {copy.hero.summary}
+              </p>
+              <p
+                class="mt-3 max-w-3xl text-base leading-8 text-(--muted) md:text-lg"
+              >
+                {copy.hero.summaryTail}
+              </p>
+            </div>
+
+            <div class="hero-actions mt-8">
+              <a
+                href={pdfHref}
+                download={copy.pdf.fileName}
+                class="button-primary will-change-transform"
+              >
+                {copy.hero.primaryCta}
+              </a>
+              <a
+                href={contactItems[0]?.href ?? "#contacto"}
+                class="button-secondary will-change-transform"
+              >
+                {copy.hero.secondaryCta}
+              </a>
+            </div>
+
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-(--muted)">
+              {copy.pdf.helper}
+            </p>
+
+            <div class="marker-line mt-8"></div>
+
+            <div class="mt-8 grid gap-4 md:grid-cols-3">
+              {
+                copy.hero.quickFacts.map((fact) => (
+                  <article class="paper-card detail-card rounded-[1.25rem] p-5">
+                    <p class="subtle-label">{fact.label}</p>
+                    <p class="mt-3 text-lg leading-7 text-(--ink)">
+                      {fact.value}
+                    </p>
+                  </article>
+                ))
+              }
+            </div>
+          </div>
+
+          <aside class="section-grid">
+            <section
+              class="paper-card reactive-section rounded-3xl p-6"
+              data-reactive-section
+            >
+              <p class="subtle-label">{copy.snapshot.eyebrow}</p>
+              <h2 class="section-title mt-3 text-(--ink)" data-section-title>
+                {copy.snapshot.title}
+              </h2>
+              <ul class="mt-5 space-y-3">
+                {
+                  copy.snapshot.items.map((item) => (
+                    <li class="paper-card detail-card rounded-2xl p-4">
+                      <p class="subtle-label">{item.label}</p>
+                      <p class="mt-2 text-base leading-7 text-(--ink)">
+                        {item.value}
+                      </p>
+                    </li>
+                  ))
+                }
+              </ul>
+            </section>
+
+            <article class="paper-card media-card rounded-[1.35rem]">
+              <div class="media-card__image media-card__image--barista">
+                <Image
+                  src={mediaItems[0].image}
+                  alt={`${copy.media.visualLabel}: ${mediaItems[0].title}`}
+                  class="h-full w-full object-cover"
+                  widths={[480, 720, 960]}
+                  sizes="(min-width: 1024px) 28vw, 100vw"
+                />
+              </div>
+              <div class="media-card__body">
+                <p class="subtle-label">{mediaItems[0].title}</p>
+                <p class="mt-3 text-sm leading-7 text-(--muted)">
+                  {mediaItems[0].caption}
+                </p>
+              </div>
+            </article>
+          </aside>
+        </section>
+
+        <section
+          id="historia"
+          class="section-target reactive-section grid gap-6 lg:grid-cols-[0.92fr_1.08fr]"
+          data-reactive-section
+        >
+          <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+            <p class="subtle-label">{copy.story.section}</p>
+            <h2 class="section-title mt-3" data-section-title>
+              {copy.story.title}
+            </h2>
+            <p class="section-copy mt-5">{copy.story.intro}</p>
+          </div>
+
+          <div class="grid gap-4">
+            <article class="paper-card media-card rounded-[1.35rem]">
+              <div class="media-card__image media-card__image--barista">
+                <Image
+                  src={mediaItems[1].image}
+                  alt={`${copy.media.visualLabel}: ${mediaItems[1].title}`}
+                  class="h-full w-full object-cover"
+                  widths={[480, 720, 960]}
+                  sizes="(min-width: 1024px) 38vw, 100vw"
+                />
+              </div>
+              <div class="media-card__body">
+                <p class="subtle-label">{mediaItems[1].title}</p>
+                <p class="mt-3 text-sm leading-7 text-(--muted)">
+                  {mediaItems[1].caption}
+                </p>
+              </div>
+            </article>
+            {
+              copy.story.steps.map((step) => (
+                <article class="paper-card detail-card rounded-[1.25rem] p-5">
+                  <p class="subtle-label">{step.title}</p>
+                  <p class="mt-3 text-base leading-7 text-(--ink)">
+                    {step.description}
+                  </p>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section
+          id="habilidades"
+          class="section-target paper-card-strong reactive-section section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10"
+          data-reactive-section
+        >
+          <div
+            class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+          >
+            <div>
+              <p class="subtle-label">{copy.skills.section}</p>
+              <h2 class="section-title mt-3" data-section-title>
+                {copy.skills.title}
+              </h2>
+            </div>
+            <p class="max-w-xl text-sm leading-7 text-(--muted)">
+              {copy.skills.intro}
+            </p>
+          </div>
+
+          <div class="mt-8 grid gap-4 xl:grid-cols-[0.84fr_1.16fr]">
+            <article class="paper-card media-card rounded-[1.35rem]">
+              <div class="media-card__image media-card__image--barista-tall">
+                <Image
+                  src={mediaItems[2].image}
+                  alt={`${copy.media.visualLabel}: ${mediaItems[2].title}`}
+                  class="h-full w-full object-cover"
+                  widths={[540, 720, 960]}
+                  sizes="(min-width: 1280px) 24vw, (min-width: 768px) 38vw, 100vw"
+                />
+              </div>
+              <div class="media-card__body">
+                <p class="subtle-label">{mediaItems[2].title}</p>
+                <p class="mt-3 text-sm leading-7 text-(--muted)">
+                  {mediaItems[2].caption}
+                </p>
+              </div>
+            </article>
+
+            <div class="grid gap-4 xl:grid-cols-3">
+              {
+                copy.skills.items.map((item) => (
+                  <article class="paper-card detail-card rounded-[1.35rem] p-5 md:p-6">
+                    <h3 class="display-face text-[1.9rem] leading-tight text-(--ink)">
+                      {item.title}
+                    </h3>
+                    <ul class="mt-5 space-y-3">
+                      {item.points.map((point) => (
+                        <li class="experience-note rounded-2xl p-4 text-sm leading-7 text-(--ink)">
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                ))
+              }
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="espresso"
+          class="section-target reactive-section grid gap-6 lg:grid-cols-[1.02fr_0.98fr]"
+          data-reactive-section
+        >
+          <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+            <p class="subtle-label">{copy.espresso.section}</p>
+            <h2 class="section-title mt-3" data-section-title>
+              {copy.espresso.title}
+            </h2>
+            <p class="section-copy mt-5">{copy.espresso.summary}</p>
+            <div class="marker-line mt-7"></div>
+            <article class="paper-card detail-card mt-7 rounded-[1.25rem] p-5">
+              <p class="subtle-label">{copy.espresso.noteTitle}</p>
+              <p class="mt-3 text-sm leading-7 text-(--ink)">
+                {copy.espresso.note}
+              </p>
+            </article>
+          </div>
+
+          <div class="grid gap-4">
+            <article class="paper-card media-card rounded-[1.35rem]">
+              <div class="media-card__image media-card__image--barista">
+                <Image
+                  src={mediaItems[3].image}
+                  alt={`${copy.media.visualLabel}: ${mediaItems[3].title}`}
+                  class="h-full w-full object-cover"
+                  widths={[480, 720, 960]}
+                  sizes="(min-width: 1024px) 38vw, 100vw"
+                />
+              </div>
+              <div class="media-card__body">
+                <p class="subtle-label">{mediaItems[3].title}</p>
+                <p class="mt-3 text-sm leading-7 text-(--muted)">
+                  {mediaItems[3].caption}
+                </p>
+              </div>
+            </article>
+            {
+              copy.espresso.highlights.map((item) => (
+                <article class="paper-card detail-card rounded-[1.25rem] p-5">
+                  <p class="text-base leading-7 text-(--ink)">{item}</p>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section
+          id="servicio"
+          class="section-target reactive-section grid gap-6 lg:grid-cols-[0.96fr_1.04fr]"
+          data-reactive-section
+        >
+          <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
+            <p class="subtle-label">{copy.service.section}</p>
+            <h2 class="section-title mt-3" data-section-title>
+              {copy.service.title}
+            </h2>
+            <p class="section-copy mt-5">{copy.service.summary}</p>
+          </div>
+
+          <div class="grid gap-4 md:grid-cols-3">
+            <article class="paper-card media-card rounded-[1.35rem] md:col-span-3 xl:col-span-1">
+              <div class="media-card__image media-card__image--barista">
+                <Image
+                  src={mediaItems[4].image}
+                  alt={`${copy.media.visualLabel}: ${mediaItems[4].title}`}
+                  class="h-full w-full object-cover"
+                  widths={[480, 720, 960]}
+                  sizes="(min-width: 1280px) 22vw, (min-width: 768px) 45vw, 100vw"
+                />
+              </div>
+              <div class="media-card__body">
+                <p class="subtle-label">{mediaItems[4].title}</p>
+                <p class="mt-3 text-sm leading-7 text-(--muted)">
+                  {mediaItems[4].caption}
+                </p>
+              </div>
+            </article>
+            {
+              copy.service.items.map((item) => (
+                <article class="paper-card detail-card rounded-[1.25rem] p-5">
+                  <p class="subtle-label">{item.title}</p>
+                  <p class="mt-3 text-sm leading-7 text-(--ink)">
+                    {item.description}
+                  </p>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section
+          id="contacto"
+          class="section-target paper-card-strong reactive-section section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10"
+          data-reactive-section
+        >
+          <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+            <div>
+              <p class="subtle-label">{copy.contact.section}</p>
+              <h2 class="section-title mt-3" data-section-title>
+                {copy.contact.title}
+              </h2>
+              <p class="section-copy mt-5">{copy.contact.summary}</p>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {
+                contactItems.map((item) => (
+                  <article class="paper-card detail-card contact-card rounded-[1.25rem] p-5">
+                    <div class="contact-card__header">
+                      <span class="contact-card__icon" aria-hidden="true">
+                        {item.type === "email" && <IconEmail />}
+                        {item.type === "linkedin" && <IconLinkedIn />}
+                        {item.type === "website" && <IconWebsite />}
+                      </span>
+                      <p class="subtle-label">{item.label}</p>
+                    </div>
+                    <p class="contact-card__value mt-3 text-base leading-7 text-(--ink)">
+                      {item.value}
+                    </p>
+                    <a
+                      href={item.href}
+                      target={item.type === "email" ? undefined : "_blank"}
+                      rel={
+                        item.type === "email"
+                          ? undefined
+                          : "noopener noreferrer"
+                      }
+                      class="contact-card__action will-change-transform"
+                      aria-label={`${item.label}: ${item.value}`}
+                    >
+                      {item.type === "email" ? "Enviar correo" : "Abrir enlace"}
+                    </a>
+                  </article>
+                ))
+              }
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const siteHeader =
+          document.querySelector<HTMLElement>("[data-site-header]");
+        const mobileHeaderQuery = window.matchMedia("(max-width: 767px)");
+        let headerFrame = 0;
+        let headerIsVisible = true;
+
+        const syncHeaderState = () => {
+          if (!siteHeader) {
+            return;
+          }
+
+          if (!mobileHeaderQuery.matches) {
+            siteHeader.classList.remove("site-header--hidden");
+            headerIsVisible = true;
+            return;
+          }
+
+          const currentScrollY = window.scrollY;
+
+          if (currentScrollY < 180) {
+            if (!headerIsVisible) {
+              siteHeader.classList.remove("site-header--hidden");
+              headerIsVisible = true;
+            }
+          } else if (currentScrollY > 220) {
+            if (headerIsVisible) {
+              siteHeader.classList.add("site-header--hidden");
+              headerIsVisible = false;
+            }
+          }
+        };
+
+        const requestHeaderSync = () => {
+          if (headerFrame) {
+            return;
+          }
+
+          headerFrame = window.requestAnimationFrame(() => {
+            headerFrame = 0;
+            syncHeaderState();
+          });
+        };
+
+        syncHeaderState();
+        window.addEventListener("scroll", requestHeaderSync, { passive: true });
+        window.addEventListener("resize", requestHeaderSync);
+        mobileHeaderQuery.addEventListener("change", requestHeaderSync);
+      });
+    </script>
+  </body>
+</html>
