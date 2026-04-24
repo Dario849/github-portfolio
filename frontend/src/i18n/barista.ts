@@ -1,6 +1,7 @@
 import { withBasePath } from "./site";
 
 export const baristaPublicUrl = "https://dario849.github.io/github-portfolio/barista/";
+export const portfolioPublicUrl = "https://dario849.github.io/github-portfolio/";
 export const baristaRoutePath = withBasePath("barista/");
 export const baristaPdfPath = withBasePath("barista/dario-rodriguez-barista.pdf");
 
@@ -204,7 +205,7 @@ export const baristaCopy = {
       { label: "Correo", value: "dariorodriguez7810@gmail.com", href: "mailto:dariorodriguez7810@gmail.com" },
       { label: "Número", value: "+54 11 6535-7441", href: "tel:+541165357441" },
       { label: "LinkedIn", value: "Dario Rodriguez", href: "https://www.linkedin.com/in/devdariorodriguez/" },
-      { label: "Perfil online", value: baristaPublicUrl, href: baristaPublicUrl },
+      { label: "Perfil online", value: portfolioPublicUrl, href: portfolioPublicUrl },
     ],
   },
   pdf: {
