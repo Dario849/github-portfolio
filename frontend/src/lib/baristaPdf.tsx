@@ -164,14 +164,20 @@ const BaristaPdfDocument = ({
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{copy.story.title}</Text>
-        <Text style={styles.paragraph}>{copy.story.intro}</Text>
+        <Text style={styles.sectionTitle}>{copy.story.title01}</Text>
+        <Text style={styles.paragraph}>{copy.story.intro01}</Text>
+        <View>
         {copy.story.steps.map((step) => (
           <View key={step.title} style={styles.card}>
             <Text style={styles.cardTitle}>{step.title}</Text>
             <Text>{step.description}</Text>
           </View>
         ))}
+        </View>
+        <Text style={styles.sectionTitle}>{copy.story.title02}</Text>
+        <Text style={styles.paragraph}>{copy.story.intro02}</Text>
+        <Text style={styles.sectionTitle}>{copy.story.title03}</Text>
+        <Text style={styles.paragraph}>{copy.story.intro03}</Text>
       </View>
 
       <View style={styles.section}>
@@ -190,10 +196,6 @@ const BaristaPdfDocument = ({
         <Text style={styles.paragraph}>{copy.espresso.summary}</Text>
         <View style={styles.card}>
           <BulletList items={copy.espresso.highlights} />
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{copy.espresso.noteTitle}</Text>
-          <Text>{copy.espresso.note}</Text>
         </View>
       </View>
 

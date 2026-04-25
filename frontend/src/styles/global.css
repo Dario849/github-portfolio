@@ -556,6 +556,10 @@ a {
   aspect-ratio: 4 / 5;
 }
 
+.media-card__image--carousel {
+  aspect-ratio: 16 / 9;
+}
+
 .media-card__image img {
   transition:
     transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -639,6 +643,93 @@ a {
   padding: 0.9rem 1rem 1rem;
   color: var(--ink);
   line-height: 1.55;
+}
+
+.barista-carousel {
+  display: grid;
+  gap: 1rem;
+}
+
+.barista-carousel__viewport {
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
+
+.barista-carousel__track {
+  display: flex;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.barista-carousel__slide {
+  min-width: 100%;
+}
+
+.barista-carousel__body {
+  min-height: 10.5rem;
+}
+
+.barista-carousel__controls {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.barista-carousel__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.barista-carousel__button,
+.barista-carousel__dot {
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface-strong) 96%, transparent);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.barista-carousel__button {
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.barista-carousel__button:hover,
+.barista-carousel__button:focus-visible {
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
+  box-shadow: 0 0.75rem 1.9rem rgba(15, 23, 42, 0.08);
+}
+
+.barista-carousel__dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.barista-carousel__dot {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 999px;
+}
+
+.barista-carousel__dot:hover,
+.barista-carousel__dot:focus-visible {
+  transform: scale(1.08);
+  border-color: var(--line-strong);
+  box-shadow: 0 0 0 0.18rem color-mix(in srgb, var(--accent-soft) 72%, transparent);
+}
+
+.barista-carousel__dot[aria-current="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
 }
 
 .media-card:hover,

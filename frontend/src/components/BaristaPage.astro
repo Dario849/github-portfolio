@@ -7,7 +7,7 @@ import IconEmail from "../../public/Icons/IconEmail.astro";
 import IconLinkedIn from "../../public/Icons/IconLinkedIn.astro";
 import IconWebsite from "../../public/Icons/IconWebsite.astro";
 import SectionRail from "./SectionRail.astro";
-import { baristaPlaceholderImages } from "../assets/placeholders";
+import { baristaCarouselImages, baristaFeaturedImages } from "../assets/images";
 import { withBasePath } from "../i18n/site";
 import type { BaristaCopy, BaristaMetadata } from "../i18n/barista";
 
@@ -42,7 +42,11 @@ const contactItems = copy.contact.items.map((item) => {
 });
 const mediaItems = copy.media.items.map((item, index) => ({
   ...item,
-  image: baristaPlaceholderImages[index % baristaPlaceholderImages.length],
+  image: baristaFeaturedImages[index % baristaFeaturedImages.length],
+}));
+const carouselItems = copy.carousel.items.map((item, index) => ({
+  ...item,
+  image: baristaCarouselImages[index % baristaCarouselImages.length],
 }));
 ---
 
@@ -88,7 +92,10 @@ const mediaItems = copy.media.items.map((item, index) => ({
   </head>
   <body>
     <div class="site-shell">
-      <header class="site-header sticky top-0 z-40 px-4 pt-4 md:px-6" data-site-header>
+      <header
+        class="site-header sticky top-0 z-40 px-4 pt-4 md:px-6"
+        data-site-header
+      >
         <div
           class="site-header__inner paper-card mx-auto flex max-w-7xl flex-col gap-4 rounded-3xl px-5 py-4 md:flex-row md:items-center md:justify-between md:px-6"
         >
@@ -112,8 +119,8 @@ const mediaItems = copy.media.items.map((item, index) => ({
             />
           </div>
         </div>
-        <SectionRail 
-          items = {copy.navItems.map((item) => ({
+        <SectionRail
+          items={copy.navItems.map((item) => ({
             href: item.href,
             label: item.label,
             title: item.label,
@@ -228,13 +235,24 @@ const mediaItems = copy.media.items.map((item, index) => ({
 
             <article class="paper-card media-card rounded-[1.35rem]">
               <div class="media-card__image media-card__image--barista">
-                <Image
-                  src={mediaItems[0].image}
-                  alt={`${copy.media.visualLabel}: ${mediaItems[0].title}`}
-                  class="h-full w-full object-cover"
-                  widths={[480, 720, 960]}
-                  sizes="(min-width: 1024px) 28vw, 100vw"
-                />
+                <button
+                  type="button"
+                  class="media-card__image-trigger"
+                  data-gallery-trigger
+                  data-image-src={mediaItems[0].image.src}
+                  data-image-alt={`${copy.media.visualLabel}: ${mediaItems[0].title}`}
+                  data-image-caption={mediaItems[0].caption}
+                  aria-label={`${copy.carousel.slideAriaLabel}: ${mediaItems[0].title}`}
+                  aria-haspopup="dialog"
+                >
+                  <Image
+                    src={mediaItems[0].image}
+                    alt={`${copy.media.visualLabel}: ${mediaItems[0].title}`}
+                    class="h-full w-full object-cover"
+                    widths={[480, 720, 960]}
+                    sizes="(min-width: 1024px) 28vw, 100vw"
+                  />
+                </button>
               </div>
               <div class="media-card__body">
                 <p class="subtle-label">{mediaItems[0].title}</p>
@@ -254,21 +272,44 @@ const mediaItems = copy.media.items.map((item, index) => ({
           <div class="paper-card section-card rounded-[1.75rem] p-6 md:p-8">
             <p class="subtle-label">{copy.story.section}</p>
             <h2 class="section-title mt-3" data-section-title>
-              {copy.story.title}
+              {copy.story.title01}
             </h2>
-            <p class="section-copy mt-5">{copy.story.intro}</p>
+            <p class="section-copy mt-5">{copy.story.intro01}</p>
+            <article class="paper-card detail-card mt-7 rounded-[1.25rem] p-5">
+              <p class="subtle-label">{copy.story.title02}</p>
+              <p class="mt-3 text-sm leading-7 text-(--ink)">
+                {copy.story.intro02}
+              </p>
+            </article>
+            <article class="paper-card detail-card mt-7 rounded-[1.25rem] p-5">
+              <p class="subtle-label">{copy.story.title03}</p>
+              <p class="mt-3 text-sm leading-7 text-(--ink)">
+                {copy.story.intro03}
+              </p>
+            </article>
           </div>
 
           <div class="grid gap-4">
             <article class="paper-card media-card rounded-[1.35rem]">
               <div class="media-card__image media-card__image--barista">
-                <Image
-                  src={mediaItems[1].image}
-                  alt={`${copy.media.visualLabel}: ${mediaItems[1].title}`}
-                  class="h-full w-full object-cover"
-                  widths={[480, 720, 960]}
-                  sizes="(min-width: 1024px) 38vw, 100vw"
-                />
+                <button
+                  type="button"
+                  class="media-card__image-trigger"
+                  data-gallery-trigger
+                  data-image-src={mediaItems[1].image.src}
+                  data-image-alt={`${copy.media.visualLabel}: ${mediaItems[1].title}`}
+                  data-image-caption={mediaItems[1].caption}
+                  aria-label={`${copy.carousel.slideAriaLabel}: ${mediaItems[1].title}`}
+                  aria-haspopup="dialog"
+                >
+                  <Image
+                    src={mediaItems[1].image}
+                    alt={`${copy.media.visualLabel}: ${mediaItems[1].title}`}
+                    class="h-full w-full object-cover"
+                    widths={[480, 720, 960]}
+                    sizes="(min-width: 1024px) 38vw, 100vw"
+                  />
+                </button>
               </div>
               <div class="media-card__body">
                 <p class="subtle-label">{mediaItems[1].title}</p>
@@ -312,13 +353,24 @@ const mediaItems = copy.media.items.map((item, index) => ({
           <div class="mt-8 grid gap-4 xl:grid-cols-[0.84fr_1.16fr]">
             <article class="paper-card media-card rounded-[1.35rem]">
               <div class="media-card__image media-card__image--barista-tall">
-                <Image
-                  src={mediaItems[2].image}
-                  alt={`${copy.media.visualLabel}: ${mediaItems[2].title}`}
-                  class="h-full w-full object-cover"
-                  widths={[540, 720, 960]}
-                  sizes="(min-width: 1280px) 24vw, (min-width: 768px) 38vw, 100vw"
-                />
+                <button
+                  type="button"
+                  class="media-card__image-trigger"
+                  data-gallery-trigger
+                  data-image-src={mediaItems[2].image.src}
+                  data-image-alt={`${copy.media.visualLabel}: ${mediaItems[2].title}`}
+                  data-image-caption={mediaItems[2].caption}
+                  aria-label={`${copy.carousel.slideAriaLabel}: ${mediaItems[2].title}`}
+                  aria-haspopup="dialog"
+                >
+                  <Image
+                    src={mediaItems[2].image}
+                    alt={`${copy.media.visualLabel}: ${mediaItems[2].title}`}
+                    class="h-full w-full object-cover"
+                    widths={[540, 720, 960]}
+                    sizes="(min-width: 1280px) 24vw, (min-width: 768px) 38vw, 100vw"
+                  />
+                </button>
               </div>
               <div class="media-card__body">
                 <p class="subtle-label">{mediaItems[2].title}</p>
@@ -372,13 +424,24 @@ const mediaItems = copy.media.items.map((item, index) => ({
           <div class="grid gap-4">
             <article class="paper-card media-card rounded-[1.35rem]">
               <div class="media-card__image media-card__image--barista">
-                <Image
-                  src={mediaItems[3].image}
-                  alt={`${copy.media.visualLabel}: ${mediaItems[3].title}`}
-                  class="h-full w-full object-cover"
-                  widths={[480, 720, 960]}
-                  sizes="(min-width: 1024px) 38vw, 100vw"
-                />
+                <button
+                  type="button"
+                  class="media-card__image-trigger"
+                  data-gallery-trigger
+                  data-image-src={mediaItems[3].image.src}
+                  data-image-alt={`${copy.media.visualLabel}: ${mediaItems[3].title}`}
+                  data-image-caption={mediaItems[3].caption}
+                  aria-label={`${copy.carousel.slideAriaLabel}: ${mediaItems[3].title}`}
+                  aria-haspopup="dialog"
+                >
+                  <Image
+                    src={mediaItems[3].image}
+                    alt={`${copy.media.visualLabel}: ${mediaItems[3].title}`}
+                    class="h-full w-full object-cover"
+                    widths={[480, 720, 960]}
+                    sizes="(min-width: 1024px) 38vw, 100vw"
+                  />
+                </button>
               </div>
               <div class="media-card__body">
                 <p class="subtle-label">{mediaItems[3].title}</p>
@@ -411,15 +474,28 @@ const mediaItems = copy.media.items.map((item, index) => ({
           </div>
 
           <div class="grid gap-4 md:grid-cols-3">
-            <article class="paper-card media-card rounded-[1.35rem] md:col-span-3 xl:col-span-1">
+            <article
+              class="paper-card media-card rounded-[1.35rem] md:col-span-3 xl:col-span-1"
+            >
               <div class="media-card__image media-card__image--barista">
-                <Image
-                  src={mediaItems[4].image}
-                  alt={`${copy.media.visualLabel}: ${mediaItems[4].title}`}
-                  class="h-full w-full object-cover"
-                  widths={[480, 720, 960]}
-                  sizes="(min-width: 1280px) 22vw, (min-width: 768px) 45vw, 100vw"
-                />
+                <button
+                  type="button"
+                  class="media-card__image-trigger"
+                  data-gallery-trigger
+                  data-image-src={mediaItems[4].image.src}
+                  data-image-alt={`${copy.media.visualLabel}: ${mediaItems[4].title}`}
+                  data-image-caption={mediaItems[4].caption}
+                  aria-label={`${copy.carousel.slideAriaLabel}: ${mediaItems[4].title}`}
+                  aria-haspopup="dialog"
+                >
+                  <Image
+                    src={mediaItems[4].image}
+                    alt={`${copy.media.visualLabel}: ${mediaItems[4].title}`}
+                    class="h-full w-full object-cover"
+                    widths={[480, 720, 960]}
+                    sizes="(min-width: 1280px) 22vw, (min-width: 768px) 45vw, 100vw"
+                  />
+                </button>
               </div>
               <div class="media-card__body">
                 <p class="subtle-label">{mediaItems[4].title}</p>
@@ -438,6 +514,129 @@ const mediaItems = copy.media.items.map((item, index) => ({
                 </article>
               ))
             }
+          </div>
+        </section>
+
+        <section
+          id="galeria"
+          class="section-target paper-card reactive-section section-card rounded-[1.9rem] p-6 md:p-8 lg:p-10"
+          data-reactive-section
+        >
+          <div
+            class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+          >
+            <div>
+              <p class="subtle-label">{copy.carousel.section}</p>
+              <h2 class="section-title mt-3" data-section-title>
+                {copy.carousel.title}
+              </h2>
+            </div>
+            <p class="max-w-2xl text-sm leading-7 text-(--muted)">
+              {copy.carousel.summary}
+            </p>
+          </div>
+
+          <div
+            class="barista-carousel mt-8"
+            data-barista-carousel
+            tabindex="0"
+            aria-label={copy.carousel.title}
+          >
+            <div class="barista-carousel__viewport">
+              <div class="barista-carousel__track" data-carousel-track>
+                {
+                  carouselItems.map((item, index) => (
+                    <article
+                      class="barista-carousel__slide"
+                      data-carousel-slide
+                      aria-hidden={index === 0 ? "false" : "true"}
+                    >
+                      <article class="paper-card media-card rounded-[1.5rem] overflow-hidden">
+                        <div class="media-card__image media-card__image--carousel">
+                          <button
+                            type="button"
+                            class="media-card__image-trigger"
+                            data-gallery-trigger
+                            data-image-src={item.image.src}
+                            data-image-alt={`${copy.media.visualLabel}: ${item.title}`}
+                            data-image-caption={item.caption}
+                            aria-label={`${copy.carousel.slideAriaLabel}: ${item.title}`}
+                            aria-haspopup="dialog"
+                          >
+                            <Image
+                              src={item.image}
+                              alt={`${copy.media.visualLabel}: ${item.title}`}
+                              class="h-full w-full object-cover"
+                              widths={[720, 960, 1280]}
+                              sizes="(min-width: 1024px) 72vw, 100vw"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </button>
+                        </div>
+                        <div class="media-card__body barista-carousel__body">
+                          <p class="subtle-label">Toma {index + 1}</p>
+                          <h3 class="display-face mt-3 text-[2rem] leading-tight text-(--ink)">
+                            {item.title}
+                          </h3>
+                          <p class="mt-3 max-w-2xl text-sm leading-7 text-(--muted)">
+                            {item.caption}
+                          </p>
+                        </div>
+                      </article>
+                    </article>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div class="barista-carousel__controls">
+              <div class="barista-carousel__buttons">
+                <button
+                  type="button"
+                  class="barista-carousel__button"
+                  data-carousel-previous
+                  aria-label={copy.carousel.previousLabel}
+                >
+                  Anterior
+                </button>
+                <button
+                  type="button"
+                  class="barista-carousel__button"
+                  data-carousel-next
+                  aria-label={copy.carousel.nextLabel}
+                >
+                  Siguiente
+                </button>
+                <button
+                  type="button"
+                  class="barista-carousel__button"
+                  data-carousel-toggle
+                  data-play-label={copy.carousel.resumeLabel}
+                  data-pause-label={copy.carousel.pauseLabel}
+                  aria-pressed="false"
+                >
+                  {copy.carousel.pauseLabel}
+                </button>
+              </div>
+
+              <div
+                class="barista-carousel__dots"
+                aria-label="Indicadores de galería"
+              >
+                {
+                  carouselItems.map((item, index) => (
+                    <button
+                      type="button"
+                      class="barista-carousel__dot"
+                      data-carousel-dot={index}
+                      aria-label={`${item.title} ${index + 1}`}
+                      aria-current={index === 0 ? "true" : "false"}
+                    />
+                  ))
+                }
+              </div>
+            </div>
           </div>
         </section>
 
@@ -491,13 +690,61 @@ const mediaItems = copy.media.items.map((item, index) => ({
         </section>
       </main>
     </div>
+    <div class="gallery-modal" data-gallery-modal hidden>
+      <button
+        type="button"
+        class="gallery-modal__backdrop"
+        data-gallery-close
+        aria-label="Cerrar imagen ampliada"></button>
+      <section
+        class="gallery-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="gallery-modal-title"
+      >
+        <header class="gallery-modal__header">
+          <h3 id="gallery-modal-title" class="gallery-modal__title">
+            Vista ampliada
+          </h3>
+          <button
+            type="button"
+            class="gallery-modal__close"
+            data-gallery-close
+            aria-label="Cerrar"
+          >
+            Cerrar
+          </button>
+        </header>
+        <img class="gallery-modal__image" alt="" data-gallery-image />
+        <p class="gallery-modal__caption" data-gallery-caption></p>
+      </section>
+    </div>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        const galleryModal = document.querySelector<HTMLElement>(
+          "[data-gallery-modal]",
+        );
+        const galleryImage = document.querySelector<HTMLImageElement>(
+          "[data-gallery-image]",
+        );
+        const galleryCaption = document.querySelector<HTMLElement>(
+          "[data-gallery-caption]",
+        );
+        const galleryCloseButtons = document.querySelectorAll<HTMLElement>(
+          "[data-gallery-close]",
+        );
+        const galleryTriggers = document.querySelectorAll<HTMLButtonElement>(
+          "[data-gallery-trigger]",
+        );
         const siteHeader =
           document.querySelector<HTMLElement>("[data-site-header]");
         const mobileHeaderQuery = window.matchMedia("(max-width: 767px)");
+        const carouselRoots = document.querySelectorAll<HTMLElement>(
+          "[data-barista-carousel]",
+        );
         let headerFrame = 0;
         let headerIsVisible = true;
+        let lastFocusedElement: HTMLElement | null = null;
 
         const syncHeaderState = () => {
           if (!siteHeader) {
@@ -535,6 +782,184 @@ const mediaItems = copy.media.items.map((item, index) => ({
             syncHeaderState();
           });
         };
+
+        const openGallery = (
+          source: string,
+          alt: string,
+          caption: string,
+          trigger: HTMLElement,
+        ) => {
+          if (!galleryModal || !galleryImage) {
+            return;
+          }
+
+          galleryImage.src = source;
+          galleryImage.alt = alt;
+          if (galleryCaption) {
+            galleryCaption.textContent = caption;
+          }
+          lastFocusedElement = trigger;
+          galleryModal.hidden = false;
+          document.body.style.overflow = "hidden";
+          galleryModal
+            .querySelector<HTMLElement>(".gallery-modal__close")
+            ?.focus();
+        };
+
+        const closeGallery = () => {
+          if (!galleryModal) {
+            return;
+          }
+          galleryModal.hidden = true;
+          document.body.style.removeProperty("overflow");
+          if (lastFocusedElement instanceof HTMLElement) {
+            lastFocusedElement.focus();
+          }
+        };
+
+        galleryTriggers.forEach((trigger) => {
+          trigger.addEventListener("click", () => {
+            openGallery(
+              trigger.dataset.imageSrc ?? "",
+              trigger.dataset.imageAlt ?? "",
+              trigger.dataset.imageCaption ?? "",
+              trigger,
+            );
+          });
+        });
+
+        galleryCloseButtons.forEach((control) => {
+          control.addEventListener("click", closeGallery);
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && galleryModal && !galleryModal.hidden) {
+            closeGallery();
+          }
+        });
+
+        carouselRoots.forEach((root) => {
+          const track = root.querySelector("[data-carousel-track]");
+          const slides = Array.from(
+            root.querySelectorAll("[data-carousel-slide]"),
+          );
+          const previousButton = root.querySelector("[data-carousel-previous]");
+          const nextButton = root.querySelector("[data-carousel-next]");
+          const toggleButton = root.querySelector("[data-carousel-toggle]");
+          const dots = Array.from(root.querySelectorAll("[data-carousel-dot]"));
+
+          if (
+            !(track instanceof HTMLElement) ||
+            slides.length === 0 ||
+            !(previousButton instanceof HTMLButtonElement) ||
+            !(nextButton instanceof HTMLButtonElement) ||
+            !(toggleButton instanceof HTMLButtonElement)
+          ) {
+            return;
+          }
+
+          let currentIndex = 0;
+          let autoplayEnabled = true;
+          let intervalId = 0;
+
+          const syncCarousel = () => {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            slides.forEach((slide, index) => {
+              slide.setAttribute(
+                "aria-hidden",
+                index === currentIndex ? "false" : "true",
+              );
+            });
+
+            dots.forEach((dot, index) => {
+              if (!(dot instanceof HTMLButtonElement)) {
+                return;
+              }
+
+              dot.setAttribute(
+                "aria-current",
+                index === currentIndex ? "true" : "false",
+              );
+            });
+
+            toggleButton.textContent = autoplayEnabled
+              ? (toggleButton.dataset.pauseLabel ?? "")
+              : (toggleButton.dataset.playLabel ?? "");
+            toggleButton.setAttribute(
+              "aria-pressed",
+              autoplayEnabled ? "false" : "true",
+            );
+          };
+
+          const goToIndex = (nextIndex: number) => {
+            currentIndex = (nextIndex + slides.length) % slides.length;
+            syncCarousel();
+          };
+
+          const stopAutoplay = () => {
+            if (intervalId) {
+              window.clearInterval(intervalId);
+              intervalId = 0;
+            }
+          };
+
+          const startAutoplay = () => {
+            stopAutoplay();
+
+            if (!autoplayEnabled) {
+              return;
+            }
+
+            intervalId = window.setInterval(() => {
+              galleryModal?.hidden ? goToIndex(currentIndex + 1) : null;
+            }, 4200);
+          };
+
+          previousButton.addEventListener("click", () => {
+            goToIndex(currentIndex - 1);
+            startAutoplay();
+          });
+
+          nextButton.addEventListener("click", () => {
+            goToIndex(currentIndex + 1);
+            startAutoplay();
+          });
+
+          toggleButton.addEventListener("click", () => {
+            autoplayEnabled = !autoplayEnabled;
+            syncCarousel();
+            startAutoplay();
+          });
+
+          dots.forEach((dot, index) => {
+            if (!(dot instanceof HTMLButtonElement)) {
+              return;
+            }
+
+            dot.addEventListener("click", () => {
+              goToIndex(index);
+              startAutoplay();
+            });
+          });
+
+          root.addEventListener("mouseenter", stopAutoplay);
+          root.addEventListener("mouseleave", startAutoplay);
+          // root.addEventListener("focusin", stopAutoplay);
+          // root.addEventListener("focusout", (event) => {
+          //   if (
+          //     event.relatedTarget instanceof Node &&
+          //     root.contains(event.relatedTarget)
+          //   ) {
+          //     return;
+          //   }
+
+          //   startAutoplay();
+          // });
+
+          syncCarousel();
+          startAutoplay();
+        });
 
         syncHeaderState();
         window.addEventListener("scroll", requestHeaderSync, { passive: true });

@@ -9,7 +9,7 @@ export const baristaCopy = {
   metadata: {
     title: "Darío Rodríguez | Perfil barista",
     description:
-      "Perfil barista de Darío Rodríguez, home brewer autodidacta enfocado en espresso, métodos manuales, control de variables, limpieza de estación y primera oportunidad profesional en barra.",
+      "Perfil barista de Darío Rodríguez, home brewer autodidacta, analista, programador y informático con interés genuino por el café preparado con intención, buscando su primera oportunidad profesional en barra.",
   },
   header: {
     eyebrow: "Perfil barista",
@@ -21,6 +21,7 @@ export const baristaCopy = {
     { href: "#habilidades", label: "Habilidades" },
     { href: "#espresso", label: "Espresso" },
     { href: "#servicio", label: "Servicio" },
+    { href: "#galeria", label: "Galería" },
     { href: "#contacto", label: "Contacto" },
   ],
   sectionRail:{
@@ -31,30 +32,79 @@ export const baristaCopy = {
     visualLabel: "Foto del perfil barista",
     items: [
       {
-        title: "Ritual y primera curiosidad",
+        title: "Mi espacio de trabajo",
         caption:
-          "Imagen para acompañar origen del interés: ritual, molienda y preparación intencional.",
+          "Proceso de preparación, limpieza, orden y cuidado de cada detalle.",
       },
       {
         title: "Aprendizaje con método",
         caption:
-          "Imagen para sección historia: práctica, repetición y mejora desde la prensa francesa.",
+          "El método de prensa francesa me permitió entender variables y resultados en taza, y desarrollar criterio para mejorar cada preparación.",
       },
       {
         title: "Control de variables",
         caption:
-          "Imagen para habilidades: foco en molienda, temperatura, extracción y balance.",
+          "La cata y el análisis de cada taza me ayudaron a entender la relación entre molienda, temperatura, tiempo de extracción y resultado final en taza.",
       },
       {
-        title: "Espresso y leche",
+        title: "Café espresso y café con leche",
         caption:
-          "Imagen para espresso: prioridad en shot, crema, textura y temperatura correcta.",
+          "Personalmente un buen café no necesita nada más que café de calidad, pero esta imagen acompaña la sección de bebidas con criterio, donde destaco que el espresso es la base de un buen Flat White, Cortado o Cappuccino.",
       },
       {
         title: "Ritmo de barra",
         caption:
-          "Imagen para servicio: orden, constancia y disposición para servir buen café con ritmo.",
+          "Mayor espacio de trabajo y ritmo constante como parte central de la experiencia de servicio que busco.",
       },
+    ],
+  },
+  carousel: {
+    section: "Sección 05",
+    title: "Galería de práctica y resultados",
+    summary:
+      "Este carrusel reúne el resto de las fotos del proceso, las bebidas y las pruebas que no aparecen en las otras secciones. Sirve como muestra visual complementaria del trabajo, la constancia y el interés real por café.",
+    previousLabel: "Imagen anterior",
+    nextLabel: "Siguiente imagen",
+    pauseLabel: "Pausar reproducción automática",
+    resumeLabel: "Reanudar reproducción automática",
+    slideAriaLabel: "Abrir imagen ampliada",
+    items: [
+      {
+        title: "Práctica constante en casa",
+        caption: "Sesiones de prueba y repetición para mejorar criterio y consistencia.",
+      },
+      {
+        title: "Relación entre molienda y extracción",
+        caption: "El grosor determina la intensidad de la extracción, encontrar el balance es el punto clave.",
+      },
+      {
+        title: "Americano",
+        caption: "Práctica de balance entre intensidad del shot y cantidad de agua para lograr taza equilibrada.",
+      },
+      {
+        title: "Más horas de espresso",
+        caption: "Pruebas y ajustes para seguir empujando la calidad del shot.",
+      },
+      {
+        title: "Parte del trabajo",
+        caption: "Orden, herramientas limpias y listas para el próximo café como parte central del proceso.",
+      },
+      {
+        title: "Tamping y nivel de crema",
+        caption: "Existe una relación entre el tamping, la extracción y la calidad de la crema del café.",
+      },
+      {
+        title: "Prolijidad antes que nada",
+        caption: "Reducir desperdicio pesando los gramos necesarios con exáctitud para mantener la estación limpia, cuidando cada detalle para mejorar el resultado final.",
+      },
+      {
+        title: "Otro shot de espresso",
+        caption: "Siempre hay lugar para mejoras tanto en las herramientas de trabajo como en la técnica de preparación.",
+      },
+      {
+        title: "Estación de trabajo",
+        caption: "Barra de café en casa: espacio dedicado, ordenado y cuidado para practicar con foco en calidad y consistencia para llevar esa disciplina a un contexto profesional.",
+      }
     ],
   },
   hero: {
@@ -97,9 +147,15 @@ export const baristaCopy = {
   },
   story: {
     section: "Sección 01",
-    title: "Cómo empezó todo",
-    intro:
-      "Antes tomaba café sin demasiado interés. El cambio llegó al ver a un colega de mi papá moler café a mano y prepararlo en prensa francesa: no era café de especialidad de alto nivel, pero el ritual y el resultado final eran claramente mejores que el café habitual.",
+    title01: "Cómo empezó todo",
+    title02: "Más sobre mí",
+    title03: "Mis estudios y experiencia laboral",
+    intro01:
+      "Antes tomaba café sin demasiado interés. El cambio llegó al ver a un colega de mi papá moler café a mano y prepararlo en prensa francesa: no era café de especialidad de alto nivel, pero el ritual, proceso y resultado final eran claramente mejores que el café habitual. A partir de ahí de a poco empecé a interesarme más y más por la preparación, a investigar por mi cuenta, a practicar con método y a mejorar cada vez más el resultado en taza. Hoy en día estoy abierto a cualquier oportunidad laboral que se me presente, tengo un abaníco de habilidades varias para ofrecer, y ganas reales de aportar, aprender y crecer dentro de un equipo de trabajo.",
+    intro02:
+      "Mis estudios y trabajo siempre estuvieron relacionados con tecnología, pero el café se volvió un hobby serio que me llevó a investigar, practicar y mejorar cada vez más. Hoy busco dar el salto a barra para convertir esa experiencia autodidacta en aprendizaje real dentro de un equipo profesional.",
+    intro03:
+      "Tengo un título superior en análisis de sistemas y título secundario en informática, se programar en PHP, Python, Javascript, y demás. Tengo experiencia laboral en atención al cliente para un almacén/fiambrería y experiencia como soporte técnico dentro oficinas de márketing/callcenter. Me gusta entender cómo funcionan las cosas, elaborar proyectos propios, investigar por mi cuenta y mejorar con práctica constante, tengo una mentalidad creativa y analítica a la vez, ataco problemas con criterio y paciencia, y me gusta trabajar en equipo para aprender de otros y aportar lo mío.",
     steps: [
       {
         title: "Primer clic con método",
@@ -197,7 +253,7 @@ export const baristaCopy = {
     ],
   },
   contact: {
-    section: "Sección 05",
+    section: "Sección 06",
     title: "Contacto y siguiente paso",
     summary:
       "Si buscás alguien con interés genuino por café, base técnica autodidacta y ganas reales de crecer como barista, me interesa conversar.",
