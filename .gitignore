@@ -5,7 +5,7 @@ dist/
 .astro/
 
 # Dev branch Folder
-/frontend
+frontend/
 
 # dependencies
 node_modules/
